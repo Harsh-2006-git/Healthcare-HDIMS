@@ -144,6 +144,43 @@
         opacity: 0.8;
       }
 
+      /* Searchable Dropdown */
+      .searchable-dropdown {
+        position: relative;
+      }
+
+      .searchable-dropdown input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        background: rgba(255, 255, 255, 0.8);
+      }
+
+      .searchable-dropdown .options {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        max-height: 150px;
+        overflow-y: auto;
+        z-index: 1000;
+        display: none;
+      }
+
+      .searchable-dropdown .options div {
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      .searchable-dropdown .options div:hover {
+        background: #f0f0f0;
+      }
+
       /* Responsive Design */
       @media (max-width: 768px) {
         .form-row {
@@ -163,14 +200,17 @@
       <!-- Appointment Booking Form -->
       <form id="appointmentForm">
         <div class="form-row">
-          <div class="form-group">
+          <div class="form-group searchable-dropdown">
             <label for="location">Location:</label>
-            <select id="location" required>
-              <option value="">Select Location</option>
-              <option value="New York">New York</option>
-              <option value="Los Angeles">Los Angeles</option>
-              <option value="Chicago">Chicago</option>
-            </select>
+            <input
+              type="text"
+              id="locationInput"
+              placeholder="Type or select location"
+              autocomplete="off"
+            />
+            <div class="options" id="locationOptions">
+              <!-- Options will be populated dynamically -->
+            </div>
           </div>
           <div class="form-group">
             <label for="date">Date:</label>
@@ -183,11 +223,27 @@
           <div class="form-group">
             <label for="doctorType">Type of Doctor:</label>
             <select id="doctorType" required>
-              <option value="">Select Doctor Type</option>
+              <option value="">Select a doctor type</option>
               <option value="Cardiologist">Cardiologist</option>
               <option value="Dermatologist">Dermatologist</option>
               <option value="Pediatrician">Pediatrician</option>
               <option value="Orthopedic">Orthopedic</option>
+              <option value="Gynecologist">Gynecologist</option>
+              <option value="Neurologist">Neurologist</option>
+              <option value="Oncologist">Oncologist</option>
+              <option value="Psychiatrist">Psychiatrist</option>
+              <option value="Endocrinologist">Endocrinologist</option>
+              <option value="Gastroenterologist">Gastroenterologist</option>
+              <option value="Urologist">Urologist</option>
+              <option value="Nephrologist">Nephrologist</option>
+              <option value="Rheumatologist">Rheumatologist</option>
+              <option value="Pulmonologist">Pulmonologist</option>
+              <option value="ENT Specialist">ENT Specialist</option>
+              <option value="Ophthalmologist">Ophthalmologist</option>
+              <option value="Dentist">Dentist</option>
+              <option value="General Physician">General Physician</option>
+              <option value="Surgeon">Surgeon</option>
+              <option value="Anesthesiologist">Anesthesiologist</option>
             </select>
           </div>
         </div>
@@ -204,6 +260,215 @@
     <script>
       // Load appointments from localStorage
       let appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+
+      // List of Indian cities
+      const cities = [
+        "Mumbai",
+        "Delhi",
+        "Bangalore",
+        "Hyderabad",
+        "Chennai",
+        "Kolkata",
+        "Pune",
+        "Ahmedabad",
+        "Jaipur",
+        "Surat",
+        "Lucknow",
+        "Kanpur",
+        "Nagpur",
+        "Indore",
+        "Thane",
+        "Bhopal",
+        "Visakhapatnam",
+        "Patna",
+        "Vadodara",
+        "Ghaziabad",
+        "Ludhiana",
+        "Agra",
+        "Nashik",
+        "Faridabad",
+        "Meerut",
+        "Rajkot",
+        "Varanasi",
+        "Srinagar",
+        "Aurangabad",
+        "Dhanbad",
+        "Amritsar",
+        "Navi Mumbai",
+        "Allahabad",
+        "Ranchi",
+        "Howrah",
+        "Jabalpur",
+        "Gwalior",
+        "Coimbatore",
+        "Vijayawada",
+        "Jodhpur",
+        "Madurai",
+        "Raipur",
+        "Kota",
+        "Chandigarh",
+        "Guwahati",
+        "Solapur",
+        "Hubli-Dharwad",
+        "Bareilly",
+        "Moradabad",
+        "Mysore",
+        "Gurgaon",
+        "Aligarh",
+        "Jalandhar",
+        "Tiruchirappalli",
+        "Bhubaneswar",
+        "Salem",
+        "Warangal",
+        "Guntur",
+        "Bhiwandi",
+        "Saharanpur",
+        "Gorakhpur",
+        "Bikaner",
+        "Amravati",
+        "Noida",
+        "Jamshedpur",
+        "Bhilai",
+        "Cuttack",
+        "Firozabad",
+        "Kochi",
+        "Nellore",
+        "Bhavnagar",
+        "Dehradun",
+        "Durgapur",
+        "Asansol",
+        "Rourkela",
+        "Nanded",
+        "Kolhapur",
+        "Ajmer",
+        "Akola",
+        "Gulbarga",
+        "Loni",
+        "Ujjain",
+        "Siliguri",
+        "Jhansi",
+        "Ulhasnagar",
+        "Jammu",
+        "Sangli-Miraj & Kupwad",
+        "Mangalore",
+        "Erode",
+        "Belgaum",
+        "Ambattur",
+        "Tirunelveli",
+        "Malegaon",
+        "Gaya",
+        "Jalgaon",
+        "Udaipur",
+        "Maheshtala",
+        "Tirupur",
+        "Davanagere",
+        "Kozhikode",
+        "Kurnool",
+        "Rajpur Sonarpur",
+        "Bokaro Steel City",
+        "South Dumdum",
+        "Bellary",
+        "Patiala",
+        "Gopalpur",
+        "Agartala",
+        "Bhagalpur",
+        "Muzaffarnagar",
+        "Bhatpara",
+        "Panihati",
+        "Latur",
+        "Dhule",
+        "Rohtak",
+        "Korba",
+        "Bhilwara",
+        "Brahmapur",
+        "Muzaffarpur",
+        "Ahmednagar",
+        "Mathura",
+        "Kollam",
+        "Avadi",
+        "Kadapa",
+        "Anantapuram",
+        "Kamarhati",
+        "Bilaspur",
+        "Sambalpur",
+        "Shahjahanpur",
+        "Satara",
+        "Bijapur",
+        "Rampur",
+        "Shivamogga",
+        "Chandrapur",
+        "Junagadh",
+        "Thrissur",
+        "Alwar",
+        "Bardhaman",
+        "Kulti",
+        "Kakinada",
+        "Nizamabad",
+        "Parbhani",
+        "Tumkur",
+        "Hisar",
+        "Ozhukarai",
+        "Bihar Sharif",
+        "Panipat",
+        "Darbhanga",
+        "Bally",
+        "Aizawl",
+        "Dewas",
+        "Ichalkaranji",
+        "Tirupati",
+        "Karnal",
+        "Bathinda",
+        "Jalna",
+        "Barasat",
+        "Kirari Suleman Nagar",
+        "Purnia",
+        "Satna",
+        "Mau",
+        "Sonipat",
+        "Farrukhabad",
+        "Sagar",
+        "Rourkela",
+        "Durg",
+        "Imphal",
+        "Ratlam",
+        "Hapur",
+        "Arrah",
+        "Karimnagar",
+        "Anantapur",
+        "Etawah",
+        "Ambernath",
+      ];
+
+      // Populate location options
+      const locationInput = document.getElementById("locationInput");
+      const locationOptions = document.getElementById("locationOptions");
+
+      locationInput.addEventListener("input", () => {
+        const searchTerm = locationInput.value.toLowerCase();
+        const filteredCities = cities.filter((city) =>
+          city.toLowerCase().includes(searchTerm)
+        );
+
+        locationOptions.innerHTML = filteredCities
+          .map((city) => <div onclick="selectLocation('${city}')">${city}</div>)
+          .join("");
+
+        locationOptions.style.display = filteredCities.length
+          ? "block"
+          : "none";
+      });
+
+      function selectLocation(city) {
+        locationInput.value = city;
+        locationOptions.style.display = "none";
+      }
+
+      // Close dropdowns when clicking outside
+      document.addEventListener("click", (event) => {
+        if (!event.target.closest(".searchable-dropdown")) {
+          locationOptions.style.display = "none";
+        }
+      });
 
       // Function to render appointments
       function renderAppointments() {
@@ -233,7 +498,7 @@
       function addAppointment(event) {
         event.preventDefault();
 
-        const location = document.getElementById("location").value;
+        const location = locationInput.value;
         const date = document.getElementById("date").value;
         const time = document.getElementById("time").value;
         const doctorType = document.getElementById("doctorType").value;
@@ -261,7 +526,7 @@
       // Function to edit an appointment
       function editAppointment(index) {
         const appointment = appointments[index];
-        document.getElementById("location").value = appointment.location;
+        locationInput.value = appointment.location;
         document.getElementById("date").value = appointment.date;
         document.getElementById("time").value = appointment.time;
         document.getElementById("doctorType").value = appointment.doctorType;
