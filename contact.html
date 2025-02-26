@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="front-page.css" />
+    <link rel="icon" href="logo.png" />
+    <title>Techno-Sparkers: Contact</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      }
+
+      /* Navbar Styling */
+      .navbar {
+        background: #003366;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 15px 20px;
+        border: 3px solid black;
+        font-size: 2rem;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        flex-wrap: wrap;
+      }
+
+      .navbar a {
+        color: rgb(246, 240, 240);
+        text-decoration: none;
+        padding: 10px 15px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: 0.3s;
+      }
+
+      .navbar a:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Dropdown Styling */
+      .dropdown {
+        position: relative;
+      }
+
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        background: white;
+        width: 200px;
+        border-radius: 5px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+      }
+
+      .dropdown-menu a {
+        display: block;
+        padding: 12px 20px;
+        color: #333;
+        text-decoration: none;
+        font-size: 16px;
+        transition: 0.3s;
+      }
+
+      .dropdown-menu a:hover {
+        background: #007bff;
+        color: white;
+      }
+
+      /* Show dropdown when active */
+      .dropdown.active .dropdown-menu {
+        display: block;
+      }
+
+      /* Mobile Navbar: Left Sidebar */
+      @media (max-width: 768px) {
+        .navbar {
+          position: fixed;
+          top: 0;
+          left: -250px;
+          width: 250px;
+          height: 100vh;
+          flex-direction: column;
+          align-items: start;
+          justify-content: start;
+          padding-top: 50px;
+          background: #007bff;
+          transition: 0.3s ease-in-out;
+        }
+
+        .navbar a {
+          display: block;
+          width: 100%;
+          text-align: left;
+          padding: 15px 20px;
+          margin-top: 1rem;
+        }
+
+        .menu-toggle {
+          position: fixed;
+          top: 20px;
+          margin-bottom: 3rem;
+          padding: 2rem;
+          left: 20px;
+          font-size: 30px;
+          cursor: pointer;
+          z-index: 1001;
+          background: #007bff;
+          color: white;
+          padding: 10px;
+          border-radius: 5px;
+        }
+
+        .navbar.active {
+          left: 0;
+        }
+      }
+
+      /* Hide menu toggle on large screens */
+      @media (min-width: 769px) {
+        .menu-toggle {
+          display: none;
+        }
+      }
+
+      /* Chatbot Sidebar */
+      .chatbot-sidebar {
+        position: fixed;
+        right: -300px; /* Hidden by default */
+        top: 0;
+        width: 300px;
+        height: 100vh;
+        background: #027afb;
+        color: rgb(38, 29, 29);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px 0 0 10px;
+        box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease-in-out;
+        background-image: url("https://cdni.iconscout.com/illustration/premium/thumb/online-doctor-8067664-6459680.png");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .chatbot-sidebar.active {
+        transform: translateX(-300px);
+      }
+
+      .chatbot-sidebar h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 10px;
+        border-radius: 5px;
+        color: white;
+      }
+
+      .chatbot-sidebar button {
+        width: 90%;
+        font-size: 1.6rem;
+        height: 3rem;
+        background: white;
+        color: #007bff;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: 0.3s;
+        font-weight: bold;
+      }
+      .navbar a:hover {
+        box-shadow: 0 0 20px black;
+        border: 2px solid black;
+      }
+      .chatbot-sidebar button:hover {
+        background: #0056b3;
+        color: white;
+      }
+      #move {
+        border: 2px solid black;
+        box-shadow: 0 0 20px rgb(131, 91, 91);
+      }
+      .close-chatbot {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 18px;
+        background: white;
+        color: #007bff;
+        border: none;
+        cursor: pointer;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        font-weight: bold;
+      }
+
+      /* Chatbot Toggle Button */
+      .chatbot-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: black;
+        color: white;
+        padding: 12px 15px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        border-radius: 50px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+      }
+
+      .chatbot-button:hover {
+        background: #0056b3;
+      }
+      .navbar a img {
+        margin-left: 15px;
+        height: 20px;
+        width: 50px;
+      }
+      .img img {
+        height: 1000px;
+        width: 100%;
+        opacity: 0.2;
+        object-fit: contain;
+      }
+      @keyframes colorChange {
+        0% {
+          background: white;
+          color: black;
+        }
+        50% {
+          background: blue;
+          color: white;
+        }
+        100% {
+          background: black;
+          color: white;
+        }
+      }
+      .footer {
+        background: #2c3e50;
+        color: white;
+        padding: 30px 0;
+        text-align: center;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .footer .column {
+        margin: 20px;
+        padding: 1.75rem;
+      }
+
+      .footer .column h3 {
+        color: #1abc9c;
+        margin-bottom: 10px;
+      }
+
+      .footer .column a {
+        display: block;
+        color: white;
+        text-decoration: none;
+        margin: 5px 0;
+        transition: 0.3s;
+      }
+
+      .footer .column a:hover {
+        color: #1abc9c;
+      }
+
+      .footer .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 10px;
+      }
+
+      .footer .social-icons a {
+        color: white;
+        font-size: 20px;
+        transition: 0.3s;
+      }
+
+      .footer .social-icons a:hover {
+        color: #1abc9c;
+      }
+
+      .footer-bottom {
+        background: #1a252f;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        font-size: 14px;
+      }
+      #move,
+      .chatbot-button {
+        animation: colorChange 3s infinite alternate;
+      }
+      /* Top Header Styling */
+      .top-header {
+        background: #003366; /* Blue Background */
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        flex-wrap: wrap;
+      }
+
+      .logo-container img {
+        height: 150px;
+        width: 150px; /* Adjust Logo Size */
+      }
+
+      .header-content {
+        text-align: center;
+        flex: 1;
+      }
+
+      .header-content h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+      }
+
+      .header-content p {
+        font-size: 1rem;
+        margin: 5px 0;
+      }
+
+      .header-buttons {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .header-btn {
+        background: #00cc00;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .header-btn:hover {
+        background: #009900;
+      }
+
+      .social-icons a {
+        color: white;
+        font-size: 1.5rem;
+        margin-left: 10px;
+        transition: 0.3s;
+      }
+
+      .social-icons a:hover {
+        color: #00ccff;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .top-header {
+          flex-direction: column;
+          text-align: center;
+        }
+        .footer > .column img {
+          width: 0;
+          height: 0;
+          display: none;
+        }
+        .footer {
+          justify-content: center;
+          align-items: center;
+          justify-items: center;
+          font-size: 0.5rem;
+        }
+        .header-buttons {
+          flex-direction: column;
+        }
+      }
+      /* Header */
+      .header {
+        background: linear-gradient(180deg, white, white);
+        color: black;
+        text-align: center;
+        border-radius: 30%;
+        padding: 20px 0;
+        font-size: 2rem;
+        font-weight: bold;
+      }
+
+      /* Sections */
+      .section {
+        padding: 80px 10%;
+        text-align: center;
+      }
+
+      .section h2 {
+        font-size: 2.5rem;
+        color: #002f6c;
+        margin-bottom: 20px;
+      }
+
+      .section p {
+        font-size: 1.3rem;
+        line-height: 2;
+        color: #333;
+        max-width: 900px;
+        margin: auto;
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        color: white;
+        background: #002f6c;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .btn:hover {
+        background: #0056b3;
+      }
+
+      /* Social Media */
+      .social-links {
+        margin-top: 30px;
+      }
+
+      .social-links a {
+        margin: 0 15px;
+        display: flex;
+        flex-direction: row;
+        text-decoration: none;
+        font-size: 1.5rem;
+        color: #002f6c;
+      }
+
+      /* Footer */
+      .footer {
+        background: #002f6c;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        font-size: 1.2rem;
+        margin-top: 0px;
+      }
+      .social-icon {
+        display: flex;
+        flex-direction: row;
+      }
+      .chatbot-button {
+        width: 150px;
+      }
+      .header-logo {
+        border-radius: 30%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Header Section -->
+    <div class="top-header">
+      <div class="logo-container">
+        <img src="logo.png" alt="Logo" class="header-logo" />
+      </div>
+      <div class="header-content">
+        <h1>Global Medical Reach</h1>
+        <p>A Project Of Healthcare Research & Development Board</p>
+        <p>(HRDB is Division of social welfare organization "NAC India")</p>
+      </div>
+      <div class="header-buttons">
+        <button
+          class="header-btn"
+          onclick="window.location.href='brochure.pdf'"
+        >
+          BROCHURES
+        </button>
+        <button class="header-btn" onclick="window.location.href='doctor.html'">
+          DOCTOR
+        </button>
+      </div>
+    </div>
+
+    <!-- Menu Toggle Button for Mobile -->
+    <div class="menu-toggle" onclick="toggleNavbar()">☰</div>
+
+    <!-- Navbar -->
+    <div class="navbar">
+      <a onclick="window.location.href='body1.html'"
+        >Home<img
+          src="https://www.jssabhiyan.co.in/wp-content/uploads/2021/10/new.gif"
+      /></a>
+      <a onclick="window.location.href='about.html'">About</a>
+      <div class="dropdown">
+        <a id="dropdownBtn">Services</a>
+        <div class="dropdown-menu">
+          <a href="index1.html" onclick="window.location.href='docter.html'"
+            >Ask ChatBot</a
+          >
+          <a href="map.html" onclick="window.location.href='map.html'">
+            Find Nearest Hospital</a
+          >
+          <a
+            href="appointment.html"
+            onclick="window.location.href='docter.html'"
+            >Book Doctor Appointment</a
+          >
+          <a
+            href="availability.html"
+            onclick="window.location.href='advice.html'"
+          >
+            Hospital equipment availability</a
+          >
+          <a href="doctor.html" onclick="window.location.href='docter.html'"
+            >Consult a Doctor</a
+          >
+          <a href="advice.html" onclick="window.location.href='docter.html'"
+            >Get Health Advice</a
+          >
+          <a href="test.html" onclick="window.location.href='docter.html'"
+            >Find Medicine</a
+          >
+        </div>
+      </div>
+      <a onclick="window.location.href='contact.html'">Contact</a>
+    </div>
+
+    <!-- Header -->
+    <div class="header">Get Involved with Techno-Sparkers</div>
+    <section class="section contact-section" aria-label="Contact Section">
+      <div class="quote-container">
+        <div class="quote-box">
+          <h2>Get connected With Us</h2>
+          <p class="subheading">We're ready to help you with your needs</p>
+
+          <form class="quote-form" aria-label="Quote request form">
+            <div class="form-column">
+              <div class="input-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" required />
+              </div>
+              <div class="input-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" required />
+              </div>
+              <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+              <div class="input-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required />
+              </div>
+              <div class="input-group">
+                <label for="message">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  placeholder="Type your message here"
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" aria-label="Submit quote request">
+                Get Connected With Us
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <style>
+      .contact-section {
+        background: linear-gradient(
+            rgba(0, 51, 102, 0.7),
+            rgba(0, 51, 102, 0.7)
+          ),
+          url("https://st.depositphotos.com/36924814/53586/i/450/depositphotos_535864320-stock-photo-medical-health-red-cross-neon.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: white;
+        padding: 60px 20px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      /* Rest of the CSS remains the same as before */
+
+      .quote-container {
+        width: 100%;
+        max-width: 600px;
+      }
+
+      .quote-box {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        width: 100%;
+      }
+
+      .quote-box h2 {
+        color: #003366;
+        font-size: 32px;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      .subheading {
+        color: #444;
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 5px;
+      }
+
+      .response-time {
+        color: #009900;
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 30px;
+      }
+
+      .form-column {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      label {
+        color: #003366;
+        font-weight: 600;
+      }
+
+      input,
+      textarea,
+      button {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+      }
+
+      input:focus,
+      textarea:focus {
+        border-color: #003366;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(0, 51, 102, 0.2);
+      }
+
+      textarea {
+        height: 120px;
+        resize: vertical;
+      }
+
+      button[type="submit"] {
+        background: #003366;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding: 15px;
+        margin-top: 10px;
+      }
+
+      button[type="submit"]:hover,
+      button[type="submit"]:focus {
+        background: #004080;
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 768px) {
+        .quote-box {
+          padding: 25px;
+        }
+
+        .quote-box h2 {
+          font-size: 28px;
+        }
+
+        .form-column {
+          gap: 15px;
+        }
+      }
+    </style>
+
+    <!-- Font Awesome for social icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- Donate Section -->
+    <section class="section">
+      <h2>Donate</h2>
+      <p>
+        Your contributions help us sustain and expand our healthcare programs,
+        providing critical services to those in need.
+      </p>
+      <a href="https://forms.gle/mtgiwgFDf6CzpfvX9" class="btn">Donate Now</a>
+    </section>
+
+    <!-- Volunteer Section -->
+    <section class="section" style="background: #eef2f7">
+      <h2>Become a Volunteer</h2>
+      <p>
+        Make a difference in the lives of impoverished communities while working
+        alongside experienced professionals and healthcare experts.
+      </p>
+      <a href="https://forms.gle/DDD8iEcNPm9rsXSp9" class="btn">Get Started</a>
+    </section>
+
+    <!-- Job Application Section -->
+
+    <!-- Social Media Section -->
+
+    <!-- Footer -->
+    <div class="footer">© 2025 Techno-Sparkers | All Rights Reserved</div>
+
+    <!-- Chatbot Sidebar -->
+    <div class="chatbot-sidebar">
+      <button class="close-chatbot" onclick="closeChatbot()">✖</button>
+      <h2>Chatbot</h2>
+      <button onclick="window.location.href='index1.html'" id="move">
+        Start Chat
+      </button>
+    </div>
+
+    <div>
+      <img src="footer.png" alt="" width="100%" />
+    </div>
+    <footer>
+      <div class="footer">
+        <div class="column">
+          <h3>QUICK LINKS</h3>
+          <a href="#">About Us</a>
+          <a href="#">Membership & Benefits</a>
+          <a href="#">View Jobs & Careers</a>
+          <a href="#">View Our Services</a>
+          <a href="#">Our Privacy Policy</a>
+          <a href="#">Refund & Cancellation Policy</a>
+          <a href="#">Terms & Conditions</a>
+        </div>
+
+        <div class="column">
+          <h3>CONTACT INFO</h3>
+          <p>Helpline No.: +91 - 8305721431</p>
+          <p>Toll Free No.: +91 - 1800 xxxx xxxx</p>
+          <p>Email: suppor@Techno-Sparkers.co.in</p>
+          <p>Email: info@Techno-Sparkers.co.in</p>
+          <a href="#">To Know Our All Office/Branch Address: Click Here</a>
+          <div class="social-icons">
+            <a href="#" onclick="window.location.href='social.html'"
+              ><i class="fab fa-facebook"></i
+            ></a>
+            <a href="#" onclick="window.location.href='social.html'"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a href="#" onclick="window.location.href='social.html'"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a href="#" onclick="window.location.href='social.html'"
+              ><i class="fab fa-youtube"></i
+            ></a>
+            <a href="#" onclick="window.location.href='social.html'"
+              ><i class="fab fa-linkedin"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2025 Techno-Sparkers Abhiyan. All Rights Reserved. Trademarks and
+        brands are the property of their respective owners.
+      </div>
+    </footer>
+
+    <!-- Chatbot Toggle Button -->
+    <button class="chatbot-button" onclick="toggleChatbot()">
+      💬 Ask Chatbot
+    </button>
+
+    <script>
+      function toggleNavbar() {
+        document.querySelector(".navbar").classList.toggle("active");
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        let dropdown = document.querySelector(".dropdown");
+        let dropdownBtn = document.getElementById("dropdownBtn");
+
+        dropdownBtn.addEventListener("click", function (event) {
+          dropdown.classList.toggle("active");
+          event.stopPropagation();
+        });
+
+        document.addEventListener("click", function (event) {
+          if (!dropdown.contains(event.target)) {
+            dropdown.classList.remove("active");
+          }
+        });
+      });
+
+      function toggleChatbot() {
+        document.querySelector(".chatbot-sidebar").classList.toggle("active");
+      }
+
+      function closeChatbot() {
+        document.querySelector(".chatbot-sidebar").classList.remove("active");
+      }
+    </script>
+  </body>
+</html>

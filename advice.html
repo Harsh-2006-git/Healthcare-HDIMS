@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="logo.png" />
+    <title>Health Advice</title>
+    <style>
+      body {
+        font-family: "Montserrat", Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: url("https://media.istockphoto.com/id/1143687314/vector/graph-and-health-blue-abstract-background.jpg?s=612x612&w=0&k=20&c=kWWrhiO92sSyRpK5e5xO7-nxrsyeHxbFuVmH6xEe_bA=")
+          no-repeat center center/cover;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        width: 450px;
+        max-width: 90%;
+        animation: fadeIn 1s ease-in-out;
+      }
+
+      h1 {
+        background: linear-gradient(
+          135deg,
+          #667eea,
+          #00b4db
+        ); /* Gradient blue color */
+        -webkit-background-clip: text; /* Clip background to text */
+        -webkit-text-fill-color: transparent; /* Make text transparent */
+        margin-bottom: 20px;
+        font-size: 28px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+      }
+
+      label {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 10px;
+        display: block;
+      }
+
+      select,
+      button {
+        margin: 10px 0;
+        padding: 12px;
+        font-size: 16px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        outline: none;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      select {
+        background: #f5f5f5;
+        border: 2px solid #667eea;
+      }
+
+      select:focus {
+        border-color: #555eea;
+        box-shadow: 0 0 8px rgba(102, 126, 234, 0.6);
+      }
+
+      button {
+        background: #667eea;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s ease;
+      }
+
+      button:hover {
+        background: #555eea;
+        transform: scale(1.05);
+      }
+
+      .advice-box {
+        margin-top: 20px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: left;
+        animation: slideUp 0.5s ease-in-out;
+        border-left: 5px solid #667eea; /* Accent border */
+      }
+
+      .advice-box h3 {
+        font-size: 20px;
+        color: #333;
+        margin-bottom: 15px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      .advice-box p {
+        font-size: 16px;
+        color: #555;
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      .advice-box ul {
+        margin: 10px 0;
+        padding-left: 20px;
+      }
+
+      .advice-box ul li {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 8px;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Health Advice Selector</h1>
+      <label for="disease">Choose a disease:</label>
+      <select id="disease">
+        <option value="">-- Select a Disease --</option>
+        <option value="Diabetes">Diabetes</option>
+        <option value="Hypertension">Hypertension</option>
+        <option value="Asthma">Asthma</option>
+        <option value="Arthritis">Arthritis</option>
+        <option value="Migraine">Migraine</option>
+        <option value="Heart Disease">Heart Disease</option>
+        <option value="Obesity">Obesity</option>
+        <option value="Depression">Depression</option>
+        <option value="Anxiety">Anxiety</option>
+        <option value="Cold and Flu">Cold and Flu</option>
+        <option value="COVID-19">COVID-19</option>
+        <option value="Allergies">Allergies</option>
+        <option value="Osteoporosis">Osteoporosis</option>
+        <option value="Liver Disease">Liver Disease</option>
+        <option value="Kidney Disease">Kidney Disease</option>
+        <option value="Thyroid Disorder">Thyroid Disorder</option>
+        <option value="Acne">Acne</option>
+        <option value="Eczema">Eczema</option>
+        <option value="Psoriasis">Psoriasis</option>
+        <option value="Gastritis">Gastritis</option>
+        <option value="Ulcers">Ulcers</option>
+        <option value="Anemia">Anemia</option>
+        <option value="Stroke">Stroke</option>
+        <option value="Parkinson’s Disease">Parkinson’s Disease</option>
+        <option value="Alzheimer’s Disease">Alzheimer’s Disease</option>
+        <option value="Epilepsy">Epilepsy</option>
+        <option value="Hepatitis">Hepatitis</option>
+        <option value="Tuberculosis">Tuberculosis</option>
+        <option value="Dengue">Dengue</option>
+        <option value="Malaria">Malaria</option>
+        <option value="Pneumonia">Pneumonia</option>
+        <option value="Bronchitis">Bronchitis</option>
+        <option value="Sinusitis">Sinusitis</option>
+        <option value="Chronic Fatigue Syndrome">
+          Chronic Fatigue Syndrome
+        </option>
+        <option value="Irritable Bowel Syndrome">
+          Irritable Bowel Syndrome
+        </option>
+        <option value="Celiac Disease">Celiac Disease</option>
+        <option value="Lupus">Lupus</option>
+        <option value="Gout">Gout</option>
+        <option value="Multiple Sclerosis">Multiple Sclerosis</option>
+        <option value="Polycystic Ovary Syndrome">
+          Polycystic Ovary Syndrome
+        </option>
+        <option value="Menopause Symptoms">Menopause Symptoms</option>
+      </select>
+      <button onclick="showAdvice()">Get Advice</button>
+      <div class="advice-box" id="advice-box">
+        <p id="advice">Select a disease from the dropdown to get advice.</p>
+      </div>
+    </div>
+    <script>
+      function showAdvice() {
+        const adviceList = {
+          Diabetes: {
+            title: "Diabetes Management",
+            content:
+              "Managing diabetes involves a combination of lifestyle changes and medical care. Here are some tips:",
+            tips: [
+              "Monitor blood sugar levels regularly.",
+              "Follow a balanced diet rich in fiber and low in refined sugars.",
+              "Engage in regular physical activity.",
+              "Take prescribed medications as directed by your doctor.",
+              "Avoid smoking and limit alcohol consumption.",
+            ],
+          },
+          Hypertension: {
+            title: "Hypertension Management",
+            content:
+              "High blood pressure can be managed with lifestyle changes and medication. Here are some tips:",
+            tips: [
+              "Reduce salt intake in your diet.",
+              "Exercise regularly for at least 30 minutes a day.",
+              "Maintain a healthy weight.",
+              "Limit alcohol consumption and avoid smoking.",
+              "Take prescribed medications as directed.",
+            ],
+          },
+          Asthma: {
+            title: "Asthma Management",
+            content:
+              "Asthma can be controlled with proper care and medication. Here are some tips:",
+            tips: [
+              "Avoid allergens like pollen, dust, and pet dander.",
+              "Keep a rescue inhaler handy at all times.",
+              "Follow your asthma action plan provided by your doctor.",
+              "Avoid smoking and exposure to secondhand smoke.",
+              "Stay active but avoid overexertion.",
+            ],
+          },
+          Arthritis: {
+            title: "Arthritis Management",
+            content:
+              "Arthritis can be managed with lifestyle changes and medication. Here are some tips:",
+            tips: [
+              "Stay active with low-impact exercises like swimming or yoga.",
+              "Maintain a healthy weight to reduce joint stress.",
+              "Use heat or cold therapy to relieve pain.",
+              "Take prescribed medications as directed.",
+              "Consider physical therapy for joint flexibility.",
+            ],
+          },
+          Migraine: {
+            title: "Migraine Management",
+            content:
+              "Migraines can be managed with lifestyle changes and medication. Here are some tips:",
+            tips: [
+              "Identify and avoid migraine triggers like stress or certain foods.",
+              "Practice stress management techniques like meditation.",
+              "Stay hydrated and maintain a regular sleep schedule.",
+              "Take prescribed medications as directed.",
+              "Use a cold compress during a migraine attack.",
+            ],
+          },
+          "Heart Disease": {
+            title: "Heart Disease Management",
+            content:
+              "Heart disease can be managed with lifestyle changes and medication. Here are some tips:",
+            tips: [
+              "Adopt a heart-healthy diet rich in fruits, vegetables, and whole grains.",
+              "Exercise regularly to improve cardiovascular health.",
+              "Avoid smoking and limit alcohol consumption.",
+              "Monitor blood pressure and cholesterol levels regularly.",
+              "Take prescribed medications as directed.",
+            ],
+          },
+          Obesity: {
+            title: "Obesity Management",
+            content:
+              "Obesity can be managed with lifestyle changes and medical care. Here are some tips:",
+            tips: [
+              "Follow a balanced, portion-controlled diet.",
+              "Engage in regular physical activity.",
+              "Avoid processed and high-sugar foods.",
+              "Consult a dietitian for personalized meal plans.",
+              "Consider medical interventions if necessary.",
+            ],
+          },
+          Depression: {
+            title: "Depression Management",
+            content:
+              "Depression can be managed with therapy, medication, and lifestyle changes. Here are some tips:",
+            tips: [
+              "Seek professional help from a therapist or counselor.",
+              "Engage in regular physical activity.",
+              "Maintain a healthy sleep schedule.",
+              "Stay connected with friends and family.",
+              "Take prescribed medications as directed.",
+            ],
+          },
+          Anxiety: {
+            title: "Anxiety Management",
+            content:
+              "Anxiety can be managed with therapy, medication, and lifestyle changes. Here are some tips:",
+            tips: [
+              "Practice mindfulness and deep breathing exercises.",
+              "Engage in regular physical activity.",
+              "Avoid caffeine and alcohol.",
+              "Seek professional help if symptoms persist.",
+              "Take prescribed medications as directed.",
+            ],
+          },
+          "Cold and Flu": {
+            title: "Cold and Flu Management",
+            content:
+              "Cold and flu can be managed with rest and proper care. Here are some tips:",
+            tips: [
+              "Stay hydrated and get plenty of rest.",
+              "Use over-the-counter medications to relieve symptoms.",
+              "Avoid close contact with others to prevent spreading the virus.",
+              "Wash your hands frequently.",
+              "Consult a doctor if symptoms worsen.",
+            ],
+          },
+          "COVID-19": {
+            title: "COVID-19 Management",
+            content:
+              "COVID-19 can be managed with proper care and precautions. Here are some tips:",
+            tips: [
+              "Follow hygiene protocols like frequent handwashing.",
+              "Wear a mask in public places.",
+              "Maintain social distancing.",
+              "Get vaccinated and stay updated on booster shots.",
+              "Consult a doctor if symptoms worsen.",
+            ],
+          },
+          Allergies: {
+            title: "Allergies Management",
+            content:
+              "Allergies can be managed with proper care and medication. Here are some tips:",
+            tips: [
+              "Identify and avoid allergens.",
+              "Use air purifiers to reduce indoor allergens.",
+              "Take prescribed antihistamines as directed.",
+              "Keep windows closed during high pollen seasons.",
+              "Consult a doctor for allergy testing.",
+            ],
+          },
+          Osteoporosis: {
+            title: "Osteoporosis Management",
+            content:
+              "Osteoporosis can be managed with lifestyle changes and medication. Here are some tips:",
+            tips: [
+              "Ensure sufficient calcium and vitamin D intake.",
+              "Engage in weight-bearing exercises.",
+              "Avoid smoking and limit alcohol consumption.",
+              "Take prescribed medications as directed.",
+              "Consult a doctor for bone density testing.",
+            ],
+          },
+          "Liver Disease": {
+            title: "Liver Disease Management",
+            content:
+              "Liver disease can be managed with lifestyle changes and medication. Here are some tips:",
+            tips: [
+              "Avoid excessive alcohol consumption.",
+              "Follow a healthy diet low in fat and sugar.",
+              "Exercise regularly to maintain a healthy weight.",
+              "Take prescribed medications as directed.",
+              "Consult a doctor for regular check-ups.",
+            ],
+          },
+          "Kidney Disease": {
+            title: "Kidney Disease Management",
+            content:
+              "Kidney disease can be managed with lifestyle changes and medication. Here are some tips:",
+            tips: [
+              "Stay hydrated and monitor protein intake.",
+              "Follow a low-sodium diet.",
+              "Avoid smoking and limit alcohol consumption.",
+              "Take prescribed medications as directed.",
+              "Consult a doctor for regular check-ups.",
+            ],
+          },
+          "Thyroid Disorder": {
+            title: "Thyroid Disorder Management",
+            content:
+              "Thyroid disorders can be managed with medication and lifestyle changes. Here are some tips:",
+            tips: [
+              "Take prescribed medications as directed.",
+              "Follow a balanced diet rich in iodine.",
+              "Get regular check-ups to monitor thyroid levels.",
+              "Avoid excessive stress.",
+              "Consult a doctor for personalized advice.",
+            ],
+          },
+          Acne: {
+            title: "Acne Management",
+            content:
+              "Acne can be managed with proper skincare and medication. Here are some tips:",
+            tips: [
+              "Wash your face twice daily with a gentle cleanser.",
+              "Avoid touching your face with dirty hands.",
+              "Use non-comedogenic skincare products.",
+              "Consult a dermatologist for severe acne.",
+              "Take prescribed medications as directed.",
+            ],
+          },
+          Eczema: {
+            title: "Eczema Management",
+            content:
+              "Eczema can be managed with proper skincare and medication. Here are some tips:",
+            tips: [
+              "Moisturize your skin regularly.",
+              "Avoid triggers like harsh soaps and detergents.",
+              "Use prescribed topical creams as directed.",
+              "Wear soft, breathable fabrics.",
+              "Consult a dermatologist for severe cases.",
+            ],
+          },
+          Psoriasis: {
+            title: "Psoriasis Management",
+            content:
+              "Psoriasis can be managed with proper skincare and medication. Here are some tips:",
+            tips: [
+              "Moisturize your skin regularly.",
+              "Avoid triggers like stress and alcohol.",
+              "Use prescribed topical treatments as directed.",
+              "Get regular exposure to sunlight.",
+              "Consult a dermatologist for severe cases.",
+            ],
+          },
+          Gastritis: {
+            title: "Gastritis Management",
+            content:
+              "Gastritis can be managed with lifestyle changes and medication. Here are some tips:",
+            tips: [
+              "Avoid spicy, acidic, and fatty foods.",
+              "Eat smaller, more frequent meals.",
+              "Limit alcohol consumption and avoid smoking.",
+              "Take prescribed medications as directed.",
+              "Consult a doctor for severe symptoms.",
+            ],
+          },
+          Ulcers: {
+            title: "Ulcers Management",
+            content:
+              "Ulcers can be managed with lifestyle changes and medication. Here are some tips:",
+            tips: [
+              "Avoid spicy, acidic, and fatty foods.",
+              "Eat smaller, more frequent meals.",
+              "Limit alcohol consumption and avoid smoking.",
+              "Take prescribed medications as directed.",
+              "Consult a doctor for severe symptoms.",
+            ],
+          },
+          Anemia: {
+            title: "Anemia Management",
+            content:
+              "Anemia can be managed with dietary changes and medication. Here are some tips:",
+            tips: [
+              "Eat iron-rich foods like spinach, red meat, and beans.",
+              "Take iron supplements as prescribed by your doctor.",
+              "Include vitamin C-rich foods to improve iron absorption.",
+              "Avoid tea or coffee with meals.",
+              "Consult a doctor for severe cases.",
+            ],
+          },
+          Stroke: {
+            title: "Stroke Management",
+            content:
+              "Stroke recovery and prevention involve lifestyle changes and medical care. Here are some tips:",
+            tips: [
+              "Follow a heart-healthy diet low in salt and saturated fats.",
+              "Exercise regularly to improve cardiovascular health.",
+              "Monitor blood pressure and cholesterol levels.",
+              "Take prescribed medications as directed.",
+              "Attend rehabilitation therapy if needed.",
+            ],
+          },
+          "Parkinson’s Disease": {
+            title: "Parkinson’s Disease Management",
+            content:
+              "Parkinson’s disease can be managed with medication and therapy. Here are some tips:",
+            tips: [
+              "Take prescribed medications as directed.",
+              "Engage in physical therapy to improve mobility.",
+              "Maintain a balanced diet and stay hydrated.",
+              "Practice speech therapy if needed.",
+              "Consult a doctor for regular check-ups.",
+            ],
+          },
+          "Alzheimer’s Disease": {
+            title: "Alzheimer’s Disease Management",
+            content:
+              "Alzheimer’s disease can be managed with medication and lifestyle changes. Here are some tips:",
+            tips: [
+              "Take prescribed medications as directed.",
+              "Engage in cognitive exercises to improve memory.",
+              "Maintain a structured daily routine.",
+              "Stay socially active and connected.",
+              "Consult a doctor for regular check-ups.",
+            ],
+          },
+          Epilepsy: {
+            title: "Epilepsy Management",
+            content:
+              "Epilepsy can be managed with medication and lifestyle changes. Here are some tips:",
+            tips: [
+              "Take prescribed medications as directed.",
+              "Avoid triggers like stress and lack of sleep.",
+              "Wear a medical alert bracelet.",
+              "Avoid activities that could be dangerous during a seizure.",
+              "Consult a doctor for regular check-ups.",
+            ],
+          },
+          Hepatitis: {
+            title: "Hepatitis Management",
+            content:
+              "Hepatitis can be managed with medication and lifestyle changes. Here are some tips:",
+            tips: [
+              "Take prescribed medications as directed.",
+              "Avoid alcohol and follow a healthy diet.",
+              "Get vaccinated for hepatitis A and B if not already done.",
+              "Practice safe sex and avoid sharing needles.",
+              "Consult a doctor for regular check-ups.",
+            ],
+          },
+          Tuberculosis: {
+            title: "Tuberculosis Management",
+            content:
+              "Tuberculosis can be managed with medication and proper care. Here are some tips:",
+            tips: [
+              "Complete the full course of prescribed antibiotics.",
+              "Maintain good ventilation in living spaces.",
+              "Practice good hygiene and cover your mouth when coughing.",
+              "Avoid close contact with others until non-contagious.",
+              "Consult a doctor for regular check-ups.",
+            ],
+          },
+          Dengue: {
+            title: "Dengue Management",
+            content:
+              "Dengue can be managed with proper care and hydration. Here are some tips:",
+            tips: [
+              "Stay hydrated and drink plenty of fluids.",
+              "Rest and avoid strenuous activities.",
+              "Use mosquito nets and repellents to prevent further bites.",
+              "Monitor symptoms and seek medical attention if they worsen.",
+              "Avoid self-medication with aspirin or ibuprofen.",
+            ],
+          },
+          Malaria: {
+            title: "Malaria Management",
+            content:
+              "Malaria can be managed with medication and preventive measures. Here are some tips:",
+            tips: [
+              "Take prescribed antimalarial medications as directed.",
+              "Use mosquito nets and repellents to prevent bites.",
+              "Avoid stagnant water to reduce mosquito breeding.",
+              "Monitor symptoms and seek medical attention if they worsen.",
+              "Consult a doctor for preventive measures if traveling to endemic areas.",
+            ],
+          },
+          Pneumonia: {
+            title: "Pneumonia Management",
+            content:
+              "Pneumonia can be managed with medication and proper care. Here are some tips:",
+            tips: [
+              "Take prescribed antibiotics as directed.",
+              "Stay hydrated and get plenty of rest.",
+              "Use a humidifier to ease breathing.",
+              "Monitor symptoms and seek medical attention if they worsen.",
+              "Get vaccinated for pneumonia if recommended by your doctor.",
+            ],
+          },
+          Bronchitis: {
+            title: "Bronchitis Management",
+            content:
+              "Bronchitis can be managed with medication and lifestyle changes. Here are some tips:",
+            tips: [
+              "Stay hydrated and get plenty of rest.",
+              "Use a humidifier to ease breathing.",
+              "Avoid smoking and exposure to secondhand smoke.",
+              "Take prescribed medications as directed.",
+              "Consult a doctor if symptoms persist.",
+            ],
+          },
+          Sinusitis: {
+            title: "Sinusitis Management",
+            content:
+              "Sinusitis can be managed with medication and proper care. Here are some tips:",
+            tips: [
+              "Use saline nasal sprays to relieve congestion.",
+              "Stay hydrated and use a humidifier.",
+              "Avoid allergens and irritants.",
+              "Take prescribed medications as directed.",
+              "Consult a doctor if symptoms persist.",
+            ],
+          },
+          "Chronic Fatigue Syndrome": {
+            title: "Chronic Fatigue Syndrome Management",
+            content:
+              "Chronic fatigue syndrome can be managed with lifestyle changes and therapy. Here are some tips:",
+            tips: [
+              "Maintain a consistent sleep schedule.",
+              "Engage in gentle exercises like yoga or walking.",
+              "Practice stress management techniques.",
+              "Follow a balanced diet and stay hydrated.",
+              "Consult a doctor for personalized advice.",
+            ],
+          },
+          "Irritable Bowel Syndrome": {
+            title: "Irritable Bowel Syndrome Management",
+            content:
+              "Irritable bowel syndrome can be managed with dietary changes and medication. Here are some tips:",
+            tips: [
+              "Follow a low-FODMAP diet to reduce symptoms.",
+              "Stay hydrated and eat smaller, more frequent meals.",
+              "Avoid trigger foods like caffeine and dairy.",
+              "Take prescribed medications as directed.",
+              "Consult a doctor for personalized advice.",
+            ],
+          },
+          "Celiac Disease": {
+            title: "Celiac Disease Management",
+            content:
+              "Celiac disease can be managed with a gluten-free diet. Here are some tips:",
+            tips: [
+              "Avoid all foods containing gluten.",
+              "Read food labels carefully to check for gluten.",
+              "Consult a dietitian for a gluten-free meal plan.",
+              "Take prescribed supplements if needed.",
+              "Consult a doctor for regular check-ups.",
+            ],
+          },
+          Lupus: {
+            title: "Lupus Management",
+            content:
+              "Lupus can be managed with medication and lifestyle changes. Here are some tips:",
+            tips: [
+              "Take prescribed medications as directed.",
+              "Avoid excessive sun exposure and use sunscreen.",
+              "Engage in low-impact exercises like swimming.",
+              "Practice stress management techniques.",
+              "Consult a doctor for regular check-ups.",
+            ],
+          },
+          Gout: {
+            title: "Gout Management",
+            content:
+              "Gout can be managed with dietary changes and medication. Here are some tips:",
+            tips: [
+              "Avoid high-purine foods like red meat and seafood.",
+              "Stay hydrated and limit alcohol consumption.",
+              "Take prescribed medications as directed.",
+              "Maintain a healthy weight.",
+              "Consult a doctor for regular check-ups.",
+            ],
+          },
+          "Multiple Sclerosis": {
+            title: "Multiple Sclerosis Management",
+            content:
+              "Multiple sclerosis can be managed with medication and therapy. Here are some tips:",
+            tips: [
+              "Take prescribed medications as directed.",
+              "Engage in physical therapy to improve mobility.",
+              "Practice stress management techniques.",
+              "Maintain a balanced diet and stay hydrated.",
+              "Consult a doctor for regular check-ups.",
+            ],
+          },
+          "Polycystic Ovary Syndrome": {
+            title: "Polycystic Ovary Syndrome Management",
+            content:
+              "Polycystic ovary syndrome can be managed with lifestyle changes and medication. Here are some tips:",
+            tips: [
+              "Maintain a healthy weight through diet and exercise.",
+              "Take prescribed medications as directed.",
+              "Monitor blood sugar levels regularly.",
+              "Consult a doctor for hormonal treatments.",
+              "Practice stress management techniques.",
+            ],
+          },
+          "Menopause Symptoms": {
+            title: "Menopause Symptoms Management",
+            content:
+              "Menopause symptoms can be managed with lifestyle changes and medication. Here are some tips:",
+            tips: [
+              "Practice stress management techniques like yoga or meditation.",
+              "Stay active and engage in regular exercise.",
+              "Maintain a balanced diet rich in calcium and vitamin D.",
+              "Take prescribed medications as directed.",
+              "Consult a doctor for hormone replacement therapy if needed.",
+            ],
+          },
+        };
+
+        let disease = document.getElementById("disease").value;
+        let adviceBox = document.getElementById("advice-box");
+
+        if (adviceList[disease]) {
+          let advice = `
+            <h3>${adviceList[disease].title}</h3>
+            <p>${adviceList[disease].content}</p>
+            <ul>
+              ${adviceList[disease].tips.map((tip) => <li>${tip}</li>).join("")}
+            </ul>
+          `;
+          adviceBox.innerHTML = advice;
+        } else if (disease === "") {
+          adviceBox.innerHTML =
+            "<p>Select a disease from the dropdown to get advice.</p>";
+        } else {
+          adviceBox.innerHTML =
+            "<p>No advice available for the selected disease.</p>";
+        }
+      }
+    </script>
+  </body>
+</html>

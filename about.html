@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="front-page.css" />
+    <link rel="icon" href="logo.png" />
+    <title>Techno-Sparkers: About</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      }
+
+      /* Navbar Styling */
+      .navbar {
+        background: #003366;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 15px 20px;
+        border: 3px solid black;
+        font-size: 2rem;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        flex-wrap: wrap;
+      }
+
+      .navbar a {
+        color: rgb(246, 240, 240);
+        text-decoration: none;
+        padding: 10px 15px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: 0.3s;
+      }
+
+      .navbar a:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Dropdown Styling */
+      .dropdown {
+        position: relative;
+      }
+
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        background: white;
+        width: 200px;
+        border-radius: 5px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+      }
+
+      .dropdown-menu a {
+        display: block;
+        padding: 12px 20px;
+        color: #333;
+        text-decoration: none;
+        font-size: 16px;
+        transition: 0.3s;
+      }
+
+      .dropdown-menu a:hover {
+        background: #007bff;
+        color: white;
+      }
+
+      /* Show dropdown when active */
+      .dropdown.active .dropdown-menu {
+        display: block;
+      }
+
+      /* Mobile Navbar: Left Sidebar */
+      @media (max-width: 768px) {
+        .navbar {
+          position: fixed;
+          top: 0;
+          left: -250px;
+          width: 250px;
+          height: 100vh;
+          flex-direction: column;
+          align-items: start;
+          justify-content: start;
+          padding-top: 50px;
+          background: #007bff;
+          transition: 0.3s ease-in-out;
+        }
+
+        .navbar a {
+          display: block;
+          width: 100%;
+          text-align: left;
+          padding: 15px 20px;
+          margin-top: 1rem;
+        }
+
+        .menu-toggle {
+          position: fixed;
+          top: 20px;
+          margin-bottom: 3rem;
+          padding: 2rem;
+          left: 20px;
+          font-size: 30px;
+          cursor: pointer;
+          z-index: 1001;
+          background: #007bff;
+          color: white;
+          padding: 10px;
+          border-radius: 5px;
+        }
+
+        .navbar.active {
+          left: 0;
+        }
+      }
+
+      /* Hide menu toggle on large screens */
+      @media (min-width: 769px) {
+        .menu-toggle {
+          display: none;
+        }
+      }
+
+      /* Chatbot Sidebar */
+      .chatbot-sidebar {
+        position: fixed;
+        right: -300px; /* Hidden by default */
+        top: 0;
+        width: 300px;
+        height: 100vh;
+        background: #027afb;
+        color: rgb(38, 29, 29);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px 0 0 10px;
+        box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease-in-out;
+        background-image: url("https://cdni.iconscout.com/illustration/premium/thumb/online-doctor-8067664-6459680.png");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .chatbot-sidebar.active {
+        transform: translateX(-300px);
+      }
+
+      .chatbot-sidebar h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 10px;
+        border-radius: 5px;
+        color: white;
+      }
+
+      .chatbot-sidebar button {
+        width: 90%;
+        font-size: 1.6rem;
+        height: 3rem;
+        background: white;
+        color: #007bff;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: 0.3s;
+        font-weight: bold;
+      }
+      .navbar a:hover {
+        box-shadow: 0 0 20px black;
+        border: 2px solid black;
+      }
+      .chatbot-sidebar button:hover {
+        background: #0056b3;
+        color: white;
+      }
+      #move {
+        border: 2px solid black;
+        box-shadow: 0 0 20px rgb(131, 91, 91);
+      }
+      .close-chatbot {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 18px;
+        background: white;
+        color: #007bff;
+        border: none;
+        cursor: pointer;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        font-weight: bold;
+      }
+
+      /* Chatbot Toggle Button */
+      .chatbot-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: black;
+        color: white;
+        padding: 12px 15px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        border-radius: 50px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+      }
+
+      .chatbot-button:hover {
+        background: #0056b3;
+      }
+      .navbar a img {
+        margin-left: 15px;
+        height: 20px;
+        width: 50px;
+      }
+      .img img {
+        height: 1000px;
+        width: 100%;
+        opacity: 0.2;
+        object-fit: contain;
+      }
+      @keyframes colorChange {
+        0% {
+          background: white;
+          color: black;
+        }
+        50% {
+          background: blue;
+          color: white;
+        }
+        100% {
+          background: black;
+          color: white;
+        }
+      }
+      .footer {
+        background: #2c3e50;
+        color: white;
+        padding: 30px 0;
+        text-align: center;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .footer .column {
+        margin: 20px;
+        padding: 1.75rem;
+      }
+
+      .footer .column h3 {
+        color: #1abc9c;
+        margin-bottom: 10px;
+      }
+
+      .footer .column a {
+        display: block;
+        color: white;
+        text-decoration: none;
+        margin: 5px 0;
+        transition: 0.3s;
+      }
+
+      .footer .column a:hover {
+        color: #1abc9c;
+      }
+
+      .footer .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 10px;
+      }
+
+      .footer .social-icons a {
+        color: white;
+        font-size: 20px;
+        transition: 0.3s;
+      }
+
+      .footer .social-icons a:hover {
+        color: #1abc9c;
+      }
+
+      .footer-bottom {
+        background: #1a252f;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        font-size: 14px;
+      }
+      #move,
+      .chatbot-button {
+        animation: colorChange 3s infinite alternate;
+      }
+      /* Top Header Styling */
+      .top-header {
+        background: #003366; /* Blue Background */
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        flex-wrap: wrap;
+      }
+
+      .logo-container img {
+        height: 150px;
+        width: 150px; /* Adjust Logo Size */
+      }
+
+      .header-content {
+        text-align: center;
+        flex: 1;
+      }
+
+      .header-content h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+      }
+
+      .header-content p {
+        font-size: 1rem;
+        margin: 5px 0;
+      }
+
+      .header-buttons {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .header-btn {
+        background: #00cc00;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .header-btn:hover {
+        background: #009900;
+      }
+
+      .social-icons a {
+        color: white;
+        font-size: 1.5rem;
+        margin-left: 10px;
+        transition: 0.3s;
+      }
+
+      .social-icons a:hover {
+        color: #00ccff;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .top-header {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .header-buttons {
+          flex-direction: column;
+        }
+      }
+
+      /* About Section */
+      #about {
+        background: #ffffff;
+        padding: 100px 10%;
+        text-align: center;
+      }
+
+      .about-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1300px;
+        margin: auto;
+        flex-wrap: wrap;
+      }
+
+      .about-content {
+        flex: 1;
+        padding: 40px;
+        text-align: left;
+      }
+
+      .about-content h2 {
+        font-size: 3rem;
+        color: #002f6c;
+        margin-bottom: 20px;
+        font-weight: bold;
+      }
+
+      .about-content p {
+        font-size: 1.4rem;
+        line-height: 2;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .about-image {
+        flex: 1;
+        text-align: center;
+      }
+
+      .about-image img {
+        width: 100%;
+        max-width: 550px;
+        border-radius: 15px;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Responsive */
+      @media (max-width: 1024px) {
+        .about-container {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .about-content {
+          padding: 20px;
+        }
+
+        .about-content h2 {
+          font-size: 2.5rem;
+        }
+
+        .about-content p {
+          font-size: 1.2rem;
+        }
+      }
+      .header-logo {
+        border-radius: 30%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Header Section -->
+    <div class="top-header">
+      <div class="logo-container">
+        <img src="logo.png" alt="Logo" class="header-logo" />
+      </div>
+      <div class="header-content">
+        <h1>Global Medical Reach</h1>
+        <p>A Project Of Healthcare Research & Development Board</p>
+        <p>(HRDB is Division of social welfare organization "NAC India")</p>
+      </div>
+      <div class="header-buttons">
+        <button class="header-btn" onclick="window.location.href='test.html'">
+          MEDICINES
+        </button>
+        <button
+          class="header-btn"
+          onclick="window.location.href='brochure.pdf'"
+        >
+          BROCHURES
+        </button>
+        <div class="social-icons">
+          <a href="#" onclick="window.location.href='social.html'"
+            ><i class="fab fa-facebook"></i
+          ></a>
+          <a href="#" onclick="window.location.href='social.html'"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a href="#" onclick="window.location.href='social.html'"
+            ><i class="fab fa-youtube"></i
+          ></a>
+          <a href="#" onclick="window.location.href='social.html'"
+            ><i class="fab fa-linkedin"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menu Toggle Button for Mobile -->
+    <div class="menu-toggle" onclick="toggleNavbar()">☰</div>
+
+    <!-- Navbar -->
+    <div class="navbar">
+      <a onclick="window.location.href='body1.html'"
+        >Home<img
+          src="https://www.jssabhiyan.co.in/wp-content/uploads/2021/10/new.gif"
+      /></a>
+      <a onclick="window.location.href='about.html'">About</a>
+      <div class="dropdown">
+        <a id="dropdownBtn">Services</a>
+        <div class="dropdown-menu">
+          <a href="#" onclick="window.location.href='doctor.html'"
+            >Consult a Doctor</a
+          >
+          <a href="#" onclick="window.location.href='map.html'"
+            >Find Nearest Hospital</a
+          >
+          <a href="#" onclick="window.location.href='advice.html'"
+            >Health Advice</a
+          >
+        </div>
+      </div>
+      <a onclick="window.location.href='contact.html'">Contact</a>
+    </div>
+
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>About Us - DevDoods</title>
+        <style>
+          /* General Styles */
+          body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa;
+          }
+
+          /* Header */
+          .header {
+            background: #002f6c;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 2rem;
+            font-weight: bold;
+          }
+
+          /* Header */
+          .header {
+            background: #002f6c;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 2rem;
+            font-weight: bold;
+          }
+
+          /* About Section */
+          #about {
+            background: #ffffff;
+            padding: 80px 10%;
+            text-align: center;
+          }
+
+          .about-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1300px;
+            margin: auto;
+            flex-wrap: wrap;
+          }
+
+          .about-content {
+            flex: 1;
+            padding: 40px;
+            text-align: left;
+          }
+
+          .about-content h2 {
+            font-size: 2.8rem;
+            color: #002f6c;
+            margin-bottom: 20px;
+            font-weight: bold;
+          }
+
+          .about-content p {
+            font-size: 1.3rem;
+            line-height: 2;
+            color: #333;
+            margin-bottom: 20px;
+          }
+
+          .about-image {
+            flex: 1;
+            text-align: center;
+          }
+
+          .about-image img {
+            width: 100%;
+            max-width: 550px;
+            border-radius: 15px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+          }
+
+          body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+          }
+          .team-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px;
+          }
+          .member {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 290px;
+          }
+          .member img {
+            width: 230px;
+            height: 260px;
+            border-radius: 50%;
+          }
+          .social-links a {
+            margin: 0 5px;
+            text-decoration: none;
+          }
+          /* Footer */
+          .footer {
+            background: #002f6c;
+            color: white;
+            text-align: center;
+
+            font-size: 1.2rem;
+            margin-top: 00px;
+          }
+
+          /* Responsive */
+          @media (max-width: 1024px) {
+            .about-container {
+              flex-direction: column;
+              text-align: center;
+            }
+
+            .about-content {
+              padding: 20px;
+            }
+
+            .about-content h2 {
+              font-size: 2.5rem;
+            }
+
+            .about-content p {
+              font-size: 1.2rem;
+            }
+          }
+          iframe {
+            display: flex;
+            justify-content: center;
+            justify-items: center;
+            text-align: center;
+            margin-top: 1rem;
+          }
+          footer {
+            padding: 0;
+            margin-top: 5px;
+          }
+        </style>
+      </head>
+      <body>
+        <!-- Header -->
+
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3425.184192095698!2d78.20457707512296!3d26.23023018908715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sin!4v1738255813807!5m2!1sen!2sin"
+          width="100%"
+          height="450"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+        <!-- About Section -->
+        <section id="about">
+          <div class="about-container">
+            <div class="about-content">
+              <h2>About Techno-Sparkers</h2>
+              <p>
+                <strong>Techno-Sparkers</strong> is a non-profit initiative
+                dedicated to providing accessible and high-quality healthcare
+                services to underprivileged communities. Our organization has
+                been tirelessly working towards building an inclusive healthcare
+                ecosystem for the past year.
+              </p>
+              <p>
+                We specialize in preventive and curative medical services,
+                ensuring that even the most remote areas have access to
+                essential healthcare. Our team of dedicated professionals
+                includes specialists in various medical fields, all committed to
+                making a lasting impact on public health.
+              </p>
+            </div>
+            <div class="about-image">
+              <img src="logo.png" alt="Healthcare Initiative" />
+            </div>
+          </div>
+        </section>
+
+        <!-- Our Mission -->
+        <section
+          id="mission"
+          style="padding: 80px 10%; background: #eef2f7; text-align: center"
+        >
+          <h2 style="color: #002f6c; font-size: 2.5rem">Our Mission</h2>
+          <p
+            style="
+              font-size: 1.3rem;
+              max-width: 1000px;
+              margin: auto;
+              line-height: 2;
+            "
+          >
+            The healthcare landscape for rural and underprivileged communities
+            remains fragile. Techno-Sparkers aims to bridge this gap by offering
+            low-cost, effective, and community-based healthcare solutions. Our
+            focus is on accessibility, affordability, and sustainability,
+            ensuring that no individual is denied medical care due to economic
+            constraints.
+          </p>
+        </section>
+
+        <!-- Our Work -->
+        <section id="work" style="padding: 80px 10%; text-align: center">
+          <h2 style="color: #002f6c; font-size: 2.5rem">Our Work</h2>
+          <p
+            style="
+              font-size: 1.3rem;
+              max-width: 1000px;
+              margin: auto;
+              line-height: 2;
+            "
+          >
+            Techno-Sparkers operates medical outreach programs, rural health
+            clinics, and preventive healthcare initiatives. With dedicated teams
+            of doctors, healthcare workers, and volunteers, we have served
+            thousands of patients across multiple districts, bringing critical
+            medical services closer to those in need.
+          </p>
+        </section>
+
+        <!-- Community Programs -->
+        <section
+          id="programs"
+          style="padding: 80px 10%; background: #eef2f7; text-align: center"
+        >
+          <h2 style="color: #002f6c; font-size: 2.5rem">Community Programs</h2>
+          <p
+            style="
+              font-size: 1.3rem;
+              max-width: 1000px;
+              margin: auto;
+              line-height: 2;
+            "
+          >
+            In addition to our healthcare services, we actively engage in
+            community-based initiatives, including nutrition programs, maternal
+            and child healthcare support, and public health awareness campaigns.
+            Our outreach efforts empower local communities with the knowledge
+            and resources needed to lead healthier lives.
+          </p>
+        </section>
+
+        <h1>Meet Our Team</h1>
+
+        <div class="team-container">
+          <!-- Founder -->
+
+          <!-- Team Head -->
+          <div class="member">
+            <img src="harsh.jpg" alt="Team Head" />
+            <h2>Harsh Manmode</h2>
+            <p>Team Head</p>
+            <div class="social-links">
+              <a
+                href="https://www.linkedin.com/in/harsh-manmode-2a0b91325?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                >LinkedIn</a
+              >
+              <a href="harshmanmode79@gmail.com">+91-8305721431</a>
+            </div>
+          </div>
+
+          <!-- Team Members -->
+
+          <div class="member">
+            <img src="vivek.png" alt="Team Member" />
+            <h2>Vivek Dahat</h2>
+            <p>Lead Developer</p>
+            <div class="social-links">
+              <a
+                href="https://www.linkedin.com/in/vivek-dahat-200307318?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                >LinkedIn</a
+              >
+            </div>
+          </div>
+
+          <div class="member">
+            <img src="amit2.jpg" alt="Team Member" />
+            <h2>Amit Manmode</h2>
+            <p>Marketing Manager</p>
+            <div class="social-links">
+              <a
+                href="https://www.linkedin.com/in/amit-manmode-5b1a23328?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app "
+                >LinkedIn</a
+              >
+            </div>
+          </div>
+
+          <div class="member">
+            <img src="john.jpg" alt="Team Member" />
+            <h2>John joseph hookens</h2>
+            <p>UI/UX Designer</p>
+            <div class="social-links">
+              <a
+                href="https://www.linkedin.com/in/john-joseph-hookens-62420b315?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app "
+                >LinkedIn</a
+              >
+            </div>
+          </div>
+          <div class="member">
+            <img src="khushbu.jpg" alt="Team Member" />
+            <h2>khushbu Raut</h2>
+            <p>Researcher</p>
+          </div>
+          <div class="member">
+            <img src="khushbuS.jpg" alt="Team Member" />
+            <h2>khushbu Sharma</h2>
+            <p>Presentation</p>
+          </div>
+        </div>
+        <!-- Footer -->
+        <div class="footer">© 2025 Techno-Sparkers | All Rights Reserved</div>
+      </body>
+    </html>
+
+    <!-- Chatbot Sidebar -->
+    <div class="chatbot-sidebar">
+      <button class="close-chatbot" onclick="closeChatbot()">✖</button>
+      <h2>Chatbot</h2>
+      <button onclick="window.location.href='index1.html'" id="move">
+        Start Chat
+      </button>
+    </div>
+
+    <footer>
+      <div class="footer">
+        <div class="column">
+          <h3>QUICK LINKS</h3>
+          <a href="#">About Us</a>
+          <a href="#">Membership & Benefits</a>
+          <a href="#">View Jobs & Careers</a>
+          <a href="#">View Our Services</a>
+          <a href="#">Our Privacy Policy</a>
+          <a href="#">Refund & Cancellation Policy</a>
+          <a href="#">Terms & Conditions</a>
+        </div>
+        <div class="column">
+          <img src="logo.png" alt="Logo" width="120" />
+        </div>
+        <div class="column">
+          <h3>CONTACT INFO</h3>
+          <p>Helpline No.: +91 - 83057 21431</p>
+          <p>Toll Free No.: +91 - 1800 xxx xxxx</p>
+          <p>Email: support@Techno-Sparkers.co.in</p>
+          <p>Email: info@\Techno-Sparkers.co.in</p>
+          <a href="#">To Know Our All Office/Branch Address: Click Here</a>
+          <div class="social-icons">
+            <a href="#" onclick="window.location.href='social.html'"
+              ><i class="fab fa-facebook"></i
+            ></a>
+            <a href="#" onclick="window.location.href='social.html'"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a href="#" onclick="window.location.href='social.html'"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a href="#" onclick="window.location.href='social.html'"
+              ><i class="fab fa-youtube"></i
+            ></a>
+            <a href="#" onclick="window.location.href='social.html'"
+              ><i class="fab fa-linkedin"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2025 Techno-Sparkers. All Rights Reserved. Trademarks and brands are
+        the property of their respective owners.
+      </div>
+    </footer>
+
+    <!-- Chatbot Toggle Button -->
+    <button class="chatbot-button" onclick="toggleChatbot()">
+      💬 Ask Chatbot
+    </button>
+
+    <script>
+      function toggleNavbar() {
+        document.querySelector(".navbar").classList.toggle("active");
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        let dropdown = document.querySelector(".dropdown");
+        let dropdownBtn = document.getElementById("dropdownBtn");
+
+        dropdownBtn.addEventListener("click", function (event) {
+          dropdown.classList.toggle("active");
+          event.stopPropagation();
+        });
+
+        document.addEventListener("click", function (event) {
+          if (!dropdown.contains(event.target)) {
+            dropdown.classList.remove("active");
+          }
+        });
+      });
+
+      function toggleChatbot() {
+        document.querySelector(".chatbot-sidebar").classList.toggle("active");
+      }
+
+      function closeChatbot() {
+        document.querySelector(".chatbot-sidebar").classList.remove("active");
+      }
+    </script>
+  </body>
+</html>

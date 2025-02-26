@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hospital Finder</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-image: url("https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"); /* Medical-themed background */
+        background-size: cover;
+        background-position: center;
+      }
+
+      #container {
+        width: 80%;
+        max-width: 800px;
+        padding: 30px;
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.9
+        ); /* Semi-transparent white background */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 15px;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        background: linear-gradient(
+          135deg,
+          #ff6f61,
+          #ffcc5c
+        ); /* Gradient for heading */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      #map {
+        height: 400px;
+        width: 100%;
+        border-radius: 10px;
+        margin-top: 20px;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 25px;
+      }
+
+      input {
+        padding: 12px;
+        font-size: 14px;
+        width: 60%;
+        border-radius: 8px;
+        border: 2px solid #ff6f61; /* Coral border */
+        outline: none;
+        transition: border-color 0.3s ease;
+      }
+
+      input:focus {
+        border-color: #ffcc5c; /* Yellow border on focus */
+      }
+
+      button {
+        padding: 12px 20px;
+        font-size: 14px;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      button#findLocationBtn {
+        background: linear-gradient(
+          135deg,
+          #ff6f61,
+          #ffcc5c
+        ); /* Coral to yellow gradient */
+      }
+
+      button#findHospitalsBtn {
+        background: linear-gradient(
+          135deg,
+          #6b5b95,
+          #d64161
+        ); /* Purple to pink gradient */
+      }
+
+      button:hover {
+        transform: translateY(-2px); /* Slight lift effect */
+      }
+
+      button:active {
+        transform: translateY(0); /* Reset lift effect on click */
+      }
+
+      .hospital-marker {
+        background-color: #e74c3c; /* Red for hospital markers */
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="container">
+      <h1>Find Nearby Hospitals</h1>
+      <div class="controls">
+        <input
+          type="text"
+          id="locationInput"
+          placeholder="Enter location name (e.g., Bhopal)"
+        />
+        <button id="findLocationBtn" onclick="findLocation()">
+          Find Location
+        </button>
+        <button id="findHospitalsBtn" onclick="findNearbyHospitals()">
+          Find Nearby Hospitals
+        </button>
+      </div>
+      <div id="map"></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+      var map = L.map("map").setView([23.2599, 77.4126], 13); // Default map center (Bhopal)
+
+      // Add the tile layer
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      var markers = []; // To store markers for adjusting map bounds later
+
+      // Function to find the location by name and place a bigger red marker
+      function findLocation() {
+        var locationName = document.getElementById("locationInput").value;
+
+        // Call the Nominatim API to get the latitude and longitude
+        fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&q=${locationName}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            if (data && data.length > 0) {
+              var lat = parseFloat(data[0].lat);
+              var lon = parseFloat(data[0].lon);
+
+              // Clear any existing markers
+              markers.forEach((marker) => map.removeLayer(marker));
+              markers = []; // Reset the markers array
+
+              // Create a larger icon for the hospital marker
+              var hospitalIcon = L.icon({
+                iconUrl:
+                  "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-red.png",
+                iconSize: [40, 40], // Increase the size of the marker
+                iconAnchor: [20, 40], // Anchor the icon to the bottom center
+                popupAnchor: [0, -40], // Popup appears above the marker
+              });
+
+              // Add the red marker at the location's coordinates
+              var marker = L.marker([lat, lon], { icon: hospitalIcon })
+                .addTo(map)
+                .bindPopup("Location: " + locationName)
+                .openPopup();
+
+              markers.push(marker); // Store the marker in the array
+
+              // Adjust the map to show all markers
+              var bounds = markers.map((marker) => marker.getLatLng());
+              map.fitBounds(bounds);
+            } else {
+              alert("Location not found!");
+            }
+          })
+          .catch((error) => {
+            alert("Error fetching data: " + error);
+          });
+      }
+
+      // Function to find nearby hospitals using Overpass API
+      function findNearbyHospitals() {
+        var locationName = document.getElementById("locationInput").value;
+
+        // Use Nominatim to get the coordinates of the location
+        fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&q=${locationName}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            if (data && data.length > 0) {
+              var lat = parseFloat(data[0].lat);
+              var lon = parseFloat(data[0].lon);
+
+              // Clear any existing markers
+              markers.forEach((marker) => map.removeLayer(marker));
+              markers = []; // Reset the markers array
+
+              // Query Overpass API for nearby hospitals
+              var overpassQuery = `[out:json][timeout:25];
+                node["amenity"="hospital"](around:5000,${lat},${lon});
+                out body;>;out skel qt;`;
+
+              fetch("https://overpass-api.de/api/interpreter", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: "data=" + encodeURIComponent(overpassQuery),
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  if (data.elements && data.elements.length > 0) {
+                    data.elements.forEach((element) => {
+                      var hospitalLat = element.lat;
+                      var hospitalLon = element.lon;
+                      var hospitalName =
+                        element.tags.name || "Unnamed Hospital";
+
+                      // Add a marker for each hospital
+                      var hospitalMarker = L.marker([hospitalLat, hospitalLon])
+                        .addTo(map)
+                        .bindPopup(
+                          `<div class="hospital-marker">${hospitalName}</div>`
+                        );
+
+                      markers.push(hospitalMarker);
+                    });
+
+                    // Adjust the map to show all hospitals
+                    var bounds = markers.map((marker) => marker.getLatLng());
+                    map.fitBounds(bounds);
+                  } else {
+                    alert("No hospitals found nearby.");
+                  }
+                })
+                .catch((error) => {
+                  alert("Error fetching hospital data: " + error);
+                });
+            } else {
+              alert("Location not found!");
+            }
+          })
+          .catch((error) => {
+            alert("Error fetching location data: " + error);
+          });
+      }
+    </script>
+  </body>
+</html>

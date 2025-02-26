@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="front-page.css" />
+    <link rel="icon" href="logo.png" />
+    <title>Techno-Sparkers: Medicine Finder</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        flex-direction: column;
+        color: white;
+        margin: 0;
+        background: url("https://media.istockphoto.com/id/1143687314/vector/graph-and-health-blue-abstract-background.jpg?s=612x612&w=0&k=20&c=kWWrhiO92sSyRpK5e5xO7-nxrsyeHxbFuVmH6xEe_bA=")
+          no-repeat center center/cover;
+      }
+      .container {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        width: 450px;
+        text-align: center;
+        color: #333;
+        animation: fadeIn 1s ease-in-out;
+      }
+      select,
+      button {
+        width: 100%;
+        padding: 15px;
+        margin: 15px 0;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        outline: none;
+      }
+      select {
+        border: 2px solid #667eea;
+        background: #f5f5f5;
+        color: #333;
+      }
+      button {
+        background: #667eea;
+        color: white;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s ease;
+      }
+      button:hover {
+        background: #555eea;
+        transform: scale(1.05);
+      }
+      .result-box {
+        margin-top: 25px;
+        text-align: left;
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        animation: slideUp 0.5s ease-in-out;
+        margin-bottom: 15px;
+      }
+      .result-box h3 {
+        color: #667eea;
+        margin-bottom: 10px;
+        font-size: 20px;
+      }
+      .result-box p {
+        color: #555;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+      .medicine-box {
+        border-left: 5px solid #4caf50;
+      }
+      .precautions-box {
+        border-left: 5px solid #ff5722;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        from {
+          transform: translateY(20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      .footer {
+        margin-top: 20px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.8);
+      }
+      h2 {
+        background: linear-gradient(
+          135deg,
+          #667eea,
+          #00b4db
+        ); /* Gradient blue color */
+        -webkit-background-clip: text; /* Clip background to text */
+        -webkit-text-fill-color: transparent; /* Make text transparent */
+        margin-bottom: 20px;
+        font-size: 28px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Medicine Finder</h2>
+      <select id="disease">
+        <option value="">Select a Disease</option>
+      </select>
+      <button onclick="findMedicine()">Search</button>
+      <div id="result"></div>
+    </div>
+
+    <script>
+      const medicineData = {
+          "Anemia": {
+              medicines: ["Ferrous Sulphate", "Folic Acid", "Cyanocobalamin"],
+              precautions: "Eat iron-rich foods like spinach and red meat, and avoid tea or coffee with meals."
+          },
+          "Hypertension": {
+              medicines: ["Amlodipine", "Atenolol", "Enalapril Maleate"],
+              precautions: "Reduce salt intake, exercise regularly, and avoid stress."
+          },
+          "Diabetes": {
+              medicines: ["Metformin", "Insulin", "Glibenclamide"],
+              precautions: "Maintain a healthy diet, monitor blood sugar levels, and exercise regularly."
+          },
+          "COVID-19": {
+              medicines: ["Remdesivir", "Dexamethasone", "Tocilizumab"],
+              precautions: "Wear a mask, maintain social distancing, and get vaccinated."
+          },
+          "Asthma": {
+              medicines: ["Salbutamol", "Budesonide", "Montelukast"],
+              precautions: "Avoid allergens, use prescribed inhalers, and monitor breathing."
+          },
+          "Malaria": {
+              medicines: ["Chloroquine", "Artemether", "Primaquine"],
+              precautions: "Use mosquito nets, apply insect repellents, and avoid stagnant water."
+          },
+          "Tuberculosis": {
+              medicines: ["Rifampicin", "Isoniazid", "Ethambutol"],
+              precautions: "Complete the full course of treatment and ensure proper ventilation."
+          },
+          "Arthritis": {
+              medicines: ["Ibuprofen", "Methotrexate", "Prednisone"],
+              precautions: "Exercise moderately, maintain a healthy weight, and apply heat or cold therapy."
+          },
+          "Depression": {
+              medicines: ["Fluoxetine", "Sertraline", "Amitriptyline"],
+              precautions: "Maintain a support system, engage in therapy, and exercise regularly."
+          },
+          "Migraine": {
+              medicines: ["Sumatriptan", "Propranolol", "Amitriptyline"],
+              precautions: "Avoid triggers, stay hydrated, and get adequate rest."
+          },
+          "Pneumonia": {
+              medicines: ["Amoxicillin", "Azithromycin", "Levofloxacin"],
+              precautions: "Practice good hygiene, avoid smoking, and get vaccinated."
+          },
+          "Hepatitis B": {
+              medicines: ["Tenofovir", "Entecavir", "Interferon"],
+              precautions: "Avoid alcohol, get vaccinated, and practice safe sex."
+          },
+          "Thyroid Disorder": {
+              medicines: ["Levothyroxine", "Methimazole", "Propylthiouracil"],
+              precautions: "Regularly monitor thyroid levels and follow a balanced diet."
+          },
+          "Allergies": {
+              medicines: ["Cetirizine", "Loratadine", "Fexofenadine"],
+              precautions: "Avoid allergens, use air purifiers, and keep windows closed during high pollen seasons."
+          },
+          "Gastritis": {
+              medicines: ["Omeprazole", "Ranitidine", "Sucralfate"],
+              precautions: "Avoid spicy foods, limit alcohol, and eat smaller meals."
+          },
+          "Osteoporosis": {
+              medicines: ["Alendronate", "Calcium", "Vitamin D"],
+              precautions: "Engage in weight-bearing exercises and ensure adequate calcium intake."
+          },
+          "Psoriasis": {
+              medicines: ["Methotrexate", "Cyclosporine", "Topical Corticosteroids"],
+              precautions: "Moisturize skin regularly, avoid triggers, and manage stress."
+          },
+          "Epilepsy": {
+              medicines: ["Phenytoin", "Carbamazepine", "Valproate"],
+              precautions: "Take medications regularly, avoid triggers, and get adequate sleep."
+          },
+          "Chronic Kidney Disease": {
+              medicines: ["Erythropoietin", "Calcium Carbonate", "Sevelamer"],
+              precautions: "Monitor blood pressure, limit protein intake, and avoid NSAIDs."
+          },
+          "Bronchitis": {
+              medicines: ["Amoxicillin", "Doxycycline", "Azithromycin"],
+              precautions: "Avoid smoking, stay hydrated, and rest adequately."
+          }
+      };
+
+      function populateDropdown() {
+          let select = document.getElementById("disease");
+          select.innerHTML = '<option value="">Select a Disease</option>';
+          for (let disease in medicineData) {
+              let option = document.createElement("option");
+              option.value = disease;
+              option.textContent = disease;
+              select.appendChild(option);
+          }
+      }
+
+      function findMedicine() {
+          let disease = document.getElementById("disease").value;
+          let resultDiv = document.getElementById("result");
+          resultDiv.innerHTML = "";
+
+          if (medicineData[disease]) {
+              let medicines = medicineData[disease].medicines.join(", ");
+              let precautions = medicineData[disease].precautions;
+
+              // Create Medicine Box
+              let medicineBox = document.createElement("div");
+              medicineBox.className = "result-box medicine-box";
+              medicineBox.innerHTML = <h3>Recommended Medicines:</h3><p>${medicines}</p>;
+              resultDiv.appendChild(medicineBox);
+
+              // Create Precautions Box
+              let precautionsBox = document.createElement("div");
+              precautionsBox.className = "result-box precautions-box";
+              precautionsBox.innerHTML = <h3>Precautions:</h3><p>${precautions}</p>;
+              resultDiv.appendChild(precautionsBox);
+          } else {
+              resultDiv.innerHTML = <p style='color:red;'>No data found. Try a different disease.</p>;
+          }
+      }
+
+      window.onload = populateDropdown;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="front-page.css" />
+    <link rel="icon" href="logo.png" />
+    <title>Techno-Sparkers: HDIMS</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+        color: #333;
+      }
+      header {
+        background-color: #1565c0; /* Indian flag green */
+        color: white;
+        padding: 1rem;
+        text-align: center;
+        border-bottom: 2px solid #ff9933; /* Indian flag saffron */
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem;
+      }
+      .dashboard {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      .stats-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      .stat-card {
+        background-color: white;
+        border-radius: 8px;
+        padding: 1rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+      .stat-card h3 {
+        margin-top: 0;
+        color: #138808;
+      }
+      .stat-value {
+        font-size: 2rem;
+        font-weight: bold;
+        margin: 0.5rem 0;
+      }
+      .filters {
+        background-color: white;
+        border-radius: 8px;
+        padding: 1rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1rem;
+      }
+      .filters-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      th,
+      td {
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #f0f0f0;
+        font-weight: 600;
+      }
+      tr:hover {
+        background-color: #f9f9f9;
+      }
+      select,
+      input {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      button {
+        background-color: #138808;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0e6b06;
+      }
+      .booking-button {
+        background-color: #1976d2;
+      }
+      .booking-button:hover {
+        background-color: #1565c0;
+      }
+      .booking-modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+      .modal-content {
+        background-color: white;
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 8px;
+        width: 50%;
+        max-width: 500px;
+      }
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .close:hover {
+        color: black;
+      }
+      .modal-footer {
+        margin-top: 1rem;
+        text-align: right;
+      }
+      .tabs {
+        display: flex;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #ddd;
+      }
+      .tab {
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+      }
+      .tab.active {
+        border-bottom: 2px solid #138808;
+        font-weight: bold;
+      }
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      @media (max-width: 768px) {
+        .filters-grid {
+          grid-template-columns: 1fr;
+        }
+        .modal-content {
+          width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>India Hospital Facilities Management System</h1>
+      <p>National Health Resource Repository</p>
+    </header>
+
+    <div class="container">
+      <div class="dashboard">
+        <div class="stats-container">
+          <div class="stat-card">
+            <h3>Total Beds</h3>
+            <div class="stat-value" id="total-beds">24,580</div>
+            <div>Available: <span id="available-beds">5,246</span></div>
+          </div>
+          <div class="stat-card">
+            <h3>ICU Beds</h3>
+            <div class="stat-value" id="total-icu">3,420</div>
+            <div>Available: <span id="available-icu">782</span></div>
+          </div>
+          <div class="stat-card">
+            <h3>Ventilators</h3>
+            <div class="stat-value" id="total-ventilators">1,850</div>
+            <div>Available: <span id="available-ventilators">437</span></div>
+          </div>
+          <div class="stat-card">
+            <h3>Specialists</h3>
+            <div class="stat-value" id="total-doctors">8,735</div>
+            <div>On Duty: <span id="available-doctors">2,914</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active" data-tab="availability">Availability</div>
+        <div class="tab" data-tab="bookings">My Bookings</div>
+        <div class="tab" data-tab="reports">Reports</div>
+      </div>
+
+      <div class="tab-content active" id="availability-tab">
+        <div class="filters">
+          <h2>Find Hospital Facilities</h2>
+          <div class="filters-grid">
+            <div>
+              <label for="city">City:</label>
+              <select id="city">
+                <option value="">All Cities</option>
+                <option value="mumbai">Mumbai</option>
+                <option value="delhi">Delhi</option>
+                <option value="bangalore">Bangalore</option>
+                <option value="hyderabad">Hyderabad</option>
+                <option value="chennai">Chennai</option>
+                <option value="kolkata">Kolkata</option>
+                <option value="ahmedabad">Ahmedabad</option>
+                <option value="pune">Pune</option>
+                <option value="jaipur">Jaipur</option>
+                <option value="lucknow">Lucknow</option>
+              </select>
+            </div>
+            <div>
+              <label for="facility-type">Facility Type:</label>
+              <select id="facility-type">
+                <option value="">All Facilities</option>
+                <option value="beds">General Beds</option>
+                <option value="icu">ICU Beds</option>
+                <option value="ventilators">Ventilators</option>
+                <option value="doctors">Specialists</option>
+                <option value="oxygen">Oxygen Supply</option>
+                <option value="dialysis">Dialysis Machines</option>
+                <option value="emergency">Emergency Services</option>
+                <option value="diagnostic">Diagnostic Services</option>
+                <option value="surgery">Surgical Facilities</option>
+              </select>
+            </div>
+            <div>
+              <label for="hospital-type">Hospital Type:</label>
+              <select id="hospital-type">
+                <option value="">All Types</option>
+                <option value="government">Government</option>
+                <option value="private">Private</option>
+                <option value="charitable">Charitable</option>
+              </select>
+            </div>
+            <div>
+              <label>&nbsp;</label>
+              <button id="search-btn">Search</button>
+            </div>
+          </div>
+        </div>
+
+        <table id="hospitals-table">
+          <thead>
+            <tr>
+              <th>Hospital Name</th>
+              <th>Location</th>
+              <th>Type</th>
+              <th>General Beds</th>
+              <th>ICU Beds</th>
+              <th>Ventilators</th>
+              <th>Specialists</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>AIIMS Delhi</td>
+              <td>New Delhi, Delhi</td>
+              <td>Government</td>
+              <td>850/1000</td>
+              <td>120/150</td>
+              <td>80/100</td>
+              <td>350/400</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('AIIMS Delhi')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Fortis Hospital</td>
+              <td>Gurugram, Haryana</td>
+              <td>Private</td>
+              <td>320/400</td>
+              <td>60/80</td>
+              <td>40/50</td>
+              <td>120/150</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Fortis Hospital')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Apollo Hospitals</td>
+              <td>Chennai, Tamil Nadu</td>
+              <td>Private</td>
+              <td>450/500</td>
+              <td>75/90</td>
+              <td>55/65</td>
+              <td>180/200</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Apollo Hospitals')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>Fortis Hospital</td>
+              <td>Bengaluru, Karnataka</td>
+              <td>Private</td>
+              <td>300/350</td>
+              <td>50/60</td>
+              <td>40/50</td>
+              <td>120/150</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Fortis Hospital')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Gajra Raja Medical College</td>
+              <td>Gwalior, Madhya Pradesh</td>
+              <td>Government</td>
+              <td>400/500</td>
+              <td>50/60</td>
+              <td>40/50</td>
+              <td>150/200</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Gajra Raja Medical College')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Birla Hospital</td>
+              <td>Gwalior, Madhya Pradesh</td>
+              <td>Private</td>
+              <td>200/250</td>
+              <td>30/40</td>
+              <td>20/30</td>
+              <td>80/100</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Birla Hospital')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>City Hospital</td>
+              <td>Gwalior, Madhya Pradesh</td>
+              <td>Private</td>
+              <td>150/200</td>
+              <td>25/35</td>
+              <td>15/25</td>
+              <td>60/80</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('City Hospital')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Jaya Hospital</td>
+              <td>Gwalior, Madhya Pradesh</td>
+              <td>Private</td>
+              <td>120/150</td>
+              <td>20/30</td>
+              <td>10/20</td>
+              <td>50/70</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Jaya Hospital')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Shri Ram Hospital</td>
+              <td>Gwalior, Madhya Pradesh</td>
+              <td>Private</td>
+              <td>100/120</td>
+              <td>15/25</td>
+              <td>10/15</td>
+              <td>40/60</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Shri Ram Hospital')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Max Super Specialty Hospital</td>
+              <td>Mumbai, Maharashtra</td>
+              <td>Private</td>
+              <td>400/450</td>
+              <td>60/70</td>
+              <td>45/55</td>
+              <td>150/180</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Max Super Specialty Hospital')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Manipal Hospitals</td>
+              <td>Hyderabad, Telangana</td>
+              <td>Private</td>
+              <td>350/400</td>
+              <td>55/65</td>
+              <td>35/45</td>
+              <td>130/160</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Manipal Hospitals')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Kokilaben Dhirubhai Ambani Hospital</td>
+              <td>Mumbai, Maharashtra</td>
+              <td>Private</td>
+              <td>500/600</td>
+              <td>80/90</td>
+              <td>60/70</td>
+              <td>200/250</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Kokilaben Dhirubhai Ambani Hospital')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Medanta - The Medicity</td>
+              <td>Gurgaon, Haryana</td>
+              <td>Private</td>
+              <td>600/700</td>
+              <td>90/100</td>
+              <td>70/80</td>
+              <td>220/250</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Medanta - The Medicity')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>PGIMER</td>
+              <td>Chandigarh</td>
+              <td>Government</td>
+              <td>700/800</td>
+              <td>110/130</td>
+              <td>90/100</td>
+              <td>240/300</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('PGIMER')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Narayana Health</td>
+              <td>Kolkata, West Bengal</td>
+              <td>Private</td>
+              <td>450/500</td>
+              <td>70/80</td>
+              <td>50/60</td>
+              <td>170/200</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Narayana Health')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Artemis Hospitals</td>
+              <td>Gurgaon, Haryana</td>
+              <td>Private</td>
+              <td>300/350</td>
+              <td>50/60</td>
+              <td>40/50</td>
+              <td>120/150</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Artemis Hospitals')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Ruby Hall Clinic</td>
+              <td>Pune, Maharashtra</td>
+              <td>Private</td>
+              <td>400/450</td>
+              <td>60/70</td>
+              <td>45/55</td>
+              <td>150/180</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Ruby Hall Clinic')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Christian Medical College</td>
+              <td>Vellore, Tamil Nadu</td>
+              <td>Private</td>
+              <td>500/600</td>
+              <td>80/90</td>
+              <td>60/70</td>
+              <td>200/250</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Christian Medical College')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>JIPMER</td>
+              <td>Puducherry</td>
+              <td>Government</td>
+              <td>600/700</td>
+              <td>90/100</td>
+              <td>70/80</td>
+              <td>220/250</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('JIPMER')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Lilavati Hospital</td>
+              <td>Mumbai, Maharashtra</td>
+              <td>Private</td>
+              <td>350/400</td>
+              <td>55/65</td>
+              <td>35/45</td>
+              <td>130/160</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Lilavati Hospital')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Sri Ramachandra Medical Centre</td>
+              <td>Chennai, Tamil Nadu</td>
+              <td>Private</td>
+              <td>450/500</td>
+              <td>75/90</td>
+              <td>55/65</td>
+              <td>180/200</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Sri Ramachandra Medical Centre')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Breach Candy Hospital</td>
+              <td>Mumbai, Maharashtra</td>
+              <td>Private</td>
+              <td>300/350</td>
+              <td>50/60</td>
+              <td>40/50</td>
+              <td>120/150</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Breach Candy Hospital')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>KIMS Hospitals</td>
+              <td>Hyderabad, Telangana</td>
+              <td>Private</td>
+              <td>400/450</td>
+              <td>60/70</td>
+              <td>45/55</td>
+              <td>150/180</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('KIMS Hospitals')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Amrita Institute of Medical Sciences</td>
+              <td>Kochi, Kerala</td>
+              <td>Private</td>
+              <td>500/600</td>
+              <td>80/90</td>
+              <td>60/70</td>
+              <td>200/250</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Amrita Institute of Medical Sciences')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Safdarjung Hospital</td>
+              <td>New Delhi, Delhi</td>
+              <td>Government</td>
+              <td>700/800</td>
+              <td>110/130</td>
+              <td>90/100</td>
+              <td>240/300</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Safdarjung Hospital')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Global Hospitals</td>
+              <td>Mumbai, Maharashtra</td>
+              <td>Private</td>
+              <td>350/400</td>
+              <td>55/65</td>
+              <td>35/45</td>
+              <td>130/160</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Global Hospitals')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>PGIMER</td>
+              <td>Chandigarh, Punjab</td>
+              <td>Government</td>
+              <td>600/750</td>
+              <td>90/110</td>
+              <td>60/75</td>
+              <td>250/300</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('PGIMER')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Tata Memorial Hospital</td>
+              <td>Mumbai, Maharashtra</td>
+              <td>Government</td>
+              <td>380/450</td>
+              <td>65/80</td>
+              <td>45/60</td>
+              <td>160/200</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Tata Memorial Hospital')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Manipal Hospital</td>
+              <td>Bangalore, Karnataka</td>
+              <td>Private</td>
+              <td>280/350</td>
+              <td>50/65</td>
+              <td>35/45</td>
+              <td>110/140</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Manipal Hospital')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>KGMU</td>
+              <td>Lucknow, Uttar Pradesh</td>
+              <td>Government</td>
+              <td>520/650</td>
+              <td>80/100</td>
+              <td>55/70</td>
+              <td>210/250</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('KGMU')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Max Super Speciality Hospital</td>
+              <td>New Delhi, Delhi</td>
+              <td>Private</td>
+              <td>310/380</td>
+              <td>55/70</td>
+              <td>38/50</td>
+              <td>130/160</td>
+              <td>
+                <button
+                  class="booking-button"
+                  onclick="openBookingModal('Max Super Speciality Hospital')"
+                >
+                  Book
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tab-content" id="bookings-tab">
+        <h2>My Bookings</h2>
+        <table id="bookings-table">
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Hospital</th>
+              <th>Facility</th>
+              <th>Patient Name</th>
+              <th>Booking Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>BK00123</td>
+              <td>Apollo Hospitals</td>
+              <td>General Bed</td>
+              <td>Rahul Sharma</td>
+              <td>25-Feb-2025</td>
+              <td>Confirmed</td>
+              <td>
+                <button onclick="cancelBooking('BK00123')">Cancel</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tab-content" id="reports-tab">
+        <h2>Resource Utilization Reports</h2>
+        <div class="filters">
+          <div class="filters-grid">
+            <div>
+              <label for="report-state">State:</label>
+              <select id="report-state">
+                <option value="">All States</option>
+                <option value="delhi">Delhi</option>
+                <option value="maharashtra">Maharashtra</option>
+                <option value="tamil-nadu">Tamil Nadu</option>
+              </select>
+            </div>
+            <div>
+              <label for="report-facility">Facility:</label>
+              <select id="report-facility">
+                <option value="">All Facilities</option>
+                <option value="beds">General Beds</option>
+                <option value="icu">ICU Beds</option>
+                <option value="ventilators">Ventilators</option>
+              </select>
+            </div>
+            <div>
+              <label for="report-date">Date Range:</label>
+              <select id="report-date">
+                <option value="today">Today</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+              </select>
+            </div>
+            <div>
+              <label>&nbsp;</label>
+              <button id="generate-report">Generate Report</button>
+            </div>
+          </div>
+        </div>
+        <div id="report-result">
+          <h3>Current Facility Utilization</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Facility Type</th>
+                <th>Total Capacity</th>
+                <th>Currently In Use</th>
+                <th>Available</th>
+                <th>Utilization %</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>General Beds</td>
+                <td>24,580</td>
+                <td>19,334</td>
+                <td>5,246</td>
+                <td>78.7%</td>
+              </tr>
+              <tr>
+                <td>ICU Beds</td>
+                <td>3,420</td>
+                <td>2,638</td>
+                <td>782</td>
+                <td>77.1%</td>
+              </tr>
+              <tr>
+                <td>Ventilators</td>
+                <td>1,850</td>
+                <td>1,413</td>
+                <td>437</td>
+                <td>76.4%</td>
+              </tr>
+              <tr>
+                <td>Specialists</td>
+                <td>8,735</td>
+                <td>5,821</td>
+                <td>2,914</td>
+                <td>66.6%</td>
+              </tr>
+              <tr>
+                <td>Oxygen Cylinders</td>
+                <td>12,350</td>
+                <td>8,645</td>
+                <td>3,705</td>
+                <td>70.0%</td>
+              </tr>
+              <tr>
+                <td>Dialysis Machines</td>
+                <td>945</td>
+                <td>756</td>
+                <td>189</td>
+                <td>80.0%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="booking-modal" class="booking-modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeBookingModal()">&times;</span>
+        <h2 id="booking-hospital-name">Book Facility</h2>
+        <form id="booking-form">
+          <div>
+            <label for="facility">Facility Type:</label>
+            <select id="facility" required>
+              <option value="">Select Facility</option>
+              <option value="general-bed">General Bed</option>
+              <option value="icu-bed">ICU Bed</option>
+              <option value="ventilator">Ventilator</option>
+              <option value="specialist">Specialist Consultation</option>
+              <option value="diagnostic">Diagnostic Service</option>
+            </select>
+          </div>
+          <div>
+            <label for="patient-name">Patient Name:</label>
+            <input type="text" id="patient-name" required />
+          </div>
+          <div>
+            <label for="patient-age">Patient Age:</label>
+            <input type="number" id="patient-age" min="0" max="120" required />
+          </div>
+          <div>
+            <label for="contact-number">Contact Number:</label>
+            <input
+              type="tel"
+              id="contact-number"
+              pattern="[0-9]{10}"
+              placeholder="10-digit number"
+              required
+            />
+          </div>
+          <div>
+            <label for="booking-date">Date:</label>
+            <input type="date" id="booking-date" required />
+          </div>
+          <div class="modal-footer">
+            <button type="button" onclick="closeBookingModal()">Cancel</button>
+            <button type="button" onclick="confirmBooking()">
+              Confirm Booking
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script>
+      let statistics = {
+        totalBeds: 24580,
+        availableBeds: 5246,
+        totalICU: 3420,
+        availableICU: 782,
+        totalVentilators: 1850,
+        availableVentilators: 437,
+        totalDoctors: 8735,
+        availableDoctors: 2914,
+      };
+
+      // Tab switching
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document
+            .querySelectorAll(".tab")
+            .forEach((t) => t.classList.remove("active"));
+          document
+            .querySelectorAll(".tab-content")
+            .forEach((c) => c.classList.remove("active"));
+          tab.classList.add("active");
+          document
+            .getElementById(`${tab.dataset.tab}-tab`)
+            .classList.add("active");
+        });
+      });
+
+      // Booking modal
+      function openBookingModal(hospitalName) {
+        document.getElementById(
+          "booking-hospital-name"
+        ).textContent = `Book Facility at ${hospitalName}`;
+        document.getElementById("booking-modal").style.display = "block";
+      }
+
+      function closeBookingModal() {
+        document.getElementById("booking-modal").style.display = "none";
+      }
+
+      function confirmBooking() {
+        const hospitalName = document
+          .getElementById("booking-hospital-name")
+          .textContent.replace("Book Facility at ", "");
+        const facilityType = document.getElementById("facility").value;
+        const patientName = document.getElementById("patient-name").value;
+
+        if (!facilityType || !patientName) {
+          alert("Please fill all required fields");
+          return;
+        }
+
+        // Update available resources
+        if (facilityType === "general-bed") {
+          statistics.availableBeds--;
+          document.getElementById("available-beds").textContent =
+            statistics.availableBeds;
+        } else if (facilityType === "icu-bed") {
+          statistics.availableICU--;
+          document.getElementById("available-icu").textContent =
+            statistics.availableICU;
+        } else if (facilityType === "ventilator") {
+          statistics.availableVentilators--;
+          document.getElementById("available-ventilators").textContent =
+            statistics.availableVentilators;
+        } else if (facilityType === "specialist") {
+          statistics.availableDoctors--;
+          document.getElementById("available-doctors").textContent =
+            statistics.availableDoctors;
+        }
+
+        closeBookingModal();
+        alert(
+          `Facility booked successfully. Booking ID: BK${Math.floor(
+            Math.random() * 100000
+          )
+            .toString()
+            .padStart(5, "0")}`
+        );
+      }
+
+      // Filter functionality
+      document
+        .getElementById("search-btn")
+        .addEventListener("click", function () {
+          const city = document.getElementById("city").value.toLowerCase();
+          const facilityType = document.getElementById("facility-type").value;
+          const hospitalType = document.getElementById("hospital-type").value;
+
+          const table = document.getElementById("hospitals-table");
+          const rows = table.getElementsByTagName("tbody")[0].rows;
+
+          for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            const locationCell = row.cells[1].textContent.toLowerCase();
+            const typeCell = row.cells[2].textContent.toLowerCase();
+
+            let showRow = true;
+
+            if (city && !locationCell.includes(city)) {
+              showRow = false;
+            }
+
+            if (hospitalType && !typeCell.includes(hospitalType)) {
+              showRow = false;
+            }
+
+            row.style.display = showRow ? "" : "none";
+          }
+        });
+
+      // Initialize city dropdown with top 50 cities in India
+      const cities = [
+        "Mumbai",
+        "Delhi",
+        "Bangalore",
+        "Hyderabad",
+        "Ahmedabad",
+        "Chennai",
+        "Kolkata",
+        "Surat",
+        "Pune",
+        "Jaipur",
+        "Lucknow",
+        "Kanpur",
+        "Nagpur",
+        "Indore",
+        "Thane",
+        "Bhopal",
+        "Visakhapatnam",
+        "Pimpri-Chinchwad",
+        "Patna",
+        "Vadodara",
+        "Ghaziabad",
+        "Ludhiana",
+        "Agra",
+        "Nashik",
+        "Faridabad",
+        "Meerut",
+        "Rajkot",
+        "Kalyan-Dombivli",
+        "Vasai-Virar",
+        "Varanasi",
+        "Srinagar",
+        "Aurangabad",
+        "Dhanbad",
+        "Amritsar",
+        "Navi Mumbai",
+        "Allahabad",
+        "Ranchi",
+        "Howrah",
+        "Coimbatore",
+        "Jabalpur",
+        "Gwalior",
+        "Vijayawada",
+        "Jodhpur",
+        "Madurai",
+        "Raipur",
+        "Kota",
+        "Chandigarh",
+        "Guwahati",
+        "Solapur",
+        "Hubballi-Dharwad",
+      ];
+
+      const cityDropdown = document.getElementById("city");
+      cities.forEach((city) => {
+        const option = document.createElement("option");
+        option.value = city.toLowerCase();
+        option.textContent = city;
+        cityDropdown.appendChild(option);
+      });
+
+      // Disable state dropdown
+      document.getElementById("state").disabled = true;
+
+      document
+        .getElementById("generate-report")
+        .addEventListener("click", function () {
+          alert("Report generated successfully!");
+        });
+    </script>
+  </body>
+</html>

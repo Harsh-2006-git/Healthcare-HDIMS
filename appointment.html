@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="logo.png" />
+    <title>Techno-Sparkers: Appointment Booker</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: url("https://images.unsplash.com/photo-1538108149393-fbbd81895907?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80")
+          no-repeat center center/cover;
+        padding: 20px;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #007bff;
+      }
+
+      .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        background: rgba(255, 255, 255, 0.8);
+      }
+
+      .form-group input[type="date"],
+      .form-group input[type="time"] {
+        cursor: pointer;
+      }
+
+      .btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        background: #0056b3;
+      }
+
+      .appointments {
+        margin-top: 30px;
+      }
+
+      .appointments h2 {
+        margin-bottom: 15px;
+        color: #007bff;
+      }
+
+      .appointment-item {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .appointment-item p {
+        margin: 0;
+        color: #555;
+      }
+
+      .appointment-item button {
+        background: #ff4d4d;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .appointment-item button.edit {
+        background: #28a745;
+        margin-right: 10px;
+      }
+
+      .appointment-item button:hover {
+        opacity: 0.8;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .form-row {
+          flex-direction: column;
+        }
+
+        .form-group {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Doctor Appointment Booker</h1>
+
+      <!-- Appointment Booking Form -->
+      <form id="appointmentForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="location">Location:</label>
+            <select id="location" required>
+              <option value="">Select Location</option>
+              <option value="New York">New York</option>
+              <option value="Los Angeles">Los Angeles</option>
+              <option value="Chicago">Chicago</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="date" id="date" required />
+          </div>
+          <div class="form-group">
+            <label for="time">Time:</label>
+            <input type="time" id="time" required />
+          </div>
+          <div class="form-group">
+            <label for="doctorType">Type of Doctor:</label>
+            <select id="doctorType" required>
+              <option value="">Select Doctor Type</option>
+              <option value="Cardiologist">Cardiologist</option>
+              <option value="Dermatologist">Dermatologist</option>
+              <option value="Pediatrician">Pediatrician</option>
+              <option value="Orthopedic">Orthopedic</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn">Book Appointment</button>
+      </form>
+
+      <!-- Display Appointments -->
+      <div class="appointments">
+        <h2>Your Appointments</h2>
+        <div id="appointmentList"></div>
+      </div>
+    </div>
+
+    <script>
+      // Load appointments from localStorage
+      let appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+
+      // Function to render appointments
+      function renderAppointments() {
+        const appointmentList = document.getElementById("appointmentList");
+        appointmentList.innerHTML = "";
+
+        appointments.forEach((appointment, index) => {
+          const appointmentItem = document.createElement("div");
+          appointmentItem.className = "appointment-item";
+          appointmentItem.innerHTML = `
+            <p>
+              <strong>Location:</strong> ${appointment.location}<br>
+              <strong>Date:</strong> ${appointment.date}<br>
+              <strong>Time:</strong> ${appointment.time}<br>
+              <strong>Doctor:</strong> ${appointment.doctorType}
+            </p>
+            <div>
+              <button class="edit" onclick="editAppointment(${index})">Edit</button>
+              <button onclick="deleteAppointment(${index})">Delete</button>
+            </div>
+          `;
+          appointmentList.appendChild(appointmentItem);
+        });
+      }
+
+      // Function to add a new appointment
+      function addAppointment(event) {
+        event.preventDefault();
+
+        const location = document.getElementById("location").value;
+        const date = document.getElementById("date").value;
+        const time = document.getElementById("time").value;
+        const doctorType = document.getElementById("doctorType").value;
+
+        if (!location || !date || !time || !doctorType) {
+          alert("Please fill all fields!");
+          return;
+        }
+
+        const newAppointment = { location, date, time, doctorType };
+        appointments.push(newAppointment);
+        localStorage.setItem("appointments", JSON.stringify(appointments));
+
+        renderAppointments();
+        document.getElementById("appointmentForm").reset();
+      }
+
+      // Function to delete an appointment
+      function deleteAppointment(index) {
+        appointments.splice(index, 1);
+        localStorage.setItem("appointments", JSON.stringify(appointments));
+        renderAppointments();
+      }
+
+      // Function to edit an appointment
+      function editAppointment(index) {
+        const appointment = appointments[index];
+        document.getElementById("location").value = appointment.location;
+        document.getElementById("date").value = appointment.date;
+        document.getElementById("time").value = appointment.time;
+        document.getElementById("doctorType").value = appointment.doctorType;
+
+        deleteAppointment(index);
+      }
+
+      // Event Listener for Form Submission
+      document
+        .getElementById("appointmentForm")
+        .addEventListener("submit", addAppointment);
+
+      // Render appointments on page load
+      renderAppointments();
+    </script>
+  </body>
+</html>

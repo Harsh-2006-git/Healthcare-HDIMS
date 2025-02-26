@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Team</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary-blue: #1a3b5d;
+        --secondary-blue: #3a6ea5;
+        --accent-blue: #6ca0d4;
+        --light-blue: #e4f0fc;
+        --dark-blue: #0c2542;
+        --white: #ffffff;
+        --light-gray: #f5f7fa;
+        --medium-gray: #e0e6ed;
+        --dark-gray: #6c757d;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--dark-blue);
+        background-color: var(--light-gray);
+        line-height: 1.6;
+      }
+
+      .header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--secondary-blue)
+        );
+        color: var(--white);
+        padding: 3rem 1rem;
+        margin-bottom: 3rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent
+        );
+        animation: shine 3s infinite linear;
+      }
+
+      @keyframes shine {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      h1 {
+        font-size: 2.8rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: relative;
+        display: inline-block;
+      }
+
+      h1::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background-color: var(--accent-blue);
+        border-radius: 2px;
+      }
+
+      .sub-heading {
+        font-size: 1.2rem;
+        font-weight: 300;
+        margin-bottom: 1rem;
+        max-width: 700px;
+        margin: 0 auto;
+        opacity: 0.9;
+      }
+
+      .team-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        padding: 20px 0 50px;
+      }
+
+      .member {
+        background: var(--white);
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        width: 300px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .member:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+      }
+
+      .member-header {
+        background: linear-gradient(
+          to right,
+          var(--primary-blue),
+          var(--secondary-blue)
+        );
+        height: 120px;
+        position: relative;
+      }
+
+      .member-header::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 40px;
+        background: var(--white);
+        border-radius: 50% 50% 0 0;
+      }
+
+      .member img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid var(--white);
+        position: absolute;
+        left: 50%;
+        top: 45px;
+        transform: translateX(-50%);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        background-color: var(--light-gray);
+      }
+
+      .member-content {
+        padding: 85px 25px 30px;
+        text-align: center;
+      }
+
+      .member h2 {
+        font-size: 1.4rem;
+        color: var(--primary-blue);
+        margin-bottom: 0.2rem;
+        font-weight: 600;
+      }
+
+      .member p.role {
+        font-size: 1rem;
+        color: var(--secondary-blue);
+        margin-bottom: 1.2rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        position: relative;
+        display: inline-block;
+      }
+
+      .member p.role::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 2px;
+        background-color: var(--accent-blue);
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .social-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background-color: var(--light-blue);
+        color: var(--primary-blue);
+        text-decoration: none;
+        transition: all 0.2s ease;
+      }
+
+      .social-links a:hover {
+        background-color: var(--primary-blue);
+        color: var(--white);
+        transform: translateY(-2px);
+      }
+
+      .social-links .contact-link {
+        width: auto;
+        padding: 0 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+      }
+
+      .social-links i {
+        font-size: 1.2rem;
+      }
+
+      .footer {
+        background-color: var(--primary-blue);
+        color: var(--white);
+        text-align: center;
+        padding: 2rem;
+        margin-top: 2rem;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 768px) {
+        .member {
+          width: 280px;
+        }
+
+        h1 {
+          font-size: 2.2rem;
+        }
+
+        .sub-heading {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <h1>Meet Our Team</h1>
+        <p class="sub-heading">
+          Dedicated professionals working together to deliver exceptional
+          results
+        </p>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="team-container">
+        <!-- Team Head -->
+        <div class="member">
+          <div class="member-header"></div>
+          <img src="harsh.jpg" alt="Team Head" />
+          <div class="member-content">
+            <h2>Harsh Manmode</h2>
+            <p class="role">Team Head</p>
+            <div class="social-links">
+              <a
+                href="https://www.linkedin.com/in/harsh-manmode-2a0b91325?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+              >
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="tel:+918305721431" class="contact-link">
+                <i class="fas fa-phone-alt"></i> Contact
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team Members -->
+        <div class="member">
+          <div class="member-header"></div>
+          <img src="vivek.png" alt="Team Member" />
+          <div class="member-content">
+            <h2>Vivek Dahat</h2>
+            <p class="role">Lead Developer</p>
+            <div class="social-links">
+              <a
+                href="https://www.linkedin.com/in/vivek-dahat-200307318?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+              >
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="member">
+          <div class="member-header"></div>
+          <img src="amit2.jpg" alt="Team Member" />
+          <div class="member-content">
+            <h2>Amit Manmode</h2>
+            <p class="role">Marketing Manager</p>
+            <div class="social-links">
+              <a
+                href="https://www.linkedin.com/in/amit-manmode-5b1a23328?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+              >
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="member">
+          <div class="member-header"></div>
+          <img src="john.jpg" alt="Team Member" />
+          <div class="member-content">
+            <h2>John Joe Johesph</h2>
+            <p class="role">UI/UX Designer</p>
+            <div class="social-links">
+              <a
+                href="https://www.linkedin.com/in/john-joseph-hookens-62420b315?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+              >
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="member">
+          <div class="member-header"></div>
+          <img src="khushbu.jpg" alt="Team Member" />
+          <div class="member-content">
+            <h2>Khushbu Raut</h2>
+            <p class="role">Researcher</p>
+            <div class="social-links">
+              <a href="mailto:24it10kh71@mitsgwl.ac.in"
+                ><i class="fas fa-envelope"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="member">
+          <div class="member-header"></div>
+          <img src="khushbuS.jpg" alt="Team Member" />
+          <div class="member-content">
+            <h2>Khushbu Sharma</h2>
+            <p class="role">Presentation</p>
+            <div class="social-links">
+              <a href="mailto:24it10kh72@mitsgwl.ac.in"
+                ><i class="fas fa-envelope"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2025 Our Team. All Rights Reserved.</p>
+      </div>
+    </footer>
+     
+  </body>
+</html>

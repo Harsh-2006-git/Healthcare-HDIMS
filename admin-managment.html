@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="logo.png" />
+    <title>Hospital Resources Management</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #0a4275;
+        color: #fff;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23083761" width="50" height="50" x="0" y="0" /><rect fill="%23072f52" width="50" height="50" x="50" y="0" /><rect fill="%23072f52" width="50" height="50" x="0" y="50" /><rect fill="%23083761" width="50" height="50" x="50" y="50" /></svg>');
+        background-size: 100px 100px;
+        background-attachment: fixed;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      header {
+        background-color: rgba(0, 30, 60, 0.8);
+        padding: 20px;
+        border-radius: 10px 10px 0 0;
+        backdrop-filter: blur(5px);
+        border-bottom: 4px solid #2a7cc7;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .logo-icon {
+        font-size: 2rem;
+        margin-right: 15px;
+        color: #2a7cc7;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+        margin-bottom: 5px;
+      }
+
+      .subtitle {
+        color: #a3c9f0;
+        font-size: 0.9rem;
+      }
+
+      .user-info {
+        text-align: right;
+      }
+
+      .admin-badge {
+        background-color: #2a7cc7;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.8rem;
+        display: inline-block;
+        margin-top: 5px;
+      }
+
+      main {
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #333;
+        padding: 20px;
+        border-radius: 0 0 10px 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .facility-selector {
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #f0f7ff;
+        border-radius: 8px;
+        border-left: 5px solid #2a7cc7;
+      }
+
+      select {
+        padding: 10px 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 100%;
+        font-size: 1rem;
+        margin-top: 10px;
+        background-color: white;
+      }
+
+      .facility-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+      }
+
+      .facility-card {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        transition: all 0.3s ease;
+        border-top: 4px solid #2a7cc7;
+      }
+
+      .facility-card h3 {
+        color: #0a4275;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .facility-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      .facility-item:last-child {
+        border-bottom: none;
+      }
+
+      .item-name {
+        font-weight: 500;
+      }
+
+      .item-count {
+        font-weight: bold;
+        color: #2a7cc7;
+      }
+
+      .critical {
+        color: #d9534f;
+      }
+
+      .warning {
+        color: #f0ad4e;
+      }
+
+      .good {
+        color: #5cb85c;
+      }
+
+      .update-panel {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #f0f7ff;
+        border-radius: 8px;
+        border-left: 5px solid #2a7cc7;
+        display: none;
+      }
+
+      .update-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+        color: #0a4275;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background-color: #2a7cc7;
+        color: white;
+      }
+
+      .btn-secondary {
+        background-color: #f3f3f3;
+        color: #333;
+      }
+
+      .btn:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+      }
+
+      .action-buttons {
+        grid-column: span 2;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      footer {
+        margin-top: 30px;
+        text-align: center;
+        color: #a3c9f0;
+        font-size: 0.8rem;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .facility-cards {
+          grid-template-columns: 1fr;
+        }
+
+        .update-form {
+          grid-template-columns: 1fr;
+        }
+
+        .action-buttons {
+          grid-column: span 1;
+        }
+
+        header {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .user-info {
+          margin-top: 15px;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="logo">
+          <span class="logo-icon">+</span>
+          <div>
+            <h1>Hospital Resources Management</h1>
+            <div class="subtitle">Administrator Control Panel</div>
+          </div>
+        </div>
+        <div class="user-info">
+          <div>Welcome, Administrator</div>
+          <div class="admin-badge">Admin Access</div>
+        </div>
+      </header>
+
+      <main>
+        <div class="facility-selector">
+          <label for="facility-select"
+            ><strong>Select Facility to Update:</strong></label
+          >
+          <select id="facility-select">
+            <option value="">-- Select a facility --</option>
+            <option value="beds">Bed Availability</option>
+            <option value="doctors">Doctors</option>
+            <option value="equipment">Medical Equipment</option>
+            <option value="emergency">Emergency Services</option>
+            <option value="pharmacy">Pharmacy</option>
+            <option value="diagnostic">Diagnostic Services</option>
+            <option value="surgical">Surgical Facilities</option>
+          </select>
+        </div>
+
+        <div class="facility-cards">
+          <!-- Bed Availability Card -->
+          <div class="facility-card" id="beds-card">
+            <h3>Bed Availability</h3>
+            <div class="facility-item">
+              <span class="item-name">General Beds</span>
+              <span class="item-count good" id="general-beds">45</span>
+            </div>
+            <div class="facility-item">
+              <span class="item-name">ICU Beds</span>
+              <span class="item-count warning" id="icu-beds">8</span>
+            </div>
+            <div class="facility-item">
+              <span class="item-name">Ventilator Beds</span>
+              <span class="item-count critical" id="ventilator-beds">3</span>
+            </div>
+          </div>
+
+          <!-- Doctors Card -->
+          <div class="facility-card" id="doctors-card">
+            <h3>Doctors</h3>
+            <div class="facility-item">
+              <span class="item-name">Cardiologists</span>
+              <span class="item-count good" id="cardiologists">5</span>
+            </div>
+            <div class="facility-item">
+              <span class="item-name">Neurologists</span>
+              <span class="item-count warning" id="neurologists">2</span>
+            </div>
+            <div class="facility-item">
+              <span class="item-name">Orthopedists</span>
+              <span class="item-count good" id="orthopedists">4</span>
+            </div>
+          </div>
+
+          <!-- Medical Equipment Card -->
+          <div class="facility-card" id="equipment-card">
+            <h3>Medical Equipment</h3>
+            <div class="facility-item">
+              <span class="item-name">Oxygen Cylinders</span>
+              <span class="item-count good" id="oxygen-cylinders">32</span>
+            </div>
+            <div class="facility-item">
+              <span class="item-name">Ventilators</span>
+              <span class="item-count critical" id="ventilators">4</span>
+            </div>
+            <div class="facility-item">
+              <span class="item-name">Dialysis Machines</span>
+              <span class="item-count warning" id="dialysis-machines">6</span>
+            </div>
+          </div>
+
+          <!-- Emergency Services Card -->
+          <div class="facility-card" id="emergency-card">
+            <h3>Emergency Services</h3>
+            <div class="facility-item">
+              <span class="item-name">Ambulances</span>
+              <span class="item-count good" id="ambulances">7</span>
+            </div>
+            <div class="facility-item">
+              <span class="item-name">Trauma Teams</span>
+              <span class="item-count warning" id="trauma-teams">2</span>
+            </div>
+            <div class="facility-item">
+              <span class="item-name">Emergency Response Units</span>
+              <span class="item-count good" id="emergency-units">3</span>
+            </div>
+          </div>
+
+          <!-- Pharmacy Card -->
+          <div class="facility-card" id="pharmacy-card">
+            <h3>Pharmacy</h3>
+            <div class="facility-item">
+              <span class="item-name">Essential Drugs</span>
+              <span class="item-count good" id="essential-drugs">95%</span>
+            </div>
+            <div class="facility-item">
+              <span class="item-name">Emergency Medications</span>
+              <span class="item-count good" id="emergency-meds">100%</span>
+            </div>
+            <div class="facility-item">
+              <span class="item-name">Specialized Medications</span>
+              <span class="item-count warning" id="specialized-meds">78%</span>
+            </div>
+          </div>
+
+          <!-- Diagnostic Services Card -->
+          <div class="facility-card" id="diagnostic-card">
+            <h3>Diagnostic Services</h3>
+            <div class="facility-item">
+              <span class="item-name">X-ray Machines</span>
+              <span class="item-count good" id="xray-machines">3</span>
+            </div>
+            <div class="facility-item">
+              <span class="item-name">MRI Machines</span>
+              <span class="item-count warning" id="mri-machines">1</span>
+            </div>
+            <div class="facility-item">
+              <span class="item-name">CT Scanners</span>
+              <span class="item-count good" id="ct-scanners">2</span>
+            </div>
+            <div class="facility-item">
+              <span class="item-name">Ultrasound Units</span>
+              <span class="item-count good" id="ultrasound-units">4</span>
+            </div>
+          </div>
+
+          <!-- Surgical Facilities Card -->
+          <div class="facility-card" id="surgical-card">
+            <h3>Surgical Facilities</h3>
+            <div class="facility-item">
+              <span class="item-name">Operation Theaters</span>
+              <span class="item-count good" id="operation-theaters">5</span>
+            </div>
+            <div class="facility-item">
+              <span class="item-name">Minor Surgery Units</span>
+              <span class="item-count good" id="minor-surgery">3</span>
+            </div>
+            <div class="facility-item">
+              <span class="item-name">Major Surgery Units</span>
+              <span class="item-count warning" id="major-surgery">2</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="update-panel" id="update-panel">
+          <h3>Update Resource Availability</h3>
+          <div class="update-form" id="update-form">
+            <!-- Form fields will be dynamically populated based on selection -->
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <p>
+          Hospital Resources Management System | Administrator Access Only |
+          &copy; 2025
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const facilitySelect = document.getElementById('facility-select');
+          const updatePanel = document.getElementById('update-panel');
+          const updateForm = document.getElementById('update-form');
+
+          // Store all resources with their current values
+          const resources = {
+              beds: {
+                  'general-beds': { name: 'General Beds', value: 45 },
+                  'icu-beds': { name: 'ICU Beds', value: 8 },
+                  'ventilator-beds': { name: 'Ventilator Beds', value: 3 }
+              },
+              doctors: {
+                  'cardiologists': { name: 'Cardiologists', value: 5 },
+                  'neurologists': { name: 'Neurologists', value: 2 },
+                  'orthopedists': { name: 'Orthopedists', value: 4 }
+              },
+              equipment: {
+                  'oxygen-cylinders': { name: 'Oxygen Cylinders', value: 32 },
+                  'ventilators': { name: 'Ventilators', value: 4 },
+                  'dialysis-machines': { name: 'Dialysis Machines', value: 6 }
+              },
+              emergency: {
+                  'ambulances': { name: 'Ambulances', value: 7 },
+                  'trauma-teams': { name: 'Trauma Teams', value: 2 },
+                  'emergency-units': { name: 'Emergency Response Units', value: 3 }
+              },
+              pharmacy: {
+                  'essential-drugs': { name: 'Essential Drugs', value: '95%' },
+                  'emergency-meds': { name: 'Emergency Medications', value: '100%' },
+                  'specialized-meds': { name: 'Specialized Medications', value: '78%' }
+              },
+              diagnostic: {
+                  'xray-machines': { name: 'X-ray Machines', value: 3 },
+                  'mri-machines': { name: 'MRI Machines', value: 1 },
+                  'ct-scanners': { name: 'CT Scanners', value: 2 },
+                  'ultrasound-units': { name: 'Ultrasound Units', value: 4 }
+              },
+              surgical: {
+                  'operation-theaters': { name: 'Operation Theaters', value: 5 },
+                  'minor-surgery': { name: 'Minor Surgery Units', value: 3 },
+                  'major-surgery': { name: 'Major Surgery Units', value: 2 }
+              }
+          };
+
+          // Update color based on value
+          function updateColorClass(element, value) {
+              element.classList.remove('good', 'warning', 'critical');
+
+              if (typeof value === 'string' && value.includes('%')) {
+                  const numValue = parseInt(value);
+                  if (numValue >= 90) element.classList.add('good');
+                  else if (numValue >= 70) element.classList.add('warning');
+                  else element.classList.add('critical');
+              } else {
+                  if (value > 10) element.classList.add('good');
+                  else if (value > 3) element.classList.add('warning');
+                  else element.classList.add('critical');
+              }
+          }
+
+          // Handle facility selection change
+          facilitySelect.addEventListener('change', function() {
+              const selectedFacility = this.value;
+
+              if (selectedFacility) {
+                  updatePanel.style.display = 'block';
+                  createUpdateForm(selectedFacility);
+              } else {
+                  updatePanel.style.display = 'none';
+              }
+          });
+
+          // Create update form based on selected facility
+          function createUpdateForm(facility) {
+              updateForm.innerHTML = '';
+
+              const facilityResources = resources[facility];
+
+              for (const key in facilityResources) {
+                  const resource = facilityResources[key];
+
+                  const formGroup = document.createElement('div');
+                  formGroup.className = 'form-group';
+
+                  const label = document.createElement('label');
+                  label.htmlFor = update-${key};
+                  label.textContent = resource.name;
+
+                  const input = document.createElement('input');
+                  input.type = 'number';
+                  input.id = update-${key};
+                  input.name = key;
+                  input.value = resource.value.toString().replace('%', '');
+                  input.min = '0';
+
+                  formGroup.appendChild(label);
+                  formGroup.appendChild(input);
+                  updateForm.appendChild(formGroup);
+              }
+
+              // Add action buttons
+              const actionButtons = document.createElement('div');
+              actionButtons.className = 'action-buttons';
+
+              const cancelButton = document.createElement('button');
+              cancelButton.type = 'button';
+              cancelButton.className = 'btn btn-secondary';
+              cancelButton.textContent = 'Cancel';
+              cancelButton.addEventListener('click', function() {
+                  updatePanel.style.display = 'none';
+                  facilitySelect.value = '';
+              });
+
+              const updateButton = document.createElement('button');
+              updateButton.type = 'button';
+              updateButton.className = 'btn btn-primary';
+              updateButton.textContent = 'Update Resources';
+              updateButton.addEventListener('click', function() {
+                  updateResources(facility);
+              });
+
+              actionButtons.appendChild(cancelButton);
+              actionButtons.appendChild(updateButton);
+              updateForm.appendChild(actionButtons);
+          }
+
+          // Update resources
+          function updateResources(facility) {
+              const facilityResources = resources[facility];
+
+              for (const key in facilityResources) {
+                  const input = document.getElementById(update-${key});
+                  const newValue = input.value;
+
+                  // Update stored value
+                  if (typeof facilityResources[key].value === 'string' &&
+                      facilityResources[key].value.includes('%')) {
+                      facilityResources[key].value = newValue + '%';
+                  } else {
+                      facilityResources[key].value = parseInt(newValue);
+                  }
+
+                  // Update display
+                  const displayElement = document.getElementById(key);
+                  displayElement.textContent = facilityResources[key].value;
+
+                  // Update color
+                  updateColorClass(displayElement, facilityResources[key].value);
+              }
+
+              // Reset form
+              updatePanel.style.display = 'none';
+              facilitySelect.value = '';
+
+              // Show confirmation
+              alert('Resources updated successfully!');
+          }
+      });
+    </script>
+  </body>
+</html>
