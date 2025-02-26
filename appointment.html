@@ -1,585 +1,546 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hospital Resources Management</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="logo.png" />
+    <title>Techno-Sparkers: Appointment Booker</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
 
-        body {
-            background-color: #0a4275;
-            color: #fff;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23083761" width="50" height="50" x="0" y="0" /><rect fill="%23072f52" width="50" height="50" x="50" y="0" /><rect fill="%23072f52" width="50" height="50" x="0" y="50" /><rect fill="%23083761" width="50" height="50" x="50" y="50" /></svg>');
-            background-size: 100px 100px;
-            background-attachment: fixed;
-        }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: url("https://images.unsplash.com/photo-1538108149393-fbbd81895907?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80")
+          no-repeat center center/cover;
+        padding: 20px;
+      }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
 
-        header {
-            background-color: rgba(0, 30, 60, 0.8);
-            padding: 20px;
-            border-radius: 10px 10px 0 0;
-            backdrop-filter: blur(5px);
-            border-bottom: 4px solid #2a7cc7;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #007bff;
+      }
 
-        .logo {
-            display: flex;
-            align-items: center;
-        }
+      .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
 
-        .logo-icon {
-            font-size: 2rem;
-            margin-right: 15px;
-            color: #2a7cc7;
-        }
+      .form-group {
+        flex: 1;
+        min-width: 200px;
+      }
 
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-        }
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #333;
+      }
 
-        .subtitle {
-            color: #a3c9f0;
-            font-size: 0.9rem;
-        }
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        background: rgba(255, 255, 255, 0.8);
+      }
 
-        .user-info {
-            text-align: right;
-        }
+      .form-group input[type="date"],
+      .form-group input[type="time"] {
+        cursor: pointer;
+      }
 
-        .admin-badge {
-            background-color: #2a7cc7;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            display: inline-block;
-            margin-top: 5px;
-        }
+      .btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+      }
 
-        main {
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #333;
-            padding: 20px;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
+      .btn:hover {
+        background: #0056b3;
+      }
 
-        .facility-selector {
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #f0f7ff;
-            border-radius: 8px;
-            border-left: 5px solid #2a7cc7;
-        }
+      .appointments {
+        margin-top: 30px;
+      }
 
-        select {
-            padding: 10px 15px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            width: 100%;
-            font-size: 1rem;
-            margin-top: 10px;
-            background-color: white;
-        }
+      .appointments h2 {
+        margin-bottom: 15px;
+        color: #007bff;
+      }
 
-        .facility-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-        }
+      .appointment-item {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-        .facility-card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            transition: all 0.3s ease;
-            border-top: 4px solid #2a7cc7;
-        }
+      .appointment-item p {
+        margin: 0;
+        color: #555;
+      }
 
-        .facility-card h3 {
-            color: #0a4275;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #eee;
-        }
+      .appointment-item button {
+        background: #ff4d4d;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
 
-        .facility-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
+      .appointment-item button.edit {
+        background: #28a745;
+        margin-right: 10px;
+      }
 
-        .facility-item:last-child {
-            border-bottom: none;
-        }
+      .appointment-item button:hover {
+        opacity: 0.8;
+      }
 
-        .item-name {
-            font-weight: 500;
-        }
+      /* Searchable Dropdown */
+      .searchable-dropdown {
+        position: relative;
+      }
 
-        .item-count {
-            font-weight: bold;
-            color: #2a7cc7;
-        }
+      .searchable-dropdown input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        background: rgba(255, 255, 255, 0.8);
+      }
 
-        .critical {
-            color: #d9534f;
-        }
+      .searchable-dropdown .options {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        max-height: 150px;
+        overflow-y: auto;
+        z-index: 1000;
+        display: none;
+      }
 
-        .warning {
-            color: #f0ad4e;
-        }
+      .searchable-dropdown .options div {
+        padding: 10px;
+        cursor: pointer;
+      }
 
-        .good {
-            color: #5cb85c;
-        }
+      .searchable-dropdown .options div:hover {
+        background: #f0f0f0;
+      }
 
-        .update-panel {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #f0f7ff;
-            border-radius: 8px;
-            border-left: 5px solid #2a7cc7;
-            display: none;
-        }
-
-        .update-form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .form-row {
+          flex-direction: column;
         }
 
         .form-group {
-            margin-bottom: 15px;
+          width: 100%;
         }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-            color: #0a4275;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary {
-            background-color: #2a7cc7;
-            color: white;
-        }
-
-        .btn-secondary {
-            background-color: #f3f3f3;
-            color: #333;
-        }
-
-        .btn:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-
-        .action-buttons {
-            grid-column: span 2;
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        footer {
-            margin-top: 30px;
-            text-align: center;
-            color: #a3c9f0;
-            font-size: 0.8rem;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .facility-cards {
-                grid-template-columns: 1fr;
-            }
-            
-            .update-form {
-                grid-template-columns: 1fr;
-            }
-            
-            .action-buttons {
-                grid-column: span 1;
-            }
-            
-            header {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .user-info {
-                margin-top: 15px;
-                text-align: center;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <div class="logo">
-                <span class="logo-icon">+</span>
-                <div>
-                    <h1>Hospital Resources Management</h1>
-                    <div class="subtitle">Administrator Control Panel</div>
-                </div>
+      <h1>Doctor Appointment Booker</h1>
+
+      <!-- Appointment Booking Form -->
+      <form id="appointmentForm">
+        <div class="form-row">
+          <div class="form-group searchable-dropdown">
+            <label for="location">Location:</label>
+            <input
+              type="text"
+              id="locationInput"
+              placeholder="Type or select location"
+              autocomplete="off"
+            />
+            <div class="options" id="locationOptions">
+              <!-- Options will be populated dynamically -->
             </div>
-            <div class="user-info">
-                <div>Welcome, Administrator</div>
-                <div class="admin-badge">Admin Access</div>
-            </div>
-        </header>
-        
-        <main>
-            <div class="facility-selector">
-                <label for="facility-select"><strong>Select Facility to Update:</strong></label>
-                <select id="facility-select">
-                    <option value="">-- Select a facility --</option>
-                    <option value="beds">Bed Availability</option>
-                    <option value="doctors">Doctors</option>
-                    <option value="equipment">Medical Equipment</option>
-                    <option value="emergency">Emergency Services</option>
-                    <option value="pharmacy">Pharmacy</option>
-                    <option value="diagnostic">Diagnostic Services</option>
-                    <option value="surgical">Surgical Facilities</option>
-                </select>
-            </div>
-            
-            <div class="facility-cards">
-                <!-- Bed Availability Card -->
-                <div class="facility-card" id="beds-card">
-                    <h3>Bed Availability</h3>
-                    <div class="facility-item">
-                        <span class="item-name">General Beds</span>
-                        <span class="item-count good" id="general-beds">45</span>
-                    </div>
-                    <div class="facility-item">
-                        <span class="item-name">ICU Beds</span>
-                        <span class="item-count warning" id="icu-beds">8</span>
-                    </div>
-                    <div class="facility-item">
-                        <span class="item-name">Ventilator Beds</span>
-                        <span class="item-count critical" id="ventilator-beds">3</span>
-                    </div>
-                </div>
-                
-                <!-- Doctors Card -->
-                <div class="facility-card" id="doctors-card">
-                    <h3>Doctors</h3>
-                    <div class="facility-item">
-                        <span class="item-name">Cardiologists</span>
-                        <span class="item-count good" id="cardiologists">5</span>
-                    </div>
-                    <div class="facility-item">
-                        <span class="item-name">Neurologists</span>
-                        <span class="item-count warning" id="neurologists">2</span>
-                    </div>
-                    <div class="facility-item">
-                        <span class="item-name">Orthopedists</span>
-                        <span class="item-count good" id="orthopedists">4</span>
-                    </div>
-                </div>
-                
-                <!-- Medical Equipment Card -->
-                <div class="facility-card" id="equipment-card">
-                    <h3>Medical Equipment</h3>
-                    <div class="facility-item">
-                        <span class="item-name">Oxygen Cylinders</span>
-                        <span class="item-count good" id="oxygen-cylinders">32</span>
-                    </div>
-                    <div class="facility-item">
-                        <span class="item-name">Ventilators</span>
-                        <span class="item-count critical" id="ventilators">4</span>
-                    </div>
-                    <div class="facility-item">
-                        <span class="item-name">Dialysis Machines</span>
-                        <span class="item-count warning" id="dialysis-machines">6</span>
-                    </div>
-                </div>
-                
-                <!-- Emergency Services Card -->
-                <div class="facility-card" id="emergency-card">
-                    <h3>Emergency Services</h3>
-                    <div class="facility-item">
-                        <span class="item-name">Ambulances</span>
-                        <span class="item-count good" id="ambulances">7</span>
-                    </div>
-                    <div class="facility-item">
-                        <span class="item-name">Trauma Teams</span>
-                        <span class="item-count warning" id="trauma-teams">2</span>
-                    </div>
-                    <div class="facility-item">
-                        <span class="item-name">Emergency Response Units</span>
-                        <span class="item-count good" id="emergency-units">3</span>
-                    </div>
-                </div>
-                
-                <!-- Pharmacy Card -->
-                <div class="facility-card" id="pharmacy-card">
-                    <h3>Pharmacy</h3>
-                    <div class="facility-item">
-                        <span class="item-name">Essential Drugs</span>
-                        <span class="item-count good" id="essential-drugs">95%</span>
-                    </div>
-                    <div class="facility-item">
-                        <span class="item-name">Emergency Medications</span>
-                        <span class="item-count good" id="emergency-meds">100%</span>
-                    </div>
-                    <div class="facility-item">
-                        <span class="item-name">Specialized Medications</span>
-                        <span class="item-count warning" id="specialized-meds">78%</span>
-                    </div>
-                </div>
-                
-                <!-- Diagnostic Services Card -->
-                <div class="facility-card" id="diagnostic-card">
-                    <h3>Diagnostic Services</h3>
-                    <div class="facility-item">
-                        <span class="item-name">X-ray Machines</span>
-                        <span class="item-count good" id="xray-machines">3</span>
-                    </div>
-                    <div class="facility-item">
-                        <span class="item-name">MRI Machines</span>
-                        <span class="item-count warning" id="mri-machines">1</span>
-                    </div>
-                    <div class="facility-item">
-                        <span class="item-name">CT Scanners</span>
-                        <span class="item-count good" id="ct-scanners">2</span>
-                    </div>
-                    <div class="facility-item">
-                        <span class="item-name">Ultrasound Units</span>
-                        <span class="item-count good" id="ultrasound-units">4</span>
-                    </div>
-                </div>
-                
-                <!-- Surgical Facilities Card -->
-                <div class="facility-card" id="surgical-card">
-                    <h3>Surgical Facilities</h3>
-                    <div class="facility-item">
-                        <span class="item-name">Operation Theaters</span>
-                        <span class="item-count good" id="operation-theaters">5</span>
-                    </div>
-                    <div class="facility-item">
-                        <span class="item-name">Minor Surgery Units</span>
-                        <span class="item-count good" id="minor-surgery">3</span>
-                    </div>
-                    <div class="facility-item">
-                        <span class="item-name">Major Surgery Units</span>
-                        <span class="item-count warning" id="major-surgery">2</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="update-panel" id="update-panel">
-                <h3>Update Resource Availability</h3>
-                <div class="update-form" id="update-form">
-                    <!-- Form fields will be dynamically populated based on selection -->
-                </div>
-            </div>
-        </main>
-        
-        <footer>
-            <p>Hospital Resources Management System | Administrator Access Only | &copy; 2025</p>
-        </footer>
+          </div>
+          <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="date" id="date" required />
+          </div>
+          <div class="form-group">
+            <label for="time">Time:</label>
+            <input type="time" id="time" required />
+          </div>
+          <div class="form-group">
+            <label for="doctorType">Type of Doctor:</label>
+            <select id="doctorType" required>
+              <option value="">Select a doctor type</option>
+              <option value="Cardiologist">Cardiologist</option>
+              <option value="Dermatologist">Dermatologist</option>
+              <option value="Pediatrician">Pediatrician</option>
+              <option value="Orthopedic">Orthopedic</option>
+              <option value="Gynecologist">Gynecologist</option>
+              <option value="Neurologist">Neurologist</option>
+              <option value="Oncologist">Oncologist</option>
+              <option value="Psychiatrist">Psychiatrist</option>
+              <option value="Endocrinologist">Endocrinologist</option>
+              <option value="Gastroenterologist">Gastroenterologist</option>
+              <option value="Urologist">Urologist</option>
+              <option value="Nephrologist">Nephrologist</option>
+              <option value="Rheumatologist">Rheumatologist</option>
+              <option value="Pulmonologist">Pulmonologist</option>
+              <option value="ENT Specialist">ENT Specialist</option>
+              <option value="Ophthalmologist">Ophthalmologist</option>
+              <option value="Dentist">Dentist</option>
+              <option value="General Physician">General Physician</option>
+              <option value="Surgeon">Surgeon</option>
+              <option value="Anesthesiologist">Anesthesiologist</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn">Book Appointment</button>
+      </form>
+
+      <!-- Display Appointments -->
+      <div class="appointments">
+        <h2>Your Appointments</h2>
+        <div id="appointmentList"></div>
+      </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const facilitySelect = document.getElementById('facility-select');
-            const updatePanel = document.getElementById('update-panel');
-            const updateForm = document.getElementById('update-form');
-            
-            // Store all resources with their current values
-            const resources = {
-                beds: {
-                    'general-beds': { name: 'General Beds', value: 45 },
-                    'icu-beds': { name: 'ICU Beds', value: 8 },
-                    'ventilator-beds': { name: 'Ventilator Beds', value: 3 }
-                },
-                doctors: {
-                    'cardiologists': { name: 'Cardiologists', value: 5 },
-                    'neurologists': { name: 'Neurologists', value: 2 },
-                    'orthopedists': { name: 'Orthopedists', value: 4 }
-                },
-                equipment: {
-                    'oxygen-cylinders': { name: 'Oxygen Cylinders', value: 32 },
-                    'ventilators': { name: 'Ventilators', value: 4 },
-                    'dialysis-machines': { name: 'Dialysis Machines', value: 6 }
-                },
-                emergency: {
-                    'ambulances': { name: 'Ambulances', value: 7 },
-                    'trauma-teams': { name: 'Trauma Teams', value: 2 },
-                    'emergency-units': { name: 'Emergency Response Units', value: 3 }
-                },
-                pharmacy: {
-                    'essential-drugs': { name: 'Essential Drugs', value: '95%' },
-                    'emergency-meds': { name: 'Emergency Medications', value: '100%' },
-                    'specialized-meds': { name: 'Specialized Medications', value: '78%' }
-                },
-                diagnostic: {
-                    'xray-machines': { name: 'X-ray Machines', value: 3 },
-                    'mri-machines': { name: 'MRI Machines', value: 1 },
-                    'ct-scanners': { name: 'CT Scanners', value: 2 },
-                    'ultrasound-units': { name: 'Ultrasound Units', value: 4 }
-                },
-                surgical: {
-                    'operation-theaters': { name: 'Operation Theaters', value: 5 },
-                    'minor-surgery': { name: 'Minor Surgery Units', value: 3 },
-                    'major-surgery': { name: 'Major Surgery Units', value: 2 }
-                }
-            };
-            
-            // Update color based on value
-            function updateColorClass(element, value) {
-                element.classList.remove('good', 'warning', 'critical');
-                
-                if (typeof value === 'string' && value.includes('%')) {
-                    const numValue = parseInt(value);
-                    if (numValue >= 90) element.classList.add('good');
-                    else if (numValue >= 70) element.classList.add('warning');
-                    else element.classList.add('critical');
-                } else {
-                    if (value > 10) element.classList.add('good');
-                    else if (value > 3) element.classList.add('warning');
-                    else element.classList.add('critical');
-                }
-            }
-            
-            // Handle facility selection change
-            facilitySelect.addEventListener('change', function() {
-                const selectedFacility = this.value;
-                
-                if (selectedFacility) {
-                    updatePanel.style.display = 'block';
-                    createUpdateForm(selectedFacility);
-                } else {
-                    updatePanel.style.display = 'none';
-                }
-            });
-            
-            // Create update form based on selected facility
-            function createUpdateForm(facility) {
-                updateForm.innerHTML = '';
-                
-                const facilityResources = resources[facility];
-                
-                for (const key in facilityResources) {
-                    const resource = facilityResources[key];
-                    
-                    const formGroup = document.createElement('div');
-                    formGroup.className = 'form-group';
-                    
-                    const label = document.createElement('label');
-                    label.htmlFor = `update-${key}`;
-                    label.textContent = resource.name;
-                    
-                    const input = document.createElement('input');
-                    input.type = 'number';
-                    input.id = `update-${key}`;
-                    input.name = key;
-                    input.value = resource.value.toString().replace('%', '');
-                    input.min = '0';
-                    
-                    formGroup.appendChild(label);
-                    formGroup.appendChild(input);
-                    updateForm.appendChild(formGroup);
-                }
-                
-                // Add action buttons
-                const actionButtons = document.createElement('div');
-                actionButtons.className = 'action-buttons';
-                
-                const cancelButton = document.createElement('button');
-                cancelButton.type = 'button';
-                cancelButton.className = 'btn btn-secondary';
-                cancelButton.textContent = 'Cancel';
-                cancelButton.addEventListener('click', function() {
-                    updatePanel.style.display = 'none';
-                    facilitySelect.value = '';
-                });
-                
-                const updateButton = document.createElement('button');
-                updateButton.type = 'button';
-                updateButton.className = 'btn btn-primary';
-                updateButton.textContent = 'Update Resources';
-                updateButton.addEventListener('click', function() {
-                    updateResources(facility);
-                });
-                
-                actionButtons.appendChild(cancelButton);
-                actionButtons.appendChild(updateButton);
-                updateForm.appendChild(actionButtons);
-            }
-            
-            // Update resources
-            function updateResources(facility) {
-                const facilityResources = resources[facility];
-                
-                for (const key in facilityResources) {
-                    const input = document.getElementById(`update-${key}`);
-                    const newValue = input.value;
-                    
-                    // Update stored value
-                    if (typeof facilityResources[key].value === 'string' && 
-                        facilityResources[key].value.includes('%')) {
-                        facilityResources[key].value = newValue + '%';
-                    } else {
-                        facilityResources[key].value = parseInt(newValue);
-                    }
-                    
-                    // Update display
-                    const displayElement = document.getElementById(key);
-                    displayElement.textContent = facilityResources[key].value;
-                    
-                    // Update color
-                    updateColorClass(displayElement, facilityResources[key].value);
-                }
-                
-                // Reset form
-                updatePanel.style.display = 'none';
-                facilitySelect.value = '';
-                
-                // Show confirmation
-                alert('Resources updated successfully!');
-            }
+      // Load appointments from localStorage
+      let appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+
+      // List of Indian cities
+      const cities = [
+        "Mumbai",
+        "Delhi",
+        "Bangalore",
+        "Hyderabad",
+        "Chennai",
+        "Kolkata",
+        "Pune",
+        "Ahmedabad",
+        "Jaipur",
+        "Surat",
+        "Lucknow",
+        "Kanpur",
+        "Nagpur",
+        "Indore",
+        "Thane",
+        "Bhopal",
+        "Visakhapatnam",
+        "Patna",
+        "Vadodara",
+        "Ghaziabad",
+        "Ludhiana",
+        "Agra",
+        "Nashik",
+        "Faridabad",
+        "Meerut",
+        "Rajkot",
+        "Varanasi",
+        "Srinagar",
+        "Aurangabad",
+        "Dhanbad",
+        "Amritsar",
+        "Navi Mumbai",
+        "Allahabad",
+        "Ranchi",
+        "Howrah",
+        "Jabalpur",
+        "Gwalior",
+        "Coimbatore",
+        "Vijayawada",
+        "Jodhpur",
+        "Madurai",
+        "Raipur",
+        "Kota",
+        "Chandigarh",
+        "Guwahati",
+        "Solapur",
+        "Hubli-Dharwad",
+        "Bareilly",
+        "Moradabad",
+        "Mysore",
+        "Gurgaon",
+        "Aligarh",
+        "Jalandhar",
+        "Tiruchirappalli",
+        "Bhubaneswar",
+        "Salem",
+        "Warangal",
+        "Guntur",
+        "Bhiwandi",
+        "Saharanpur",
+        "Gorakhpur",
+        "Bikaner",
+        "Amravati",
+        "Noida",
+        "Jamshedpur",
+        "Bhilai",
+        "Cuttack",
+        "Firozabad",
+        "Kochi",
+        "Nellore",
+        "Bhavnagar",
+        "Dehradun",
+        "Durgapur",
+        "Asansol",
+        "Rourkela",
+        "Nanded",
+        "Kolhapur",
+        "Ajmer",
+        "Akola",
+        "Gulbarga",
+        "Loni",
+        "Ujjain",
+        "Siliguri",
+        "Jhansi",
+        "Ulhasnagar",
+        "Jammu",
+        "Sangli-Miraj & Kupwad",
+        "Mangalore",
+        "Erode",
+        "Belgaum",
+        "Ambattur",
+        "Tirunelveli",
+        "Malegaon",
+        "Gaya",
+        "Jalgaon",
+        "Udaipur",
+        "Maheshtala",
+        "Tirupur",
+        "Davanagere",
+        "Kozhikode",
+        "Kurnool",
+        "Rajpur Sonarpur",
+        "Bokaro Steel City",
+        "South Dumdum",
+        "Bellary",
+        "Patiala",
+        "Gopalpur",
+        "Agartala",
+        "Bhagalpur",
+        "Muzaffarnagar",
+        "Bhatpara",
+        "Panihati",
+        "Latur",
+        "Dhule",
+        "Rohtak",
+        "Korba",
+        "Bhilwara",
+        "Brahmapur",
+        "Muzaffarpur",
+        "Ahmednagar",
+        "Mathura",
+        "Kollam",
+        "Avadi",
+        "Kadapa",
+        "Anantapuram",
+        "Kamarhati",
+        "Bilaspur",
+        "Sambalpur",
+        "Shahjahanpur",
+        "Satara",
+        "Bijapur",
+        "Rampur",
+        "Shivamogga",
+        "Chandrapur",
+        "Junagadh",
+        "Thrissur",
+        "Alwar",
+        "Bardhaman",
+        "Kulti",
+        "Kakinada",
+        "Nizamabad",
+        "Parbhani",
+        "Tumkur",
+        "Hisar",
+        "Ozhukarai",
+        "Bihar Sharif",
+        "Panipat",
+        "Darbhanga",
+        "Bally",
+        "Aizawl",
+        "Dewas",
+        "Ichalkaranji",
+        "Tirupati",
+        "Karnal",
+        "Bathinda",
+        "Jalna",
+        "Barasat",
+        "Kirari Suleman Nagar",
+        "Purnia",
+        "Satna",
+        "Mau",
+        "Sonipat",
+        "Farrukhabad",
+        "Sagar",
+        "Rourkela",
+        "Durg",
+        "Imphal",
+        "Ratlam",
+        "Hapur",
+        "Arrah",
+        "Karimnagar",
+        "Anantapur",
+        "Etawah",
+        "Ambernath",
+      ];
+
+      // Populate location options
+      const locationInput = document.getElementById("locationInput");
+      const locationOptions = document.getElementById("locationOptions");
+
+      locationInput.addEventListener("input", () => {
+        const searchTerm = locationInput.value.toLowerCase();
+        const filteredCities = cities.filter((city) =>
+          city.toLowerCase().includes(searchTerm)
+        );
+
+        locationOptions.innerHTML = filteredCities
+          .map((city) => <div onclick="selectLocation('${city}')">${city}</div>)
+          .join("");
+
+        locationOptions.style.display = filteredCities.length
+          ? "block"
+          : "none";
+      });
+
+      function selectLocation(city) {
+        locationInput.value = city;
+        locationOptions.style.display = "none";
+      }
+
+      // Close dropdowns when clicking outside
+      document.addEventListener("click", (event) => {
+        if (!event.target.closest(".searchable-dropdown")) {
+          locationOptions.style.display = "none";
+        }
+      });
+
+      // Function to render appointments
+      function renderAppointments() {
+        const appointmentList = document.getElementById("appointmentList");
+        appointmentList.innerHTML = "";
+
+        appointments.forEach((appointment, index) => {
+          const appointmentItem = document.createElement("div");
+          appointmentItem.className = "appointment-item";
+          appointmentItem.innerHTML = `
+            <p>
+              <strong>Location:</strong> ${appointment.location}<br>
+              <strong>Date:</strong> ${appointment.date}<br>
+              <strong>Time:</strong> ${appointment.time}<br>
+              <strong>Doctor:</strong> ${appointment.doctorType}
+            </p>
+            <div>
+              <button class="edit" onclick="editAppointment(${index})">Edit</button>
+              <button onclick="deleteAppointment(${index})">Delete</button>
+            </div>
+          `;
+          appointmentList.appendChild(appointmentItem);
         });
+      }
+
+      // Function to add a new appointment
+      function addAppointment(event) {
+        event.preventDefault();
+
+        const location = locationInput.value;
+        const date = document.getElementById("date").value;
+        const time = document.getElementById("time").value;
+        const doctorType = document.getElementById("doctorType").value;
+
+        if (!location || !date || !time || !doctorType) {
+          alert("Please fill all fields!");
+          return;
+        }
+
+        const newAppointment = { location, date, time, doctorType };
+        appointments.push(newAppointment);
+        localStorage.setItem("appointments", JSON.stringify(appointments));
+
+        renderAppointments();
+        document.getElementById("appointmentForm").reset();
+      }
+
+      // Function to delete an appointment
+      function deleteAppointment(index) {
+        appointments.splice(index, 1);
+        localStorage.setItem("appointments", JSON.stringify(appointments));
+        renderAppointments();
+      }
+
+      // Function to edit an appointment
+      function editAppointment(index) {
+        const appointment = appointments[index];
+        locationInput.value = appointment.location;
+        document.getElementById("date").value = appointment.date;
+        document.getElementById("time").value = appointment.time;
+        document.getElementById("doctorType").value = appointment.doctorType;
+
+        deleteAppointment(index);
+      }
+
+      // Event Listener for Form Submission
+      document
+        .getElementById("appointmentForm")
+        .addEventListener("submit", addAppointment);
+
+      // Render appointments on page load
+      renderAppointments();
     </script>
-</body>
+  </body>
 </html>
