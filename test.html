@@ -144,122 +144,146 @@
 
     <script>
       const medicineData = {
-          "Anemia": {
-              medicines: ["Ferrous Sulphate", "Folic Acid", "Cyanocobalamin"],
-              precautions: "Eat iron-rich foods like spinach and red meat, and avoid tea or coffee with meals."
-          },
-          "Hypertension": {
-              medicines: ["Amlodipine", "Atenolol", "Enalapril Maleate"],
-              precautions: "Reduce salt intake, exercise regularly, and avoid stress."
-          },
-          "Diabetes": {
-              medicines: ["Metformin", "Insulin", "Glibenclamide"],
-              precautions: "Maintain a healthy diet, monitor blood sugar levels, and exercise regularly."
-          },
-          "COVID-19": {
-              medicines: ["Remdesivir", "Dexamethasone", "Tocilizumab"],
-              precautions: "Wear a mask, maintain social distancing, and get vaccinated."
-          },
-          "Asthma": {
-              medicines: ["Salbutamol", "Budesonide", "Montelukast"],
-              precautions: "Avoid allergens, use prescribed inhalers, and monitor breathing."
-          },
-          "Malaria": {
-              medicines: ["Chloroquine", "Artemether", "Primaquine"],
-              precautions: "Use mosquito nets, apply insect repellents, and avoid stagnant water."
-          },
-          "Tuberculosis": {
-              medicines: ["Rifampicin", "Isoniazid", "Ethambutol"],
-              precautions: "Complete the full course of treatment and ensure proper ventilation."
-          },
-          "Arthritis": {
-              medicines: ["Ibuprofen", "Methotrexate", "Prednisone"],
-              precautions: "Exercise moderately, maintain a healthy weight, and apply heat or cold therapy."
-          },
-          "Depression": {
-              medicines: ["Fluoxetine", "Sertraline", "Amitriptyline"],
-              precautions: "Maintain a support system, engage in therapy, and exercise regularly."
-          },
-          "Migraine": {
-              medicines: ["Sumatriptan", "Propranolol", "Amitriptyline"],
-              precautions: "Avoid triggers, stay hydrated, and get adequate rest."
-          },
-          "Pneumonia": {
-              medicines: ["Amoxicillin", "Azithromycin", "Levofloxacin"],
-              precautions: "Practice good hygiene, avoid smoking, and get vaccinated."
-          },
-          "Hepatitis B": {
-              medicines: ["Tenofovir", "Entecavir", "Interferon"],
-              precautions: "Avoid alcohol, get vaccinated, and practice safe sex."
-          },
-          "Thyroid Disorder": {
-              medicines: ["Levothyroxine", "Methimazole", "Propylthiouracil"],
-              precautions: "Regularly monitor thyroid levels and follow a balanced diet."
-          },
-          "Allergies": {
-              medicines: ["Cetirizine", "Loratadine", "Fexofenadine"],
-              precautions: "Avoid allergens, use air purifiers, and keep windows closed during high pollen seasons."
-          },
-          "Gastritis": {
-              medicines: ["Omeprazole", "Ranitidine", "Sucralfate"],
-              precautions: "Avoid spicy foods, limit alcohol, and eat smaller meals."
-          },
-          "Osteoporosis": {
-              medicines: ["Alendronate", "Calcium", "Vitamin D"],
-              precautions: "Engage in weight-bearing exercises and ensure adequate calcium intake."
-          },
-          "Psoriasis": {
-              medicines: ["Methotrexate", "Cyclosporine", "Topical Corticosteroids"],
-              precautions: "Moisturize skin regularly, avoid triggers, and manage stress."
-          },
-          "Epilepsy": {
-              medicines: ["Phenytoin", "Carbamazepine", "Valproate"],
-              precautions: "Take medications regularly, avoid triggers, and get adequate sleep."
-          },
-          "Chronic Kidney Disease": {
-              medicines: ["Erythropoietin", "Calcium Carbonate", "Sevelamer"],
-              precautions: "Monitor blood pressure, limit protein intake, and avoid NSAIDs."
-          },
-          "Bronchitis": {
-              medicines: ["Amoxicillin", "Doxycycline", "Azithromycin"],
-              precautions: "Avoid smoking, stay hydrated, and rest adequately."
-          }
+        Anemia: {
+          medicines: ["Ferrous Sulphate", "Folic Acid", "Cyanocobalamin"],
+          precautions:
+            "Eat iron-rich foods like spinach and red meat, and avoid tea or coffee with meals.",
+        },
+        Hypertension: {
+          medicines: ["Amlodipine", "Atenolol", "Enalapril Maleate"],
+          precautions:
+            "Reduce salt intake, exercise regularly, and avoid stress.",
+        },
+        Diabetes: {
+          medicines: ["Metformin", "Insulin", "Glibenclamide"],
+          precautions:
+            "Maintain a healthy diet, monitor blood sugar levels, and exercise regularly.",
+        },
+        "COVID-19": {
+          medicines: ["Remdesivir", "Dexamethasone", "Tocilizumab"],
+          precautions:
+            "Wear a mask, maintain social distancing, and get vaccinated.",
+        },
+        Asthma: {
+          medicines: ["Salbutamol", "Budesonide", "Montelukast"],
+          precautions:
+            "Avoid allergens, use prescribed inhalers, and monitor breathing.",
+        },
+        Malaria: {
+          medicines: ["Chloroquine", "Artemether", "Primaquine"],
+          precautions:
+            "Use mosquito nets, apply insect repellents, and avoid stagnant water.",
+        },
+        Tuberculosis: {
+          medicines: ["Rifampicin", "Isoniazid", "Ethambutol"],
+          precautions:
+            "Complete the full course of treatment and ensure proper ventilation.",
+        },
+        Arthritis: {
+          medicines: ["Ibuprofen", "Methotrexate", "Prednisone"],
+          precautions:
+            "Exercise moderately, maintain a healthy weight, and apply heat or cold therapy.",
+        },
+        Depression: {
+          medicines: ["Fluoxetine", "Sertraline", "Amitriptyline"],
+          precautions:
+            "Maintain a support system, engage in therapy, and exercise regularly.",
+        },
+        Migraine: {
+          medicines: ["Sumatriptan", "Propranolol", "Amitriptyline"],
+          precautions: "Avoid triggers, stay hydrated, and get adequate rest.",
+        },
+        Pneumonia: {
+          medicines: ["Amoxicillin", "Azithromycin", "Levofloxacin"],
+          precautions:
+            "Practice good hygiene, avoid smoking, and get vaccinated.",
+        },
+        "Hepatitis B": {
+          medicines: ["Tenofovir", "Entecavir", "Interferon"],
+          precautions: "Avoid alcohol, get vaccinated, and practice safe sex.",
+        },
+        "Thyroid Disorder": {
+          medicines: ["Levothyroxine", "Methimazole", "Propylthiouracil"],
+          precautions:
+            "Regularly monitor thyroid levels and follow a balanced diet.",
+        },
+        Allergies: {
+          medicines: ["Cetirizine", "Loratadine", "Fexofenadine"],
+          precautions:
+            "Avoid allergens, use air purifiers, and keep windows closed during high pollen seasons.",
+        },
+        Gastritis: {
+          medicines: ["Omeprazole", "Ranitidine", "Sucralfate"],
+          precautions:
+            "Avoid spicy foods, limit alcohol, and eat smaller meals.",
+        },
+        Osteoporosis: {
+          medicines: ["Alendronate", "Calcium", "Vitamin D"],
+          precautions:
+            "Engage in weight-bearing exercises and ensure adequate calcium intake.",
+        },
+        Psoriasis: {
+          medicines: [
+            "Methotrexate",
+            "Cyclosporine",
+            "Topical Corticosteroids",
+          ],
+          precautions:
+            "Moisturize skin regularly, avoid triggers, and manage stress.",
+        },
+        Epilepsy: {
+          medicines: ["Phenytoin", "Carbamazepine", "Valproate"],
+          precautions:
+            "Take medications regularly, avoid triggers, and get adequate sleep.",
+        },
+        "Chronic Kidney Disease": {
+          medicines: ["Erythropoietin", "Calcium Carbonate", "Sevelamer"],
+          precautions:
+            "Monitor blood pressure, limit protein intake, and avoid NSAIDs.",
+        },
+        Bronchitis: {
+          medicines: ["Amoxicillin", "Doxycycline", "Azithromycin"],
+          precautions: "Avoid smoking, stay hydrated, and rest adequately.",
+        },
       };
 
       function populateDropdown() {
-          let select = document.getElementById("disease");
-          select.innerHTML = '<option value="">Select a Disease</option>';
-          for (let disease in medicineData) {
-              let option = document.createElement("option");
-              option.value = disease;
-              option.textContent = disease;
-              select.appendChild(option);
-          }
+        let select = document.getElementById("disease");
+        select.innerHTML = '<option value="">Select a Disease</option>';
+        for (let disease in medicineData) {
+          let option = document.createElement("option");
+          option.value = disease;
+          option.textContent = disease;
+          select.appendChild(option);
+        }
       }
 
       function findMedicine() {
-          let disease = document.getElementById("disease").value;
-          let resultDiv = document.getElementById("result");
-          resultDiv.innerHTML = "";
+        let disease = document.getElementById("disease").value;
+        let resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = "";
 
-          if (medicineData[disease]) {
-              let medicines = medicineData[disease].medicines.join(", ");
-              let precautions = medicineData[disease].precautions;
+        if (medicineData[disease]) {
+          let medicines = medicineData[disease].medicines.join(", ");
+          let precautions = medicineData[disease].precautions;
 
-              // Create Medicine Box
-              let medicineBox = document.createElement("div");
-              medicineBox.className = "result-box medicine-box";
-              medicineBox.innerHTML = <h3>Recommended Medicines:</h3><p>${medicines}</p>;
-              resultDiv.appendChild(medicineBox);
+          // Create Medicine Box
+          let medicineBox = document.createElement("div");
+          medicineBox.className = "result-box medicine-box";
+          medicineBox.innerHTML =
+            "<h3>Recommended Medicines:</h3><p>" + medicines + "</p>";
+          resultDiv.appendChild(medicineBox);
 
-              // Create Precautions Box
-              let precautionsBox = document.createElement("div");
-              precautionsBox.className = "result-box precautions-box";
-              precautionsBox.innerHTML = <h3>Precautions:</h3><p>${precautions}</p>;
-              resultDiv.appendChild(precautionsBox);
-          } else {
-              resultDiv.innerHTML = <p style='color:red;'>No data found. Try a different disease.</p>;
-          }
+          // Create Precautions Box
+          let precautionsBox = document.createElement("div");
+          precautionsBox.className = "result-box precautions-box";
+          precautionsBox.innerHTML =
+            "<h3>Precautions:</h3><p>" + precautions + "</p>";
+          resultDiv.appendChild(precautionsBox);
+        } else {
+          resultDiv.innerHTML =
+            "<p style='color:red;'>No data found. Try a different disease.</p>";
+        }
       }
 
       window.onload = populateDropdown;
