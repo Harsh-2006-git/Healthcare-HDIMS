@@ -42,16 +42,12 @@
       }
 
       h1 {
-        background: linear-gradient(
-          135deg,
-          #667eea,
-          #00b4db
-        ); /* Gradient blue color */
-        -webkit-background-clip: text; /* Clip background to text */
-        -webkit-text-fill-color: transparent; /* Make text transparent */
+        background: linear-gradient(135deg, #667eea, #00b4db);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         margin-bottom: 20px;
         font-size: 28px;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
       }
 
       label {
@@ -104,7 +100,7 @@
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         text-align: left;
         animation: slideUp 0.5s ease-in-out;
-        border-left: 5px solid #667eea; /* Accent border */
+        border-left: 5px solid #667eea;
       }
 
       .advice-box h3 {
@@ -707,19 +703,27 @@
               "Consult a doctor for hormone replacement therapy if needed.",
             ],
           },
+          // Add more diseases and advice as needed...
         };
 
         let disease = document.getElementById("disease").value;
         let adviceBox = document.getElementById("advice-box");
 
         if (adviceList[disease]) {
-          let advice = `
-            <h3>${adviceList[disease].title}</h3>
-            <p>${adviceList[disease].content}</p>
-            <ul>
-              ${adviceList[disease].tips.map((tip) => <li>${tip}</li>).join("")}
-            </ul>
-          `;
+          let advice =
+            "<h3>" +
+            adviceList[disease].title +
+            "</h3>" +
+            "<p>" +
+            adviceList[disease].content +
+            "</p>" +
+            "<ul>";
+
+          adviceList[disease].tips.forEach(function (tip) {
+            advice += "<li>" + tip + "</li>";
+          });
+
+          advice += "</ul>";
           adviceBox.innerHTML = advice;
         } else if (disease === "") {
           adviceBox.innerHTML =
