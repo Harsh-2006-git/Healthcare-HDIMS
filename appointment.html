@@ -450,7 +450,7 @@
         );
 
         locationOptions.innerHTML = filteredCities
-          .map((city) => <div onclick="selectLocation('${city}')">${city}</div>)
+          .map((city) => `<div onclick="selectLocation('${city}')">${city}</div>`)
           .join("");
 
         locationOptions.style.display = filteredCities.length
@@ -542,5 +542,5 @@
       // Render appointments on page load
       renderAppointments();
     </script>
-  </body>
+  </body>
 </html>
