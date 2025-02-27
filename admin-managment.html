@@ -526,12 +526,12 @@
                   formGroup.className = 'form-group';
 
                   const label = document.createElement('label');
-                  label.htmlFor = update-${key};
+                  label.htmlFor = `update-${key}`;
                   label.textContent = resource.name;
 
                   const input = document.createElement('input');
                   input.type = 'number';
-                  input.id = update-${key};
+                  input.id = `update-${key}`;
                   input.name = key;
                   input.value = resource.value.toString().replace('%', '');
                   input.min = '0';
@@ -572,8 +572,14 @@
               const facilityResources = resources[facility];
 
               for (const key in facilityResources) {
-                  const input = document.getElementById(update-${key});
+                  const input = document.getElementById(`update-${key}`);
                   const newValue = input.value;
+
+                  // Validate input
+                  if (newValue === '' || isNaN(newValue) || newValue < 0) {
+                      alert(`Please enter a valid number for ${facilityResources[key].name}.`);
+                      return;
+                  }
 
                   // Update stored value
                   if (typeof facilityResources[key].value === 'string' &&
@@ -582,8 +588,7 @@
                   } else {
                       facilityResources[key].value = parseInt(newValue);
                   }
-
-                  // Update display
+// Update display
                   const displayElement = document.getElementById(key);
                   displayElement.textContent = facilityResources[key].value;
 
@@ -600,5 +605,6 @@
           }
       });
     </script>
-  </body>
+</body>
 </html>
+        
