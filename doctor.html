@@ -814,12 +814,13 @@
         const videoCallSection = document.getElementById("video-call");
 
         // Sample doctor data
+        // doctors.js
         const doctors = [
           {
             id: 1,
             name: "Dr. Sarah Johnson",
             specialty: "general",
-            image: "https://via.placeholder.com/300",
+            image: "https://stock.adobe.com/search?k=doctor+image", // Female doctor image
             experience: "12 years",
             rating: 4.8,
             reviews: 124,
@@ -829,7 +830,7 @@
             id: 2,
             name: "Dr. Michael Chen",
             specialty: "cardiology",
-            image: "https://via.placeholder.com/300",
+            image: "https://www.freepik.com/photos/male-doctor", // Male doctor image
             experience: "15 years",
             rating: 4.9,
             reviews: 198,
@@ -839,7 +840,7 @@
             id: 3,
             name: "Dr. Emily Rodriguez",
             specialty: "dermatology",
-            image: "https://via.placeholder.com/300",
+            image: "https://stock.adobe.com/search?k=doctor+image", // Female doctor image
             experience: "8 years",
             rating: 4.7,
             reviews: 87,
@@ -849,7 +850,7 @@
             id: 4,
             name: "Dr. James Wilson",
             specialty: "neurology",
-            image: "https://via.placeholder.com/300",
+            image: "https://www.freepik.com/photos/male-doctor", // Male doctor image
             experience: "20 years",
             rating: 4.9,
             reviews: 215,
@@ -859,7 +860,7 @@
             id: 5,
             name: "Dr. Olivia Patel",
             specialty: "orthopedics",
-            image: "https://via.placeholder.com/300",
+            image: "https://stock.adobe.com/search?k=doctor+image", // Female doctor image
             experience: "14 years",
             rating: 4.8,
             reviews: 156,
@@ -869,7 +870,7 @@
             id: 6,
             name: "Dr. Daniel Kim",
             specialty: "pediatrics",
-            image: "https://via.placeholder.com/300",
+            image: "https://www.freepik.com/photos/male-doctor", // Male doctor image
             experience: "10 years",
             rating: 4.9,
             reviews: 178,
@@ -879,7 +880,7 @@
             id: 7,
             name: "Dr. Lisa Thompson",
             specialty: "psychiatry",
-            image: "https://via.placeholder.com/300",
+            image: "https://stock.adobe.com/search?k=doctor+image", // Female doctor image
             experience: "16 years",
             rating: 4.7,
             reviews: 132,
@@ -889,7 +890,7 @@
             id: 8,
             name: "Dr. Maria Garcia",
             specialty: "gynecology",
-            image: "https://via.placeholder.com/300",
+            image: "https://stock.adobe.com/search?k=doctor+image", // Female doctor image
             experience: "13 years",
             rating: 4.8,
             reviews: 145,
@@ -899,7 +900,7 @@
             id: 9,
             name: "Dr. Robert Brown",
             specialty: "general",
-            image: "https://via.placeholder.com/300",
+            image: "https://www.freepik.com/photos/male-doctor", // Male doctor image
             experience: "9 years",
             rating: 4.6,
             reviews: 112,
@@ -909,7 +910,7 @@
             id: 10,
             name: "Dr. Jennifer Lee",
             specialty: "cardiology",
-            image: "https://via.placeholder.com/300",
+            image: "https://stock.adobe.com/search?k=doctor+image", // Female doctor image
             experience: "18 years",
             rating: 4.9,
             reviews: 210,
@@ -919,7 +920,7 @@
             id: 11,
             name: "Dr. David Smith",
             specialty: "dermatology",
-            image: "https://via.placeholder.com/300",
+            image: "https://www.freepik.com/photos/male-doctor", // Male doctor image
             experience: "11 years",
             rating: 4.7,
             reviews: 95,
@@ -929,7 +930,7 @@
             id: 12,
             name: "Dr. Sophia Martinez",
             specialty: "neurology",
-            image: "https://via.placeholder.com/300",
+            image: "https://stock.adobe.com/search?k=doctor+image", // Female doctor image
             experience: "17 years",
             rating: 4.8,
             reviews: 180,
@@ -939,7 +940,7 @@
             id: 13,
             name: "Dr. William Taylor",
             specialty: "orthopedics",
-            image: "https://via.placeholder.com/300",
+            image: "https://www.freepik.com/photos/male-doctor", // Male doctor image
             experience: "12 years",
             rating: 4.7,
             reviews: 140,
@@ -949,7 +950,7 @@
             id: 14,
             name: "Dr. Emma Anderson",
             specialty: "pediatrics",
-            image: "https://via.placeholder.com/300",
+            image: "https://stock.adobe.com/search?k=doctor+image", // Female doctor image
             experience: "7 years",
             rating: 4.6,
             reviews: 88,
@@ -959,7 +960,7 @@
             id: 15,
             name: "Dr. Noah Thomas",
             specialty: "psychiatry",
-            image: "https://via.placeholder.com/300",
+            image: "https://www.freepik.com/photos/male-doctor", // Male doctor image
             experience: "14 years",
             rating: 4.8,
             reviews: 160,
@@ -969,7 +970,7 @@
             id: 16,
             name: "Dr. Ava Jackson",
             specialty: "gynecology",
-            image: "https://via.placeholder.com/300",
+            image: "https://stock.adobe.com/search?k=doctor+image", // Female doctor image
             experience: "10 years",
             rating: 4.7,
             reviews: 120,
@@ -979,7 +980,7 @@
             id: 17,
             name: "Dr. Liam White",
             specialty: "general",
-            image: "https://via.placeholder.com/300",
+            image: "https://www.freepik.com/photos/male-doctor", // Male doctor image
             experience: "6 years",
             rating: 4.5,
             reviews: 75,
@@ -989,7 +990,7 @@
             id: 18,
             name: "Dr. Isabella Harris",
             specialty: "cardiology",
-            image: "https://via.placeholder.com/300",
+            image: "https://stock.adobe.com/search?k=doctor+image", // Female doctor image
             experience: "19 years",
             rating: 4.9,
             reviews: 220,
@@ -999,7 +1000,7 @@
             id: 19,
             name: "Dr. Lucas Martin",
             specialty: "dermatology",
-            image: "https://via.placeholder.com/300",
+            image: "https://www.freepik.com/photos/male-doctor", // Male doctor image
             experience: "10 years",
             rating: 4.7,
             reviews: 100,
@@ -1009,7 +1010,7 @@
             id: 20,
             name: "Dr. Mia Clark",
             specialty: "neurology",
-            image: "logo.png",
+            image: "https://stock.adobe.com/search?k=doctor+image", // Female doctor image
             experience: "15 years",
             rating: 4.8,
             reviews: 170,
@@ -1045,12 +1046,11 @@
           doctorListSection.innerHTML = "";
 
           if (doctorsList.length === 0) {
-            doctorListSection.innerHTML = `
-                        <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
-                            <h3>No doctors available</h3>
-                            <p>Please try a different specialty or date.</p>
-                        </div>
-                    `;
+            doctorListSection.innerHTML =
+              "<div style='grid-column: 1 / -1; text-align: center; padding: 40px;'>" +
+              "<h3>No doctors available</h3>" +
+              "<p>Please try a different specialty or date.</p>" +
+              "</div>";
             return;
           }
 
@@ -1061,33 +1061,33 @@
 
             const doctorCard = document.createElement("div");
             doctorCard.className = "doctor-card";
-            doctorCard.innerHTML = `
-                        <img src="${doctor.image}" alt="${
-              doctor.name
-            }" class="doctor-img">
-                        <div class="doctor-info">
-                            <h3 class="doctor-name">${doctor.name}</h3>
-                            <p class="doctor-specialty">${
-                              doctor.specialty.charAt(0).toUpperCase() +
-                              doctor.specialty.slice(1)
-                            }</p>
-                            <p class="doctor-details">Experience: ${
-                              doctor.experience
-                            }</p>
-                            <p class="doctor-details">Languages: ${
-                              doctor.languages
-                            }</p>
-                            <div class="rating">
-                                <span class="stars">${stars}</span>
-                                <span class="count">(${
-                                  doctor.reviews
-                                } reviews)</span>
-                            </div>
-                            <button class="btn btn-primary book-btn" data-id="${
-                              doctor.id
-                            }">Book Consultation</button>
-                        </div>
-                    `;
+            doctorCard.innerHTML =
+              "<div class='doctor-info'>" +
+              "<h3 class='doctor-name'>" +
+              doctor.name +
+              "</h3>" +
+              "<p class='doctor-specialty'>" +
+              doctor.specialty.charAt(0).toUpperCase() +
+              doctor.specialty.slice(1) +
+              "</p>" +
+              "<p class='doctor-details'>Experience: " +
+              doctor.experience +
+              "</p>" +
+              "<p class='doctor-details'>Languages: " +
+              doctor.languages +
+              "</p>" +
+              "<div class='rating'>" +
+              "<span class='stars'>" +
+              stars +
+              "</span>" +
+              "<span class='count'>(" +
+              doctor.reviews +
+              " reviews)</span>" +
+              "</div>" +
+              "<button class='btn btn-primary book-btn' data-id='" +
+              doctor.id +
+              "'>Book Consultation</button>" +
+              "</div>";
 
             doctorListSection.appendChild(doctorCard);
 
@@ -1115,17 +1115,18 @@
 
           // Display doctor details in the video call section
           const videoCallTitle = videoCallSection.querySelector(".form-title");
-          videoCallTitle.textContent = Video Consultation with ${doctor.name};
+          videoCallTitle.textContent = "Video Consultation with " + doctor.name;
 
           // Simulate video call connection
           setTimeout(() => {
             const mainVideoPlaceholder = document.querySelector(
               ".main-video .video-placeholder"
             );
-            mainVideoPlaceholder.innerHTML = `
-                        <h3>Connected to ${doctor.name}</h3>
-                        <p>You are now in a video consultation.</p>
-                    `;
+            mainVideoPlaceholder.innerHTML =
+              "<h3>Connected to " +
+              doctor.name +
+              "</h3>" +
+              "<p>You are now in a video consultation.</p>";
           }, 2000); // Simulate a 2-second delay for connection
         }
 
@@ -1141,14 +1142,14 @@
           isMicOn = !isMicOn;
           toggleMicBtn.classList.toggle("btn-danger", !isMicOn);
           toggleMicBtn.classList.toggle("btn-outline", isMicOn);
-          console.log(Microphone is ${isMicOn ? "on" : "off"});
+          console.log("Microphone is " + (isMicOn ? "on" : "off"));
         });
 
         toggleCameraBtn.addEventListener("click", function () {
           isCameraOn = !isCameraOn;
           toggleCameraBtn.classList.toggle("btn-danger", !isCameraOn);
           toggleCameraBtn.classList.toggle("btn-outline", isCameraOn);
-          console.log(Camera is ${isCameraOn ? "on" : "off"});
+          console.log("Camera is " + (isCameraOn ? "on" : "off"));
         });
 
         endCallBtn.addEventListener("click", function () {
@@ -1173,7 +1174,7 @@
           if (message) {
             const messageElement = document.createElement("div");
             messageElement.className = "chat-message";
-            messageElement.textContent = You: ${message};
+            messageElement.textContent = "You: " + message;
             chatMessages.appendChild(messageElement);
             chatInputField.value = "";
 
@@ -1181,7 +1182,8 @@
             setTimeout(() => {
               const doctorResponse = document.createElement("div");
               doctorResponse.className = "chat-message doctor-response";
-              doctorResponse.textContent = Dr. Smith: Thank you for sharing. Let me review your symptoms.;
+              doctorResponse.textContent =
+                "Dr. Smith: Thank you for sharing. Let me review your symptoms.";
               chatMessages.appendChild(doctorResponse);
               chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
             }, 1000); // Simulate a 1-second delay for response
@@ -1195,64 +1197,6 @@
           }
         });
       });
-      function displayDoctors(doctorsList) {
-        doctorListSection.style.display = "grid";
-        doctorListSection.innerHTML = "";
-
-        if (doctorsList.length === 0) {
-          doctorListSection.innerHTML = `
-            <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
-                <h3>No doctors available</h3>
-                <p>Please try a different specialty or date.</p>
-            </div>
-        `;
-          return;
-        }
-
-        doctorsList.forEach((doctor) => {
-          const stars =
-            "★".repeat(Math.floor(doctor.rating)) +
-            "☆".repeat(5 - Math.floor(doctor.rating));
-
-          // Assign image based on gender
-          const imageUrl =
-            doctor.gender === "male"
-              ? "https://img.freepik.com/premium-vector/people-avatar-icons-doctor_755164-20688.jpg"
-              : "https://th.bing.com/th/id/OIP.GkbuakTQPzjXN-2v8Z0phgHaE7?w=580&h=386&rs=1&pid=ImgDetMain";
-
-          const doctorCard = document.createElement("div");
-          doctorCard.className = "doctor-card";
-          doctorCard.innerHTML = `
-            <img src="${imageUrl}" alt="${doctor.name}" class="doctor-img">
-            <div class="doctor-info">
-                <h3 class="doctor-name">${doctor.name}</h3>
-                <p class="doctor-specialty">${
-                  doctor.specialty.charAt(0).toUpperCase() +
-                  doctor.specialty.slice(1)
-                }</p>
-                <p class="doctor-details">Experience: ${doctor.experience}</p>
-                <p class="doctor-details">Languages: ${doctor.languages}</p>
-                <div class="rating">
-                    <span class="stars">${stars}</span>
-                    <span class="count">(${doctor.reviews} reviews)</span>
-                </div>
-                <button class="btn btn-primary book-btn" data-id="${
-                  doctor.id
-                }">Book Consultation</button>
-            </div>
-        `;
-
-          doctorListSection.appendChild(doctorCard);
-
-          // Add event listener to book button
-          doctorCard
-            .querySelector(".book-btn")
-            .addEventListener("click", function () {
-              bookConsultation(doctor);
-            });
-        });
-      }
     </script>
-     
   </body>
 </html>
