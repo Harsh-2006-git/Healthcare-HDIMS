@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI-Powered Health Risk Predictor</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+      .chat-container {
+        max-width: 600px;
+        margin: 50px auto;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+      }
+      .chat-box {
+        height: 300px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        background: #f9f9f9;
+      }
+      .message {
+        margin-bottom: 10px;
+        padding: 8px;
+        border-radius: 5px;
+      }
+      .user-message {
+        background: #007bff;
+        color: #fff;
+        align-self: flex-end;
+      }
+      .ai-message {
+        background: #e9ecef;
+        color: #000;
+        align-self: flex-start;
+      }
+      .timestamp {
+        font-size: 0.8em;
+        color: #666;
+        margin-top: 4px;
+      }
+      .risk-high {
+        color: #dc3545;
+        font-weight: bold;
+      }
+      .risk-medium {
+        color: #ffc107;
+        font-weight: bold;
+      }
+      .risk-low {
+        color: #28a745;
+        font-weight: bold;
+      }
+      .user-input {
+        display: flex;
+        gap: 10px;
+      }
+      .user-input textarea {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: none;
+      }
+      .user-input button {
+        padding: 10px 20px;
+        border: none;
+        background: #007bff;
+        color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .user-input button:hover {
+        background: #0056b3;
+      }
+      .file-upload {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chat-container">
+      <h1>AI Health Risk Predictor</h1>
+      <div class="chat-box" id="chat-box">
+        <p>
+          Welcome! Please provide your historical medical data either by typing
+          or uploading a document.
+        </p>
+        <div class="timestamp" id="welcome-timestamp"></div>
+      </div>
+      <div class="user-input">
+        <textarea
+          id="user-input"
+          placeholder="Enter your medical history here..."
+        ></textarea>
+        <button id="send-btn">Send</button>
+      </div>
+      <div class="file-upload">
+        <input type="file" id="file-input" accept=".json,.txt" />
+        <button id="upload-btn">Upload Document</button>
+        <span id="file-name">No file chosen</span>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Set welcome message timestamp
+        const welcomeTimestamp = document.getElementById("welcome-timestamp");
+        welcomeTimestamp.textContent = getCurrentTime();
+
+        // Event listeners
+        document
+          .getElementById("send-btn")
+          .addEventListener("click", processTextInput);
+        document
+          .getElementById("upload-btn")
+          .addEventListener("click", processFileUpload);
+        document
+          .getElementById("user-input")
+          .addEventListener("keypress", function (e) {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              processTextInput();
+            }
+          });
+
+        document
+          .getElementById("file-input")
+          .addEventListener("change", function () {
+            const fileName = this.files[0]
+              ? this.files[0].name
+              : "No file chosen";
+            document.getElementById("file-name").textContent = fileName;
+          });
+      });
+
+      function processTextInput() {
+        const input = document.getElementById("user-input").value.trim();
+        if (!input) return;
+
+        addMessage(input, "user");
+        const prediction = predictHealthRisk(input);
+        addMessage(formatPrediction(prediction), "ai");
+
+        document.getElementById("user-input").value = "";
+      }
+
+      function processFileUpload() {
+        const fileInput = document.getElementById("file-input");
+        const file = fileInput.files[0];
+
+        if (!file) {
+          alert("Please select a file first.");
+          return;
+        }
+
+        addMessage("Uploaded file: " + file.name, "user");
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          let fileContent = e.target.result;
+
+          // Try to parse JSON if it's a JSON file
+          if (file.name.endsWith(".json")) {
+            try {
+              const jsonData = JSON.parse(fileContent);
+              // Convert JSON to string for processing
+              fileContent = JSON.stringify(jsonData, null, 2);
+            } catch (error) {
+              console.error("Error parsing JSON:", error);
+            }
+          }
+
+          const prediction = predictHealthRisk(fileContent);
+          addMessage(formatPrediction(prediction), "ai");
+        };
+
+        reader.onerror = function () {
+          addMessage(
+            "Error reading file. Please try again with a different file.",
+            "ai"
+          );
+        };
+
+        reader.readAsText(file);
+      }
+
+      function predictHealthRisk(data) {
+        // Initialize risks object with categories
+        const risks = {
+          high: [],
+          medium: [],
+          low: [],
+          notes: [],
+        };
+
+        // Convert to lowercase for case-insensitive matching
+        const lowerData = data.toLowerCase();
+
+        // Cardiovascular risks
+        if (
+          lowerData.includes("heart attack") ||
+          lowerData.includes("myocardial infarction")
+        ) {
+          risks.high.push("Cardiovascular disease");
+        } else if (
+          lowerData.includes("high blood pressure") ||
+          lowerData.includes("hypertension")
+        ) {
+          risks.medium.push("Hypertension");
+        }
+
+        // Diabetes risks
+        if (
+          lowerData.includes("diabetes type 1") ||
+          lowerData.includes("type 1 diabetes")
+        ) {
+          risks.high.push("Type 1 Diabetes");
+        } else if (
+          lowerData.includes("diabetes") ||
+          lowerData.includes("high blood sugar") ||
+          lowerData.includes("glucose")
+        ) {
+          risks.medium.push("Type 2 Diabetes");
+        }
+
+        // Respiratory risks
+        if (
+          lowerData.includes("asthma") ||
+          lowerData.includes("copd") ||
+          lowerData.includes("chronic obstructive pulmonary")
+        ) {
+          risks.medium.push("Respiratory conditions");
+        }
+
+        // Cancer risks
+        if (
+          lowerData.includes("cancer") ||
+          lowerData.includes("tumor") ||
+          lowerData.includes("malignant")
+        ) {
+          risks.high.push("Cancer recurrence/complications");
+        } else if (
+          lowerData.includes("family history") &&
+          lowerData.includes("cancer")
+        ) {
+          risks.medium.push("Increased cancer risk (family history)");
+        }
+
+        // Weight-related risks
+        if (lowerData.includes("obese") || lowerData.includes("obesity")) {
+          risks.medium.push("Obesity-related complications");
+        } else if (lowerData.includes("overweight")) {
+          risks.low.push("Weight management");
+        }
+
+        // Mental health
+        if (
+          lowerData.includes("depression") ||
+          lowerData.includes("anxiety") ||
+          lowerData.includes("mental health")
+        ) {
+          risks.medium.push("Mental health conditions");
+        }
+
+        // Add general notes about lifestyle
+        if (lowerData.includes("smoke") || lowerData.includes("smoking")) {
+          risks.notes.push("Smoking cessation recommended");
+        }
+        if (
+          lowerData.includes("alcohol") &&
+          (lowerData.includes("heavy") || lowerData.includes("addiction"))
+        ) {
+          risks.notes.push("Alcohol consumption reduction recommended");
+        }
+
+        // If no risks detected
+        if (
+          risks.high.length === 0 &&
+          risks.medium.length === 0 &&
+          risks.low.length === 0
+        ) {
+          risks.low.push(
+            "No significant health risks detected based on provided information"
+          );
+        }
+
+        return risks;
+      }
+
+      function formatPrediction(prediction) {
+        let result =
+          "Based on the information provided, here's your health risk assessment:\n\n";
+
+        if (prediction.high.length > 0) {
+          result +=
+            '<span class="risk-high">High Priority:</span> ' +
+            prediction.high.join(", ") +
+            "\n\n";
+        }
+
+        if (prediction.medium.length > 0) {
+          result +=
+            '<span class="risk-medium">Medium Priority:</span> ' +
+            prediction.medium.join(", ") +
+            "\n\n";
+        }
+
+        if (prediction.low.length > 0) {
+          result +=
+            '<span class="risk-low">Low Priority:</span> ' +
+            prediction.low.join(", ") +
+            "\n\n";
+        }
+
+        if (prediction.notes.length > 0) {
+          result +=
+            "<strong>Recommendations:</strong> " +
+            prediction.notes.join(". ") +
+            "\n\n";
+        }
+
+        result +=
+          "This is an automated assessment only. Please consult with a healthcare professional for proper diagnosis and treatment.";
+
+        return result;
+      }
+
+      function addMessage(content, sender) {
+        const chatBox = document.getElementById("chat-box");
+        const messageDiv = document.createElement("div");
+        messageDiv.className = "message " + sender + "-message";
+
+        // Replace newlines with <br> for proper display
+        content = content.replace(/\n/g, "<br>");
+
+        messageDiv.innerHTML = content;
+
+        const timestamp = document.createElement("div");
+        timestamp.className = "timestamp";
+        timestamp.textContent = getCurrentTime();
+        messageDiv.appendChild(timestamp);
+
+        chatBox.appendChild(messageDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+
+      function getCurrentTime() {
+        const now = new Date();
+        return now.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      }
+    </script>
+  </body>
+</html>
