@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Organ Donation Registration</title>
+    <style>
+      /* General Styles */
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      /* Header Styles */
+      header {
+        background: linear-gradient(135deg, #0078d7, #005bb5);
+        color: #fff;
+        padding: 40px 20px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 2.5rem;
+        font-weight: 600;
+      }
+
+      header p {
+        margin: 10px 0 0;
+        font-size: 1.1rem;
+        opacity: 0.9;
+      }
+
+      /* Main Content Styles */
+      main {
+        padding: 20px;
+        max-width: 800px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      section {
+        margin-bottom: 30px;
+      }
+
+      h2 {
+        color: #0078d7;
+        font-size: 2rem;
+        margin-bottom: 15px;
+        font-weight: 600;
+      }
+
+      p {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: #555;
+      }
+
+      /* Form Styles */
+      form {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #333;
+        font-size: 1rem;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        color: #333;
+        background-color: #f9f9f9;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      input:focus,
+      select:focus {
+        border-color: #0078d7;
+        outline: none;
+        box-shadow: 0 0 8px rgba(0, 120, 215, 0.3);
+      }
+
+      /* Checkbox Styles */
+      .consent-label {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        font-size: 0.95rem;
+        color: #555;
+      }
+
+      .consent-label input[type="checkbox"] {
+        margin-right: 10px;
+        width: auto;
+        accent-color: #0078d7;
+      }
+
+      /* Submit Button Styles */
+      button[type="submit"] {
+        display: inline-block;
+        width: 100%;
+        padding: 14px;
+        background-color: #0078d7;
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 600;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #005bb5;
+        transform: translateY(-2px);
+      }
+
+      button[type="submit"]:active {
+        transform: translateY(0);
+      }
+
+      /* Success Message Styles */
+      #success-message {
+        display: none; /* Hidden by default */
+        text-align: center;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        width: 100%;
+        animation: fadeIn 1s ease-in-out;
+        margin: 0 auto; /* Center the success message */
+      }
+
+      #success-message h1 {
+        color: #0078d7;
+        font-size: 3rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      #success-message p {
+        font-size: 1.2rem;
+        color: #555;
+        margin: 10px 0;
+      }
+
+      #success-message a {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 24px;
+        background-color: #0078d7;
+        color: #fff;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 6px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      #success-message a:hover {
+        background-color: #005bb5;
+        transform: translateY(-2px);
+      }
+
+      #success-message a:active {
+        transform: translateY(0);
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Footer Styles */
+      footer {
+        text-align: center;
+        padding: 15px;
+        background-color: #0078d7;
+        color: #fff;
+        font-size: 0.9rem;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      footer p {
+        margin: 0;
+        opacity: 0.9;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 600px) {
+        header h1 {
+          font-size: 2rem;
+        }
+
+        header p {
+          font-size: 1rem;
+        }
+
+        h2 {
+          font-size: 1.5rem;
+        }
+
+        form,
+        #success-message {
+          padding: 20px;
+        }
+
+        input,
+        select,
+        button[type="submit"],
+        #success-message a {
+          padding: 10px;
+          font-size: 0.9rem;
+        }
+
+        #success-message h1 {
+          font-size: 2rem;
+        }
+
+        #success-message p {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <h1>Organ Donation Registration</h1>
+      <p>
+        Your decision to donate organs can save lives. Fill out the form below
+        to register as an organ donor.
+      </p>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <!-- Registration Form Section -->
+      <section id="registration-form">
+        <h2>Registration Form</h2>
+        <form id="donor-form">
+          <label for="full-name">Full Name:</label>
+          <input type="text" id="full-name" name="full-name" required />
+
+          <label for="email">Email Address:</label>
+          <input type="email" id="email" name="email" required />
+
+          <label for="phone">Phone Number:</label>
+          <input type="tel" id="phone" name="phone" required />
+
+          <label for="dob">Date of Birth:</label>
+          <input type="date" id="dob" name="dob" required />
+
+          <label for="blood-type">Blood Type:</label>
+          <select id="blood-type" name="blood-type" required>
+            <option value="">Select Blood Type</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
+
+          <label for="organ">Organ(s) Willing to Donate:</label>
+          <select id="organ" name="organ" required>
+            <option value="">Select Organ</option>
+            <option value="heart">Heart</option>
+            <option value="lungs">Lungs</option>
+            <option value="liver">Liver</option>
+            <option value="kidneys">Kidneys</option>
+            <option value="pancreas">Pancreas</option>
+            <option value="intestines">Intestines</option>
+            <option value="corneas">Corneas</option>
+            <option value="tissue">Tissue</option>
+          </select>
+
+          <!-- Checkbox for Consent -->
+          <label class="consent-label">
+            <input type="checkbox" id="consent" name="consent" required />
+            I agree to the terms and conditions of organ donation.
+          </label>
+
+          <!-- Submit Button -->
+          <button type="submit">Submit</button>
+        </form>
+      </section>
+
+      <!-- Success Message Section -->
+      <section id="success-message">
+        <h1>Thank You!</h1>
+        <p>Your organ donation registration has been successfully submitted.</p>
+        <p>More information will be sent to your email shortly.</p>
+        <a href="#" id="return-home">Return to Home</a>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2025 Hospital Organ Donation System. All rights reserved.</p>
+    </footer>
+
+    <script>
+      // JavaScript to handle form submission and toggle visibility
+      document
+        .getElementById("donor-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent form from submitting the traditional way
+
+          // Validate consent
+          const consent = document.getElementById("consent").checked;
+          if (!consent) {
+            alert("You must agree to the terms and conditions to proceed.");
+            return;
+          }
+
+          // Hide the form and show the success message
+          document.getElementById("registration-form").style.display = "none";
+          document.getElementById("success-message").style.display = "block";
+        });
+
+      // Return to the form when "Return to Home" is clicked
+      document
+        .getElementById("return-home")
+        .addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent default link behavior
+          document.getElementById("success-message").style.display = "none";
+          document.getElementById("registration-form").style.display = "block";
+        });
+    </script>
+  </body>
+</html>
