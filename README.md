@@ -21,38 +21,17 @@ The Healthcare Management System is a web-based platform designed to streamline 
 
 🛠️ Tech Stack
 
-Frontend: React.js, Tailwind CSS
+Frontend: Html, Tailwind CSS, JS
 
-Backend: Node.js, Express.js
+Backend: Node.js
 
-Database: MongoDB
+Database: Mysql
 
 Authentication: JWT
 
 Deployment: Vercel / Heroku
 
 📦 Installation
-
-Clone the repository:
-
-git clone https://github.com/your-username/healthcare-management-system.git
-cd healthcare-management-system
-
-Install dependencies:
-
-npm install
-
-Configure environment variables:
-
-Create a .env file and add required variables (e.g., database URL, JWT secret, etc.).
-
-Start the application:
-
-npm run dev
-
-🎯 Usage
-
-Visit http://localhost:3000 to access the platform.
 
 Register as a doctor or patient to explore functionalities.
 
@@ -66,6 +45,6 @@ This project is licensed under the MIT License.
 
 📬 Contact
 
-For any inquiries, reach out via your-email@example.com or open an issue on GitHub.
+For any inquiries, reach out via your-  harmanmode79@gmail.com or open an issue on GitHub.
 
 ⭐ If you like this project, please star this repo on GitHub!
