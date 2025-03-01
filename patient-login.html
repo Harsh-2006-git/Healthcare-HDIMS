@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link href="patient-login.css" rel="stylesheet" />
+    <link rel="icon" href="logo.png" />
+    <title>Techno-Sparkers: Login/Signup</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: url("https://media.istockphoto.com/id/1143687314/vector/graph-and-health-blue-abstract-background.jpg?s=612x612&w=0&k=20&c=kWWrhiO92sSyRpK5e5xO7-nxrsyeHxbFuVmH6xEe_bA=")
+        no-repeat center center/cover;
+    }
+
+    .container {
+      width: 350px;
+      height: 550px;
+      position: relative;
+      perspective: 1000px;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      transform-style: preserve-3d;
+      transition: transform 0.7s;
+    }
+
+    .card.flip {
+      transform: rotateY(180deg);
+    }
+
+    .card-side {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      backface-visibility: hidden;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .back {
+      transform: rotateY(180deg);
+    }
+
+    .logo {
+      width: 80px;
+      height: auto;
+      margin-bottom: 10px;
+      padding: 0.2rem;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #0077b6, #00b4d8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .input-wrapper {
+      position: relative;
+      width: 80%;
+      margin: 15px 0;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      background-color: transparent;
+      font-size: 16px;
+      color: #333;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #00b4d8;
+      box-shadow: 0 0 10px rgba(0, 180, 216, 0.5);
+      outline: none;
+    }
+
+    label {
+      position: absolute;
+      top: 0;
+      left: 10px;
+      font-size: 12px;
+      color: #00b4d8;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 0 5px;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      transform: translateY(-50%);
+    }
+
+    input:focus + label,
+    input:not(:placeholder-shown) + label {
+      top: 0;
+      left: 15px;
+      font-size: 12px;
+      color: #00b4d8;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    button {
+      width: 80%;
+      padding: 12px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #0077b6, #00b4d8);
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #00b4d8, #0077b6);
+      transform: translateY(-2px);
+    }
+    @keyframes colorChange {
+      0% {
+        background: linear-gradient(135deg, white, red, white);
+        color: black;
+      }
+      100% {
+        background: linear-gradient(
+          135deg,
+          rgb(22, 22, 22),
+          red,
+          rgb(17, 17, 17)
+        );
+        color: white;
+      }
+    }
+    .admin-login-btn {
+      background: linear-gradient(
+        135deg,
+        #00b4d8,
+        #0077b6
+      ); /* Green to Blue gradient */
+      margin-bottom: 10px; /* Space between Admin Login and Sign In button */
+      border: 2px solid black;
+    }
+
+    .admin-login-btn:hover {
+      background: linear-gradient(
+        135deg,
+        #2196f3,
+        #4caf50
+      ); /* Blue to Green gradient */
+    }
+
+    .toggle {
+      margin-top: 10px;
+      color: #0077b6;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .toggle:hover {
+      color: #00b4d8;
+      text-decoration: underline;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div class="card" id="card">
+        <div class="card-side front">
+          <img src="logo.jpg" alt="Logo" class="logo" />
+          <h2><i class="fa-solid fa-users-medical"></i> Patient Sign Up</h2>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="signup-name"
+              placeholder="Full Name"
+              required
+            />
+            <label for="signup-name">Full Name</label>
+          </div>
+          <div class="input-wrapper">
+            <input
+              type="email"
+              id="signup-email"
+              placeholder="Email id"
+              required
+            />
+            <label for="signup-email">Email</label>
+          </div>
+          <div class="input-wrapper">
+            <input
+              type="password"
+              id="signup-password"
+              placeholder="Password"
+              required
+            />
+            <label for="signup-password">Password</label>
+          </div>
+          <button onclick="signUp()">Sign Up</button>
+          <p class="toggle" onclick="flipCard()">
+            Already have an account? Sign In
+          </p>
+        </div>
+
+        <!-- Sign In Form -->
+        <div class="card-side back">
+          <img src="logo.jpg" class="logo" />
+          <h2><i class="fa-solid fa-users-medical"></i> Patient Sign In</h2>
+
+          <div class="input-wrapper">
+            <input
+              type="email"
+              id="signin-email"
+              placeholder="Email id"
+              required
+            />
+            <label for="signin-email">Email</label>
+          </div>
+          <div class="input-wrapper">
+            <input
+              type="password"
+              id="signin-password"
+              placeholder="Password"
+              required
+            />
+            <label for="signin-password">Password</label>
+          </div>
+          <button onclick="signIn()">Sign In</button>
+          <p class="toggle" onclick="flipCard()">New here? Sign Up</p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function flipCard() {
+        document.getElementById("card").classList.toggle("flip");
+      }
+
+      function signUp() {
+        let name = document.getElementById("signup-name").value;
+        let email = document.getElementById("signup-email").value;
+        let password = document.getElementById("signup-password").value;
+
+        if (name === "" || email === "" || password === "") {
+          alert("Please fill all fields!");
+          return;
+        }
+
+        localStorage.setItem("userEmail", email);
+        localStorage.setItem("userPassword", password);
+        alert("Signup successful! Please sign in.");
+        flipCard();
+      }
+
+      function signIn() {
+        let email = document.getElementById("signin-email").value;
+        let password = document.getElementById("signin-password").value;
+        let storedEmail = localStorage.getItem("userEmail");
+        let storedPassword = localStorage.getItem("userPassword");
+
+        if (email === storedEmail && password === storedPassword) {
+          window.location.href = "body1.html";
+        } else {
+          alert("Invalid credentials!");
+        }
+      }
+
+      function adminLogin() {
+        window.location.href = "admin.html";
+      }
+    </script>
+  </body>
+</html>
