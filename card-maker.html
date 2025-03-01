@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All India Health Card Maker</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+      h1 {
+        color: #007bff;
+        margin-bottom: 20px;
+      }
+      .container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 800px;
+        text-align: center;
+      }
+      .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+      .card {
+        background: linear-gradient(135deg, #007bff, #00bfff);
+        color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        text-align: left;
+        position: relative;
+        display: none;
+      }
+      .card h2 {
+        margin: 0;
+        font-size: 24px;
+      }
+      .card p {
+        margin: 5px 0;
+      }
+      .card img {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+      }
+      .partners {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        margin-top: 20px;
+      }
+      .partners img {
+        width: 100px;
+        margin: 10px;
+      }
+      button {
+        padding: 10px 20px;
+        background: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #0056b3;
+      }
+      .download-btn {
+        margin-top: 20px;
+        display: none;
+      }
+      #preview {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 2px solid #ccc;
+        margin-bottom: 10px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>All India Health Card Maker</h1>
+    <div class="container">
+      <form id="card-form">
+        <div class="form-group">
+          <label for="name">Full Name:</label>
+          <input
+            type="text"
+            id="name"
+            placeholder="Enter your full name"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="dob">Date of Birth:</label>
+          <input type="date" id="dob" required />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number:</label>
+          <input
+            type="tel"
+            id="phone"
+            placeholder="Enter your phone number"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="policy">Policy Number:</label>
+          <input
+            type="text"
+            id="policy"
+            placeholder="Enter your health insurance policy number"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="photo">Upload Photo:</label>
+          <input type="file" id="photo" accept="image/*" required />
+          <img id="preview" src="#" alt="Photo Preview" />
+        </div>
+        <button type="submit">Generate Card</button>
+      </form>
+
+      <div id="health-card" class="card">
+        <h2 id="card-name">John Doe</h2>
+        <p id="card-dob">DOB: 01/01/1990</p>
+        <p id="card-phone">Phone: +91 9876543210</p>
+        <p id="card-policy">Policy Number: 1234567890</p>
+        <img id="card-photo" src="#" alt="User Photo" />
+      </div>
+
+      <button id="download-btn" class="download-btn" onclick="downloadCard()">
+        Download Card
+      </button>
+
+      <div class="partners">
+        <h3>In Partnership With:</h3>
+        <img
+          src="https://www.policybazaar.com/pblife/assets/images/art_thumb_img/pb_life_thumb_1712655875.jpg"
+        />
+        <img
+          src="https://cdn.freebiesupply.com/logos/large/2x/lic-logo-png-transparent.png"
+          alt="Company 2"
+        />
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/9/90/Care_health_insurance_logo.png?20210127185145"
+          alt="Company 3"
+        />
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Star_Health_and_Allied_Insurance.svg/296px-Star_Health_and_Allied_Insurance.svg.png?20130910135249"
+          alt="Company 4"
+        />
+      </div>
+    </div>
+
+    <script>
+      // Preview uploaded photo
+      document
+        .getElementById("photo")
+        .addEventListener("change", function (event) {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              document.getElementById("preview").src = e.target.result;
+              document.getElementById("preview").style.display = "block";
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+      // Generate card
+      document
+        .getElementById("card-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          // Get user input
+          const name = document.getElementById("name").value;
+          const dob = document.getElementById("dob").value;
+          const phone = document.getElementById("phone").value;
+          const policy = document.getElementById("policy").value;
+          const photo = document.getElementById("photo").files[0];
+
+          // Update card details
+          document.getElementById("card-name").textContent = name;
+          document.getElementById("card-dob").textContent = "DOB: " + dob;
+          document.getElementById("card-phone").textContent = "Phone: " + phone;
+          document.getElementById("card-policy").textContent =
+            "Policy Number: " + policy;
+
+          // Display uploaded photo on card
+          if (photo) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              document.getElementById("card-photo").src = e.target.result;
+            };
+            reader.readAsDataURL(photo);
+          }
+
+          // Show card and download button
+          document.getElementById("health-card").style.display = "block";
+          document.getElementById("download-btn").style.display = "block";
+        });
+
+      // Download card as image
+      function downloadCard() {
+        const card = document.getElementById("health-card");
+        html2canvas(card).then((canvas) => {
+          const link = document.createElement("a");
+          link.download = "health-card.png";
+          link.href = canvas.toDataURL();
+          link.click();
+        });
+      }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  </body>
+</html>
