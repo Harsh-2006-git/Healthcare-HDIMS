@@ -3,315 +3,227 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Healthcare App Landing Page</title>
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="icon" href="logo.png" />
-    <title>Techno-Sparkers: Login/Signup</title>
     <style>
-      * {
+      /* General Styles */
+      body,
+      html {
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
-        font-family: "Montserrat", sans-serif;
+        height: 100%;
+        font-family: "Poppins", sans-serif;
+        overflow: hidden;
+        background: url("https://media.istockphoto.com/id/1143687314/vector/graph-and-health-blue-abstract-background.jpg?s=612x612&w=0&k=20&c=kWWrhiO92sSyRpK5e5xO7-nxrsyeHxbFuVmH6xEe_bA=")
+          no-repeat center center/cover;
+        animation: gradientBG 10s ease infinite;
       }
 
-      body {
+      /* Gradient Background Animation */
+      @keyframes gradientBG {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* Container for the cards */
+      .container {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
-        background: url("https://media.istockphoto.com/id/1143687314/vector/graph-and-health-blue-abstract-background.jpg?s=612x612&w=0&k=20&c=kWWrhiO92sSyRpK5e5xO7-nxrsyeHxbFuVmH6xEe_bA=")
-          no-repeat center center/cover;
+        height: 100%;
+        gap: 40px;
+        animation: slideUp 1.5s ease-out forwards;
       }
 
-      .container {
-        width: 350px;
-        height: 550px;
-        position: relative;
-        perspective: 1000px;
-      }
-
+      /* Card Styles with Glassmorphism */
       .card {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        transform-style: preserve-3d;
-        transition: transform 0.7s;
-      }
-
-      .card.flip {
-        transform: rotateY(180deg);
-      }
-
-      .card-side {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        backface-visibility: hidden;
-        background: rgba(255, 255, 255, 0.9);
-        padding: 10px;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        width: 320px;
+        height: 450px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+        animation: float 4s ease-in-out infinite;
       }
 
-      .back {
-        transform: rotateY(180deg);
+      .card::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0.05)
+        );
+        transform: rotate(45deg);
+        z-index: -1;
       }
 
-      .logo {
-        width: 80px;
-        height: auto;
-        margin-bottom: 10px;
-        padding: 0.2rem;
+      .card:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
       }
 
-      h2 {
-        margin-bottom: 15px;
-        background: linear-gradient(135deg, #0077b6, #00b4d8);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+      /* Floating Animation */
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      /* Image Styles with Animation */
+      .card img {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 20px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, border-color 0.3s ease;
+      }
+
+      .card:hover img {
+        transform: scale(1.1);
+        border-color: rgba(255, 255, 255, 0.8);
+      }
+
+      /* Text Styles */
+      .card h2 {
         font-size: 24px;
         font-weight: 600;
+        color: black;
+        margin: 10px 0;
       }
 
-      .input-wrapper {
-        position: relative;
-        width: 80%;
-        margin: 15px 0;
-      }
-
-      input {
-        width: 100%;
-        padding: 10px;
-        margin: 8px 0;
-        border: 2px solid #ccc;
-        border-radius: 10px;
-        background-color: transparent;
-        font-size: 16px;
-        color: #333;
-        transition: all 0.3s ease;
-      }
-
-      input:focus {
-        border-color: #00b4d8;
-        box-shadow: 0 0 10px rgba(0, 180, 216, 0.5);
-        outline: none;
-      }
-
-      label {
-        position: absolute;
-        top: 0;
-        left: 10px;
-        font-size: 12px;
-        color: #00b4d8;
-        background: rgba(255, 255, 255, 0.9);
-        padding: 0 5px;
-        pointer-events: none;
-        transition: all 0.3s ease;
-        transform: translateY(-50%);
-      }
-
-      input:focus + label,
-      input:not(:placeholder-shown) + label {
-        top: 0;
-        left: 15px;
-        font-size: 12px;
-        color: #00b4d8;
-        background: rgba(255, 255, 255, 0.9);
-      }
-
-      button {
-        width: 80%;
-        padding: 12px;
-        margin-top: 15px;
-        border: none;
-        border-radius: 10px;
-        background: linear-gradient(135deg, #0077b6, #00b4d8);
-        color: white;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-
-      button:hover {
-        background: linear-gradient(135deg, #00b4d8, #0077b6);
-        transform: translateY(-2px);
-      }
-      @keyframes colorChange {
-        0% {
-          background: linear-gradient(135deg, white, red, white);
-          color: black;
-        }
-        100% {
-          background: linear-gradient(
-            135deg,
-            rgb(22, 22, 22),
-            red,
-            rgb(17, 17, 17)
-          );
-          color: white;
-        }
-      }
-      .admin-login-btn {
-        background: linear-gradient(
-          135deg,
-          #00b4d8,
-          #0077b6
-        ); /* Green to Blue gradient */
-        margin-bottom: 10px; /* Space between Admin Login and Sign In button */
-        border: 2px solid black;
-      }
-
-      .admin-login-btn:hover {
-        background: linear-gradient(
-          135deg,
-          #2196f3,
-          #4caf50
-        ); /* Blue to Green gradient */
-      }
-
-      .toggle {
-        margin-top: 10px;
-        color: #0077b6;
-        cursor: pointer;
+      .card p {
         font-size: 14px;
-        font-weight: 500;
-        transition: color 0.3s ease;
+        color: rgba(253, 250, 254, 1);
+        margin: 10px 0;
       }
 
-      .toggle:hover {
-        color: #00b4d8;
-        text-decoration: underline;
+      /* Button Styles with Gradient and Animation */
+      .card button {
+        padding: 12px 30px;
+        background: linear-gradient(135deg, #007bff, #00bfff);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card button::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 300%;
+        height: 300%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.3),
+          rgba(255, 255, 255, 0)
+        );
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform 0.5s ease;
+      }
+
+      .card button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+      }
+
+      .card button:hover::before {
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      /* Animation for sliding up */
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(100px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .card {
+          width: 280px;
+          height: 400px;
+        }
       }
     </style>
   </head>
   <body>
+    <!-- Container for Cards -->
     <div class="container">
-      <div class="card" id="card">
-        <!-- Sign Up Form -->
-        <div class="card-side front">
-          <img src="logo.png" alt="Logo" class="logo" />
-          <h2><i class="fa-solid fa-users-medical"></i> Patient Sign Up</h2>
-          <div class="input-wrapper">
-            <input
-              type="text"
-              id="signup-name"
-              placeholder="Full Name"
-              required
-            />
-            <label for="signup-name">Full Name</label>
-          </div>
-          <div class="input-wrapper">
-            <input
-              type="email"
-              id="signup-email"
-              placeholder="Email id"
-              required
-            />
-            <label for="signup-email">Email</label>
-          </div>
-          <div class="input-wrapper">
-            <input
-              type="password"
-              id="signup-password"
-              placeholder="Password"
-              required
-            />
-            <label for="signup-password">Password</label>
-          </div>
-          <button onclick="signUp()">Sign Up</button>
-          <p class="toggle" onclick="flipCard()">
-            Already have an account? Sign In
-          </p>
-        </div>
+      <!-- Patient Login Card -->
+      <div class="card">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/4137/4137492.png"
+          alt="Patient"
+        />
+        <h2>Patient Login</h2>
+        <p>
+          Access your health records, book appointments, and track your
+          progress.
+        </p>
+        <button onclick="window.location.href='patient-login.html'">
+          Login
+        </button>
+      </div>
 
-        <!-- Sign In Form -->
-        <div class="card-side back">
-          <img src="logo.png" class="logo" />
-          <h2><i class="fa-solid fa-users-medical"></i> Patient Sign In</h2>
-          <!-- Admin Login Button -->
-          <button class="admin-login-btn" onclick="adminLogin()">
-            <pre><i class="fa-solid fa-user-tie"></i>  Admin Login</pre>
-          </button>
-          <div class="input-wrapper">
-            <input
-              type="email"
-              id="signin-email"
-              placeholder="Email id"
-              required
-            />
-            <label for="signin-email">Email</label>
-          </div>
-          <div class="input-wrapper">
-            <input
-              type="password"
-              id="signin-password"
-              placeholder="Password"
-              required
-            />
-            <label for="signin-password">Password</label>
-          </div>
-          <button onclick="signIn()">Sign In</button>
-          <p class="toggle" onclick="flipCard()">New here? Sign Up</p>
-        </div>
+      <!-- Admin Login Card -->
+      <div class="card">
+        <img
+          src="https://static.vecteezy.com/system/resources/previews/009/636/683/non_2x/admin-3d-illustration-icon-png.png"
+          alt="Admin"
+        />
+        <h2>Admin Login</h2>
+        <p>Manage healthcare operations, patient data, and system settings.</p>
+        <button onclick="window.location.href='admin.html'">Login</button>
       </div>
     </div>
-
-    <script>
-      function flipCard() {
-        document.getElementById("card").classList.toggle("flip");
-      }
-
-      function signUp() {
-        let name = document.getElementById("signup-name").value;
-        let email = document.getElementById("signup-email").value;
-        let password = document.getElementById("signup-password").value;
-
-        if (name === "" || email === "" || password === "") {
-          alert("Please fill all fields!");
-          return;
-        }
-
-        localStorage.setItem("userEmail", email);
-        localStorage.setItem("userPassword", password);
-        alert("Signup successful! Please sign in.");
-        flipCard();
-      }
-
-      function signIn() {
-        let email = document.getElementById("signin-email").value;
-        let password = document.getElementById("signin-password").value;
-        let storedEmail = localStorage.getItem("userEmail");
-        let storedPassword = localStorage.getItem("userPassword");
-
-        if (email === storedEmail && password === storedPassword) {
-          window.location.href = "body1.html";
-        } else {
-          alert("Invalid credentials!");
-        }
-      }
-
-      function adminLogin() {
-        // Redirect to admin login page or handle admin login logic
-        window.location.href = "admin.html";
-        // Example: window.location.href = "admin-login.html";
-      }
-    </script>
   </body>
 </html>
