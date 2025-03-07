@@ -1,4 +1,4 @@
-Live server Hosting website : https://harsh-2006-git.github.io/Hackathon/
+Live server Hosting website : https://harsh-2006-git.github.io/Healthcare-HDIMS/
 Healthcare Management System
 
 📌 Overview
