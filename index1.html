@@ -16,13 +16,27 @@
       body {
         width: 100%;
         height: 100vh;
-        background: url("https://img.freepik.com/free-vector/medical-healthcare-blue-color_1017-26807.jpg?w=1380&t=st=1715941231~exp=1715941831~hmac=8a4c8c1d2d5f5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5")
-          no-repeat center center/cover;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
         color: #333;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Background Image with Blur */
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("https://img.freepik.com/free-vector/medical-healthcare-blue-color_1017-26807.jpg?w=1380&t=st=1715941231~exp=1715941831~hmac=8a4c8c1d2d5f5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5")
+          no-repeat center center/cover;
+        filter: blur(8px);
+        z-index: -1;
       }
 
       .container {
@@ -36,7 +50,7 @@
       }
 
       h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
         margin-bottom: 10px;
         background: linear-gradient(135deg, #6a11cb, #2575fc);
         -webkit-background-clip: text;
@@ -257,7 +271,7 @@
   </head>
   <body>
     <div class="container">
-      <h1>Healthcare Chatbot</h1>
+      <h1>HEALTHCARE CHATBOT</h1>
       <div class="chat-container" id="chat-container"></div>
       <div class="prompt-area">
         <input type="text" id="prompt" placeholder="Type or use voice..." />
@@ -315,8 +329,9 @@
       let jarvisAnimation = document.getElementById("jarvis-animation");
       let languageSelect = document.getElementById("language-select");
 
+      // Updated API URL with your new API key
       let apiUrl =
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyDQBDrSk8uuRaMZWLmwfvMX9Se0GDJH6GA";
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyAodiW_Fc3DSrgglP3Phi7s-aA8IhCZ76A";
 
       let abortController = new AbortController(); // For aborting fetch requests
       let recognition; // For speech recognition
@@ -363,9 +378,16 @@
             }),
             signal: abortController.signal, // Attach the abort signal
           });
+
+          if (!response.ok) {
+            throw new Error(
+              `API Error: ${response.status} ${response.statusText}`
+            );
+          }
+
           let data = await response.json();
           let aiResponse =
-            data?.candidates[0]?.content?.parts[0]?.text ||
+            data?.candidates?.[0]?.content?.parts?.[0]?.text ||
             "Sorry, I couldn't understand.";
 
           // Remove loading GIF and display AI response
@@ -376,9 +398,9 @@
           if (e.name === "AbortError") {
             console.log("Request aborted");
           } else {
-            console.error(e);
+            console.error("Error:", e);
             chatContainer.removeChild(loadingDiv);
-            createChatBox("Error fetching response.", "ai-chat-box", aiImg.src);
+            createChatBox("Error: " + e.message, "ai-chat-box", aiImg.src);
           }
         }
       }
@@ -458,6 +480,13 @@
 
         // Hide Jarvis-like animation
         jarvisAnimation.style.display = "none";
+      });
+
+      // Allow sending message with Enter key
+      promptInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          sendBtn.click();
+        }
       });
     </script>
   </body>
